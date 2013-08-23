@@ -16,13 +16,10 @@ jquery-ui
 
 1. your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationResources.groovy and ensure you refer to it in your main.gsp or relevant file
 
-     <head>
-      ...
-      
-	        <g:javascript library="jquery-ui"/>
-		      <g:javascript library="jquery"/>
-		      
-		      <g:layoutHead/>
+
+      <g:javascript library="jquery-ui"/>
+      <g:javascript library="jquery"/>
+      <g:layoutHead/>
 
 
 
@@ -30,6 +27,7 @@ jquery-ui
 
 
        package testingv
+       
        class MyCountry {
          String name
          static hasMany=[mycity: MyCity]
@@ -38,6 +36,7 @@ jquery-ui
 
 
        package testingv
+       
        class MyCity {
          String name
          MyCountry mycountry
