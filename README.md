@@ -30,7 +30,8 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
     package testingv
     class MyCountry {
-      String name
+    
+       String name
       
       static hasMany=[mycity: MyCity]
       
