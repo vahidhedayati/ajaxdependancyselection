@@ -7,7 +7,7 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
 # Required:
 
-       jquery-ui 
+       jquery-ui
        {this plugin - ajaxdependancyselection }
 
 
@@ -18,9 +18,9 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
 
         <g:javascript library="jquery-ui"/>
-        
+
         <g:javascript library="jquery"/>
-        
+
         Above    <g:layoutHead/>
 
 
@@ -32,13 +32,10 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
     package testingv
     class MyCountry {
-    
+
        String name
-      
+
       static hasMany=[mycity: MyCity]
-      
-      static constraints = {}
-      
      }
 
 
@@ -46,13 +43,10 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
     package testingv
     class MyCity {
-     
+
      String name
-     
+
      MyCountry mycountry
-     
-     static constraints = {}
-     
     }
 
 
@@ -61,8 +55,8 @@ Now generated controllers and views for above, once done edit the controller for
     def example2() {
      [countryInstance: new MyCountry(params)]
     }
-      
-Ofcourse calling it what you what and ensuring the new MyCountry matches actual class 
+
+Ofcourse calling it what you what and ensuring the new MyCountry matches actual class
 
 
 The GSP:
@@ -104,7 +98,7 @@ This does work on any object but only allows 1 usage per gsp page which means yo
 
       g:autoCompletePrimary
       g:autoCompleteSecondary
-      
+
 since it can only be used once
 
 
@@ -123,15 +117,12 @@ The first is full path to actual domain class including the package name, search
 Explaination 3 on Secondary:
 
       primarybind='mycountry.id'
-      
-      
-This must match the field that there is a corelation with in the sql it will by mycountry_id in the domain class it was MyCountry mycountry, in this it needs to be 
+
+
+This must match the field that there is a corelation with in the sql it will by mycountry_id in the domain class it was MyCountry mycountry, in this it needs to be
 
        name you selected.id
-       
-       
-
-Seriously that is it 
 
 
-		
+
+Seriously that is it

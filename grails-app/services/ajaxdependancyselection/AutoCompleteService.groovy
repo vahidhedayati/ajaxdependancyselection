@@ -1,9 +1,11 @@
 package ajaxdependancyselection
 
-
 import grails.converters.JSON
 
 class AutoCompleteService {
+
+	static transactional = false
+
 	def grailsApplication
 
 	def autocompleteSecondaryAction (params) {
