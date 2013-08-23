@@ -4,12 +4,11 @@ class AutoCompleteController {
 
 	def autoCompleteService
 
-	def autocompletePrimaryAction= {
+	def autocompletePrimaryAction() {
 	   render autoCompleteService.autocompletePrimaryAction(params)
 	}
-	
-	def autocompleteSecondaryAction= {
+
+	def autocompleteSecondaryAction() {
 	   render autoCompleteService.autocompleteSecondaryAction(params)
 	}
-	
 }
