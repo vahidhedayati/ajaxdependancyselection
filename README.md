@@ -31,8 +31,11 @@ Grails plugin using auto complete to fill first form field, using the id it bind
     package testingv
     class MyCountry {
       String name
-       static hasMany=[mycity: MyCity]
-        static constraints = {}
+      
+      static hasMany=[mycity: MyCity]
+      
+      static constraints = {}
+      
      }
 
 
@@ -40,9 +43,13 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
     package testingv
     class MyCity {
+     
      String name
+     
      MyCountry mycountry
+     
      static constraints = {}
+     
     }
 
 
