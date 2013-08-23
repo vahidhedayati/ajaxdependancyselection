@@ -26,29 +26,27 @@ jquery-ui
 2. 2 domain classes that depend on each other here is an example:
 
 
-       package testingv
-       
-       class MyCountry {
-         String name
-         static hasMany=[mycity: MyCity]
-          static constraints = {}
-        }
+    package testingv
+    class MyCountry {
+      String name
+       static hasMany=[mycity: MyCity]
+        static constraints = {}
+     }
 
 
-       package testingv
-       
-       class MyCity {
-         String name
-         MyCountry mycountry
-         static constraints = {}
-        }
+    package testingv
+    class MyCity {
+     String name
+     MyCountry mycountry
+     static constraints = {}
+    }
 
 
 Now generated controllers and views for above, once done edit the controller for master which is MyCountry add :
 
-      def example2() {
-       [countryInstance: new MyCountry(params)]
-      }
+    def example2() {
+     [countryInstance: new MyCountry(params)]
+    }
       
 Ofcourse calling it what you what and ensuring the new MyCountry matches actual class 
 
