@@ -7,8 +7,8 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
 # Required:
 
-jquery-ui 
-{this plugin } ajaxdependancyselection
+       jquery-ui 
+       {this plugin - ajaxdependancyselection }
 
 
 
@@ -26,12 +26,16 @@ jquery-ui
 2. 2 domain classes that depend on each other here is an example:
 
 
+
+
     package testingv
     class MyCountry {
       String name
        static hasMany=[mycity: MyCity]
         static constraints = {}
      }
+
+
 
 
     package testingv
