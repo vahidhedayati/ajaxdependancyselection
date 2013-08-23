@@ -17,9 +17,11 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 1. your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationResources.groovy and ensure you refer to it in your main.gsp or relevant file
 
 
-      <g:javascript library="jquery-ui"/>
-      <g:javascript library="jquery"/>
-      <g:layoutHead/>
+        <g:javascript library="jquery-ui"/>
+        
+        <g:javascript library="jquery"/>
+        
+        Above    <g:layoutHead/>
 
 
 
