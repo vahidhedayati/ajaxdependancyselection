@@ -109,7 +109,6 @@ class AutoCompleteTagLib {
 		out << "?"
 		out << "&domain="+ attrs.domain
 		out << "&searchField="+attrs.searchField
-		//out << "&setld="+attrs.setId
 		out << "&max="+attrs.max
 		out << "&order="+attrs.order
 		out << "&collectField="+attrs.collectField
@@ -158,7 +157,6 @@ class AutoCompleteTagLib {
 		def cid=""
 		def styles = ""
 		def var1="";
-		//if (!attrs.setId) attrs.setId = "secondarySearch"
 		if (!attrs.max) attrs.max = 10
 		if (!attrs.value) attrs.value =""
 
@@ -188,7 +186,6 @@ class AutoCompleteTagLib {
 		out << "&domain="+ attrs.domain
 		out << "&primarybind="+ attrs.primarybind
 		out << "&searchField="+attrs.searchField
-		//out << "&setld="+attrs.setId
 		out << "&max="+attrs.max
 		out << "&order="+attrs.order
 		out << "&collectField="+attrs.collectField
