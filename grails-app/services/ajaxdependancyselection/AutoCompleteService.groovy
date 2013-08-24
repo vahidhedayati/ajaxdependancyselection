@@ -8,6 +8,27 @@ class AutoCompleteService {
 
 	def grailsApplication
 
+	
+	def autocomplete (params) {
+		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
+
+		def results = domainClass.createCriteria().list {
+			ilike params.searchField, params.term + '%'
+			maxResults(Integer.parseInt(params.max,10))
+			order(params.searchField, params.order)
+		}
+		if (results.size()< 5){
+			results = domainClass.createCriteria().list {
+					ilike params.searchField, "%${params.term}%"
+					maxResults(Integer.parseInt(params.max,10))
+					order(params.searchField, params.order)
+			}
+		}
+		results = results.collect {     [label:it."${params.collectField}"] }.unique()
+		return results as JSON
+	}
+	
+	
 	def autocompleteSecondaryAction (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
 		def results = domainClass.createCriteria().list {
@@ -15,10 +36,17 @@ class AutoCompleteService {
 			ilike params.searchField, params.term + '%'
 			order(params.searchField, params.order)
 		}
-		
+		if (results.size()< 5){
+			results = domainClass.createCriteria().list {
+				eq (params.primarybind, params.primaryid.toLong())
+				ilike   params.searchField,'%' + params.term + '%'
+				order(params.searchField, params.order)
+			}
+		}
 		results = results.collect {	[label:it."${params.collectField}"] }.unique()
 		return results as JSON
 	}
+	
 	
 	def autocompletePrimaryAction (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
