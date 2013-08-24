@@ -165,7 +165,7 @@ Please take note:
             domain='testingv.Department'
             searchField='name'
             collectField='id'
-            setId="secondarySearch1"
+            setId="secondarySearch2"
             hidden='hidden3'
             value=''/>
             
