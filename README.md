@@ -151,11 +151,12 @@ h2. First example uses the default id primarySearch, thus no requirement to use 
             value=''/>
        <br/><br/>
             
-##In this example which is actually on the same gsp page, the id's have to differ inorder for correct results to be returned, 
+In this example which is actually on the same gsp page, the id's have to differ inorder for correct results to be returned, 
 
-#An addtional setId field is set on primary  auto selects:
+An addtional setId field is set on primary auto selects:
 
-#Please take note the setId on primary is actual id of secondary Field
+Please take note:
+#setId on primary is actual id of secondary Field
 
             <label>Department:</label>
        <g:autoCompletePrimary id="primarySearch1" name="deparmentId"
