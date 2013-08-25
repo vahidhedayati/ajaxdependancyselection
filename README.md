@@ -33,6 +33,14 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
 
 
+# Provides:
+	
+	g:selectPrimary - Methods: Controller:autoComplete | Actions: ajaxSelectSecondary
+  	g:autoCompletePrimary  - Methods: Controller:autoComplete   | Actions: autocompletePrimaryAction
+   	g:autoCompleteSecondary - Methods: Controller:autoComplete | Actions: autocompleteSecondaryAction
+ 	g:autocomplete - Methods: Controller:autoComplete | Actions: autocomplete, autocompleteShowCollect
+ 	
+ 	
 2. 2 domain classes that depend on each other here is an example:
 
 
@@ -121,6 +129,51 @@ h3. This example shows the collection field in the drop down box and is what is 
             searchField='name'
             collectField='id'
             value=''/>
+
+# Select dependancy :
+
+ 	<g:selectPrimary id="selectPrimary" name="MyCountry"
+       		action='ajaxSelectSecondary'
+            controller='autoComplete'
+            domain='testingv.MyCountry'
+            domain2='testingv.MyCity'
+            bindid="mycountry.id"
+            searchField='name'
+            collectField='id'
+            noSelection="['null': 'Please choose Country']" 
+            setId="MyCity1"
+            value=''/>
+    
+       	<g:select name="testingv.MyCity1" id="MyCity1"  
+       		optionKey="id" optionValue="name" 
+       		from="[]" noSelection="['null': 'Please choose Country']" />
+
+
+Please note selects can only be done once per gsp page - 
+
+
+# On second gsp page the following could be done:
+
+ 	<g:selectPrimary id="selectPrimaryTest2" name="Department"
+       		action='ajaxSelectSecondary'
+            controller='autoComplete'
+            domain='testingv.Department'
+            domain2='testingv.Employee'
+            bindid="department.id"
+            searchField='name'
+            collectField='id'
+            noSelection="['null': 'Please choose Department']" 
+            setId="Employee1"
+            value=''/>
+    
+       	<g:select name="testingv.Employee1" id="Employee1"  	
+       		optionKey="id" optionValue="name" 
+       		from="[]" noSelection="['null': 'Please choose Department']" />
+
+Until i figure out why....
+
+
+
 
 h3. Auto complete multiple times on one page
 
