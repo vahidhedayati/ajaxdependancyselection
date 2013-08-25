@@ -85,4 +85,16 @@ class AutoCompleteService {
 		}
 		return primarySelectList as JSON
 	}
+	List returnPrimaryList(String className) {
+		Class clazz = grailsApplication.getDomainClass(className).clazz
+		clazz.list()
+		
+	}
+	def selectSecondary(params) {	
+		def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
+		def results = domainClass.createCriteria().list {
+			eq (params.bindid, params.id.toLong())
+		}
+		return results as JSON
+	}
 }
