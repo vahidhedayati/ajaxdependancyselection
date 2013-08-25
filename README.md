@@ -44,10 +44,10 @@ Grails plugin using auto complete to fill first form field, using the id it bind
  # Multi dimension auto complete:
  
  	g:autoCompletePrimary  - Methods: Controller: autoCompletePrimary | Actions: autocompletePrimaryAction 
- 	g:autoCompletePrimary  - Methods: Controller: autoCompleteSecondary | Actions:  autocompleteMiddleAction & autocompleteSecondaryAction
+ 	g:autoCompletePrimary  - Methods: Controller: autoCompleteSecondary | Actions:   autocompleteSecondaryAction
  	
-Above example expanded means a primary is called with its action, a secondary is initially called with a middle action and completed with secondary action
-
+Above example expanded means a primary is called with its action, a secondary can be called as many times as required last call should not include:
+# setId
 
 
 2. 2 domain classes that depend on each other here is an example:
@@ -205,8 +205,9 @@ Until i figure out why....
 
 # Multi dimension Auto Completion:
 
- 	<label>Continent:</label>
-      	<g:autoCompletePrimary id="primarySearch1" name="continentId"
+       <form method=post action=exampl5>
+       <label>Continent:</label>
+      <g:autoCompletePrimary id="primarySearch1" name="continentName"
             action='autocompletePrimaryAction'
             controller='autoComplete'
             domain='testingv.MyContinent'
@@ -217,12 +218,12 @@ Until i figure out why....
             value=''/>
             
 
-	<input type=hidden id="hidden3" name="hiddenFieldSomthing" value=""/>
+	<input type=hidden id="hidden3" name="continentId" value=""/>
 
 
   	<label>Country:</label>
-  	<g:autoCompleteSecondary id="secondarySearch2" name="countryId"
-            action='autocompleteMiddleAction'
+  	<g:autoCompleteSecondary id="secondarySearch2" name="countryName"
+            action='autocompleteSecondaryAction'
             controller='autoComplete'
             domain='testingv.MyCountry'
             primarybind='mycontinent.id'
@@ -235,19 +236,28 @@ Until i figure out why....
             
             
             
-            
-	<input type=hidden id="hidden4" name="hiddenField4Something" value=""/>
+	<input type=hidden id="hidden4" name="countryId" value=""/>
 
   	<label>City:</label>
-  	<g:autoCompleteSecondary id="secondarySearch3" name="cityId"
+  	<g:autoCompleteSecondary id="secondarySearch3" name="cityName"
             action='autocompleteSecondaryAction'
             controller='autoComplete'
             domain='testingv.MyCity'
             primarybind='mycountry.id'
             hidden='hidden4'
+             hidden2='hidden5'
             searchField='name'
+            collectField='id'
             value=''/>    
             
+    	<input type=hidden id="hidden5" name="cityId" value=""/>
+    
+     	<input type=submit value=go>   
+          </form>  
+            
+ Above returns:
+ 
+ 	[countryId:2, continentName:Europe, countryName:Britain, continentId:1, cityId:2, cityName:London, action:exampl5, controller:myCountry]
  
 
 Above example lists continents, then countries and finally cities, 
@@ -262,7 +272,7 @@ h3. Auto complete multiple times on one page
 h2. First example uses the default id primarySearch, thus no requirement to use the variable setId
 
        <label>Countries:</label>
-       <g:autoCompletePrimary id="primarySearch" name="myCountryId"
+       <g:autoCompletePrimary id="primarySearch" name="myCountryName"
             action='autocompletePrimaryAction'
             controller='autoComplete'
             domain='testingv.MyCountry'
@@ -272,18 +282,21 @@ h2. First example uses the default id primarySearch, thus no requirement to use 
             value=''/>
 
 
-       <input type=hidden id="hidden2" name="hiddenField" value=""/>
+       <input type=hidden id="hidden2" name="myCountryId" value=""/>
 
 
        <label>Cities:</label>
-       <g:autoCompleteSecondary id="secondarySearch" name="myCityId"
+       <g:autoCompleteSecondary id="secondarySearch" name="myCity"
             action='autocompleteSecondaryAction'
             controller='autoComplete'
             domain='testingv.MyCity'
             primarybind='mycountry.id'
-            hidden='hidden2'
+           hidden='hidden2'
+             hidden2='hidden3'
             searchField='name'
-            value=''/>
+            collectField='id'
+            value=''/>    
+              <input type=hidden id="hidden3" name="myCityId" value=""/>
        <br/><br/>
             
 In this example which is actually on the same gsp page, the id's have to differ inorder for correct results to be returned, 
@@ -294,29 +307,32 @@ Please take note:
 #setId on primary is actual id of secondary Field
 
             <label>Department:</label>
-       <g:autoCompletePrimary id="primarySearch1" name="deparmentId"
+       <g:autoCompletePrimary id="primarySearch1" name="deparmentName"
             action='autocompletePrimaryAction'
             controller='autoComplete'
             domain='testingv.Department'
             searchField='name'
             collectField='id'
             setId="secondarySearch2"
-            hidden='hidden3'
+            hidden='hidden44'
             value=''/>
             
-       <input type=hidden id="hidden3" name="hiddenField" value=""/>
+       <input type=hidden id="hidden44" name="departmentId" value=""/>
 
 
        <label>Cities:</label>
-       <g:autoCompleteSecondary id="secondarySearch2" name="employeeId"
+       <g:autoCompleteSecondary id="secondarySearch2" name="employeeName"
             action='autocompleteSecondaryAction'
             controller='autoComplete'
             domain='testingv.Employee'
             primarybind='department.id'
-            hidden='hidden3'
+            hidden='hidden44'
+             hidden2='hidden55'
             searchField='name'
-            value=''/>
-       </html>    
+            collectField='id'
+            value=''/>    
+              <input type=hidden id="hidden55" name="employeeId" value=""/>
+       <br/><br/>
    
 
 
