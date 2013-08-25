@@ -312,10 +312,14 @@ class AutoCompleteTagLib {
 		out << "&collectField="+attrs.collectField
 		out << "', { primaryid: \$('#" + attrs.hidden+"').val() }, "
 		out << " response);  }, "
-		if (attrs.setId) {
+		if ((attrs.setId)||(attrs.hidden2)) {
 			out << "select: function(event, ui) {"
-			out << "    \$('#" + attrs.hidden2+"').val(ui.item.id);"
-			out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
+			if(attrs.hidden2) {
+				out << "    \$('#" + attrs.hidden2+"').val(ui.item.id);"
+			}
+			if (attrs.setId) {
+				out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
+			}
 			out <<"},"
 		}
 		out << " dataType: 'json'"
