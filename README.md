@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.3
+ajaxdependancyselection 0.5
 =======================
 
 Grails plugin using auto complete to fill first form field, using the id it binds to second form field and auto complete option of 2nd field based on first chosen auto completed box. This is in cases where domain object 1 hasMany of domainclass2 and domainclass2 belongs to domainclass1
@@ -39,7 +39,7 @@ Grails plugin using auto complete to fill first form field, using the id it bind
   	g:autoCompletePrimary  - Methods: Controller:autoComplete   | Actions: autocompletePrimaryAction
    	g:autoCompleteSecondary - Methods: Controller:autoComplete | Actions: autocompleteSecondaryAction
  	g:autocomplete - Methods: Controller:autoComplete | Actions: autocomplete, autocompleteShowCollect
- 	
+ 	g:selectController - Methods: Controller:autoComplete | Actions: ajaxSelectControllerAction
  	
 2. 2 domain classes that depend on each other here is an example:
 
@@ -174,6 +174,23 @@ Until i figure out why....
 
 
 
+
+# Gsp tag to query all controllers and using select dependancy show its relevant actions - useful for permissions or anything related to what actions controllers have avaialble:
+
+	<g:selectController id="selectPrimaryTest2" name="Department"
+       		action='ajaxSelectControllerAction'
+            controller='autoComplete'
+            searchField='name'
+            collectField='id'
+            noSelection="['null': 'Please choose Controller']" 
+            setId="ControllerActions"
+            value=''/>
+    
+	 <g:select name="myactions" id="ControllerActions"  	
+       		optionKey="id" optionValue="name" 
+       		from="[]" noSelection="['null': 'Please choose controller']" />
+       		
+       		
 
 h3. Auto complete multiple times on one page
 
