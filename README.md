@@ -42,6 +42,7 @@ Grails plugin using auto complete to fill first form field, using the id it bind
  	g:selectController - Methods: Controller:autoComplete | Actions: ajaxSelectControllerAction
  	
  # Multi dimension auto complete:
+ 
  	g:autoCompletePrimary  - Methods: Controller: autoCompletePrimary | Actions: autocompletePrimaryAction
  	g:autoCompletePrimary  - Methods: Controller: autoCompleteSecondary | Actions: autocompletePrimaryAction & autocompleteSecondaryAction
  	
