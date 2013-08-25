@@ -3,7 +3,9 @@ package ajaxdependancyselection
 class AutoCompleteController {
 
 	def autoCompleteService
-
+	def ajaxSelectSecondary() {
+		render autoCompleteService.selectSecondary(params)
+	 }
 	def autocomplete() {
 		render autoCompleteService.autocompletePrimaryAction(params)
 	 }
