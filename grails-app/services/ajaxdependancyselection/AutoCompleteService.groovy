@@ -1,6 +1,10 @@
 package ajaxdependancyselection
 
+
 import grails.converters.JSON
+import org.codehaus.groovy.grails.commons.DefaultGrailsControllerClass
+import grails.web.Action
+import java.lang.reflect.Method
 
 class AutoCompleteService {
 
@@ -96,5 +100,31 @@ class AutoCompleteService {
 			eq (params.bindid, params.id.toLong())
 		}
 		return results as JSON
+	}
+	
+	def returnControllerActions(params) {
+		if (params.id!=null) {
+			String s = params.id
+			String domclass1= (s.substring(0,1).toUpperCase())
+			String domclass2=s.substring(1,s.length())
+			String domclass=domclass1+domclass2
+			def fp=grailsApplication.metadata['app.name']
+			def gp=fp+"."+domclass
+			Class clazz = grailsApplication.getDomainClass(fp+"."+domclass).clazz
+			List<String> list=new ArrayList<String>();
+			grailsApplication.controllerClasses.each { DefaultGrailsControllerClass controller ->
+				Class controllerClass = controller.clazz
+				if (controllerClass.name.startsWith(gp.toString())) {
+					String logicalControllerName = controller.logicalPropertyName
+					controllerClass.methods.each { Method method ->
+						if (method.getAnnotation(Action)) {
+							list.add(method.name)
+						}
+					}
+				}
+			}
+			def results = list.collect {	[name:it] }.unique()
+			return results as JSON
+		}
 	}
 }
