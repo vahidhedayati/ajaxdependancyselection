@@ -2,7 +2,7 @@ package ajaxdependancyselection
 
 
 class AutoCompleteTagLib {
-
+	def autoCompleteService
 	def selectPrimary = {attrs ->
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
