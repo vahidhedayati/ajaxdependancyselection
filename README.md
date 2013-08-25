@@ -43,10 +43,11 @@ Grails plugin using auto complete to fill first form field, using the id it bind
  	
  # Multi dimension auto complete:
  
- 	g:autoCompletePrimary  - Methods: Controller: autoCompletePrimary | Actions: autocompletePrimaryAction
- 	g:autoCompletePrimary  - Methods: Controller: autoCompleteSecondary | Actions: autocompletePrimaryAction & autocompleteSecondaryAction
+ 	g:autoCompletePrimary  - Methods: Controller: autoCompletePrimary | Actions: autocompletePrimaryAction 
+ 	g:autoCompletePrimary  - Methods: Controller: autoCompleteSecondary | Actions:  autocompleteMiddleAction & autocompleteSecondaryAction
  	
-Above example expanded means a primary is called with its action, a secondary is initially called with primary action as many times as required and ended with the last being autocompleteSecondayAction
+Above example expanded means a primary is called with its action, a secondary is initially called with a middle action and completed with secondary action
+
 
 
 2. 2 domain classes that depend on each other here is an example:
@@ -221,7 +222,7 @@ Until i figure out why....
 
   	<label>Country:</label>
   	<g:autoCompleteSecondary id="secondarySearch2" name="countryId"
-            action='autocompletePrimaryAction'
+            action='autocompleteMiddleAction'
             controller='autoComplete'
             domain='testingv.MyCountry'
             primarybind='mycontinent.id'
@@ -231,6 +232,7 @@ Until i figure out why....
             collectField='id'
             setId="secondarySearch3"
             value=''/>
+            
             
             
             
@@ -248,7 +250,10 @@ Until i figure out why....
             
  
 
-Above example lists continents, then countries and finally cities, the key was in the actions called if you notice the 2nd calls primary action, this can be repeated on further nested situations.
+Above example lists continents, then countries and finally cities, 
+the key was in the actions called if you notice the 2nd calls Middle action, 
+this can be repeated on further nested situations. ie keep recalling autocompleteMiddleAction and for the final turn call autocompleteSecondaryAction. Following their structures since the middle one has lots of extra values
+
 
 
 
