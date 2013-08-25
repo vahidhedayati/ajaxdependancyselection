@@ -3,7 +3,7 @@ class AjaxdependancyselectionGrailsPlugin {
 	def grailsVersion = "2.0 > *"
  
 	def title = "Ajax Dependancy Selection Plugin"
-	def description = 'Defines secondary auto completion form field values ensuring it is bound on first auto completed form field'
+	def description = 'Defines secondary auto completion form field values ensuring it is bound on first auto completed form field. Ver 0.3  provides support for select dependancy'
 	def documentation = "http://grails.org/plugin/ajaxdependancyselection"
 	def license = "GPL2"
 	def developers = [
