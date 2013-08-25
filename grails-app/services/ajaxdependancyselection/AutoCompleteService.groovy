@@ -95,11 +95,13 @@ class AutoCompleteService {
 		
 	}
 	def selectSecondary(params) {	
-		def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
-		def results = domainClass.createCriteria().list {
-			eq (params.bindid, params.id.toLong())
+		if ((!params.id!='') && (params.id!=null) && (params.id!='null')) {
+			def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
+			def results = domainClass.createCriteria().list {
+				eq (params.bindid, params.id.toLong())
+			}
+			return results as JSON
 		}
-		return results as JSON
 	}
 	List returnControllerList() {
 		List clazz=grailsApplication.controllerClasses.logicalPropertyName.toList()
