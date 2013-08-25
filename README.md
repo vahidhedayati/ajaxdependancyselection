@@ -41,6 +41,13 @@ Grails plugin using auto complete to fill first form field, using the id it bind
  	g:autocomplete - Methods: Controller:autoComplete | Actions: autocomplete, autocompleteShowCollect
  	g:selectController - Methods: Controller:autoComplete | Actions: ajaxSelectControllerAction
  	
+ # Multi dimension auto complete:
+ 	g:autoCompletePrimary  - Methods: Controller: autoCompletePrimary | Actions: autocompletePrimaryAction
+ 	g:autoCompletePrimary  - Methods: Controller: autoCompleteSecondary | Actions: autocompletePrimaryAction & autocompleteSecondaryAction
+ 	
+Above example expanded means a primary is called with its action, a secondary is initially called with primary action as many times as required and ended with the last being autocompleteSecondayAction
+
+
 2. 2 domain classes that depend on each other here is an example:
 
 
@@ -191,6 +198,58 @@ Until i figure out why....
        		from="[]" noSelection="['null': 'Please choose controller']" />
        		
        		
+
+
+
+# Multi dimension Auto Completion:
+
+ 	<label>Continent:</label>
+      	<g:autoCompletePrimary id="primarySearch1" name="continentId"
+            action='autocompletePrimaryAction'
+            controller='autoComplete'
+            domain='testingv.MyContinent'
+            searchField='name'
+            collectField='id'
+            setId="secondarySearch2"
+            hidden='hidden3'
+            value=''/>
+            
+
+	<input type=hidden id="hidden3" name="hiddenFieldSomthing" value=""/>
+
+
+  	<label>Country:</label>
+  	<g:autoCompleteSecondary id="secondarySearch2" name="countryId"
+            action='autocompletePrimaryAction'
+            controller='autoComplete'
+            domain='testingv.MyCountry'
+            primarybind='mycontinent.id'
+            hidden='hidden3'
+            hidden2='hidden4'
+            searchField='name'
+            collectField='id'
+            setId="secondarySearch3"
+            value=''/>
+            
+            
+            
+	<input type=hidden id="hidden4" name="hiddenField4Something" value=""/>
+
+  	<label>City:</label>
+  	<g:autoCompleteSecondary id="secondarySearch3" name="cityId"
+            action='autocompleteSecondaryAction'
+            controller='autoComplete'
+            domain='testingv.MyCity'
+            primarybind='mycountry.id'
+            hidden='hidden4'
+            searchField='name'
+            value=''/>    
+            
+ 
+
+Above example lists continents, then countries and finally cities, the key was in the actions called if you notice the 2nd calls primary action, this can be repeated on further nested situations.
+
+
 
 h3. Auto complete multiple times on one page
 
