@@ -89,11 +89,55 @@ class AutoCompleteService {
 		}
 		return primarySelectList as JSON
 	}
+	
+	def autocompleteMiddleAction (params) {
+		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
+		def query = {
+			eq (params.primarybind, params.primaryid.toLong())
+			and{
+				
+				ilike params.searchField, params.term + '%'
+			}
+			projections { // good to select only the required columns.
+				property(params.collectField)
+				property(params.searchField)
+			}
+			maxResults(Integer.parseInt(params.max,10))
+			order(params.searchField, params.order)
+		}
+		def query1 = {
+			eq (params.primarybind, params.primaryid.toLong())
+			and{
+				
+				ilike params.searchField, "%${params.term}%"
+			}
+			projections { // good to select only the required columns.##
+				property(params.collectField)
+				property(params.searchField)
+			}
+			maxResults(Integer.parseInt(params.max,10))
+			order(params.searchField, params.order)
+		}
+		def results =domainClass.createCriteria().list(query)
+		if (results.size()< 5){
+			results = domainClass.createCriteria().list(query1)
+		}
+		def primarySelectList = []
+		results.each {
+			def primaryMap = [:]
+			primaryMap.put('id', it[0])
+			primaryMap.put('label', it[1])
+			primarySelectList.add(primaryMap)
+		}
+		return primarySelectList as JSON
+	}
+	
 	List returnPrimaryList(String className) {
 		Class clazz = grailsApplication.getDomainClass(className).clazz
 		clazz.list()
 		
 	}
+	
 	def selectSecondary(params) {	
 		if ((!params.id!='') && (params.id!=null) && (params.id!='null')) {
 			def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
@@ -103,10 +147,12 @@ class AutoCompleteService {
 			return results as JSON
 		}
 	}
+	
 	List returnControllerList() {
 		List clazz=grailsApplication.controllerClasses.logicalPropertyName.toList()
 		clazz
 	}
+	
 	def returnControllerActions(params) {
 		if ((!params.id!='') && (params.id!=null) && (params.id!='null')) {
 			String s = params.id
