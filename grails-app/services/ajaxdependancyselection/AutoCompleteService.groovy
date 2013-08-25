@@ -101,13 +101,9 @@ class AutoCompleteService {
 		}
 		return results as JSON
 	}
-	
-	List returnPrimaryList(String className) {
-		if (!className.equals('')) {
-			Class clazz = grailsApplication.getDomainClass(className).clazz
-			clazz.list()
-		}
-		
+	List returnControllerList() {
+		List clazz=grailsApplication.controllerClasses.logicalPropertyName.toList()
+		clazz
 	}
 	def returnControllerActions(params) {
 		if ((!params.id!='') && (params.id!=null) && (params.id!='null')) {
