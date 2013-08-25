@@ -33,6 +33,7 @@ class AutoCompleteService {
 	}
 	
 	
+	/*
 	def autocompleteSecondaryAction (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
 		def results = domainClass.createCriteria().list {
@@ -50,7 +51,7 @@ class AutoCompleteService {
 		results = results.collect {	[label:it."${params.collectField}"] }.unique()
 		return results as JSON
 	}
-	
+	*/
 	
 	def autocompletePrimaryAction (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
@@ -90,7 +91,7 @@ class AutoCompleteService {
 		return primarySelectList as JSON
 	}
 	
-	def autocompleteMiddleAction (params) {
+	def autocompleteSecondaryAction (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
 		def query = {
 			eq (params.primarybind, params.primaryid.toLong())
@@ -130,12 +131,6 @@ class AutoCompleteService {
 			primarySelectList.add(primaryMap)
 		}
 		return primarySelectList as JSON
-	}
-	
-	List returnPrimaryList(String className) {
-		Class clazz = grailsApplication.getDomainClass(className).clazz
-		clazz.list()
-		
 	}
 	
 	def selectSecondary(params) {	
