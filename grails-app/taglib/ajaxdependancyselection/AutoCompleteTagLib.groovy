@@ -280,7 +280,7 @@ class AutoCompleteTagLib {
 		def var1="";
 		if (!attrs.max) attrs.max = 10
 		if (!attrs.value) attrs.value =""
-
+		
 		if (attrs.cid ==null ) attrs.cid =""
 		if (!attrs.order) attrs.order = "asc"
 		if (!attrs.collectField) attrs.collectField = attrs.searchField
@@ -310,9 +310,15 @@ class AutoCompleteTagLib {
 		out << "&max="+attrs.max
 		out << "&order="+attrs.order
 		out << "&collectField="+attrs.collectField
-		out << "', { primaryid: \$('#" + attrs.hidden+"').val() },  "
-		out << " response);  } "
-		out << ", dataType: 'json'"
+		out << "', { primaryid: \$('#" + attrs.hidden+"').val() }, "
+		out << " response);  }, "
+		if (attrs.setId) {
+			out << "select: function(event, ui) {"
+			out << "    \$('#" + attrs.hidden2+"').val(ui.item.id);"
+			out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
+			out <<"},"
+		}
+		out << " dataType: 'json'"
 		out << "});});"
 		out << "</script>"
 	}
