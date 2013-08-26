@@ -166,9 +166,10 @@ class AutoCompleteService {
 		
 	}
 	
-	List returnControllerList() {
-		List clazz=grailsApplication.controllerClasses.logicalPropertyName.toList()
-		clazz
+	def returnControllerList() {
+		def clazz=grailsApplication.controllerClasses.logicalPropertyName
+		def results = clazz.collect {[	'id': it, 'name': it ]}.unique()
+		return results
 	}
 	
 	def returnControllerActions(params) {
