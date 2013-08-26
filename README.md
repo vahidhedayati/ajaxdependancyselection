@@ -161,7 +161,8 @@ Until i figure out why....
 
 
 
-# Gsp tag to query all controllers and using select dependancy show its relevant actions - useful for permissions or anything related to what actions controllers have avaialble:
+# Gsp query controller:Actions
+tag to query all controllers and using select dependancy show its relevant actions - useful for permissions or anything related to what actions controllers have avaialble:
 
 	<form method=post action=exampl5>
    	<g:selectController id="selectPrimaryTest2" name="Department"
