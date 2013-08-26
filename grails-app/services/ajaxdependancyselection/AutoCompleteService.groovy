@@ -136,10 +136,25 @@ class AutoCompleteService {
 	def selectSecondary(params) {	
 		if ((!params.id!='') && (params.id!=null) && (params.id!='null')) {
 			def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
-			def results = domainClass.createCriteria().list {
-				eq (params.bindid, params.id.toLong())
+			def query = {
+				 
+					eq params.bindid, params.id.toLong()
+					
+				projections { // good to select only the required columns.##
+					property(params.collectField)
+					property(params.searchField)
+				}
+				order(params.searchField)
 			}
-			return results as JSON
+			def results =domainClass.createCriteria().list(query)
+			def primarySelectList = []
+			results.each {
+				def primaryMap = [:]
+				primaryMap.put('id', it[0])
+				primaryMap.put('name', it[1])
+				primarySelectList.add(primaryMap)
+			}
+			return primarySelectList as JSON
 		}
 	}
 	
