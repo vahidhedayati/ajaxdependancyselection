@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.10
+ajaxdependancyselection 0.11
 =======================
 
 Grails plugin using auto complete to fill first form field, using the id it binds to second form field and auto complete option of 2nd field based on first chosen auto completed box. This is in cases where domain object 1 hasMany of domainclass2 and domainclass2 belongs to domainclass1
@@ -146,13 +146,11 @@ returns:
 	[MyCity:2, MyCountry:2, action:exampl5, controller:myCountry]
 	params.Mycity=2 params.MyCountry=2
 	
-Please note using this select option the value returned is the id of selection
+Please note using this select call : selectPrimary returned value is the id of the selection
 
 
-Please note selects can only be done once per gsp page - 
 
-
-# On second gsp page the following could be done:
+# On same gsp page this can now be run from 0.11 on wards
 
  	<g:selectPrimary id="selectPrimaryTest2" name="Department"
             domain='testingv.Department'
@@ -168,8 +166,8 @@ Please note selects can only be done once per gsp page -
        		optionKey="id" optionValue="name" 
        		from="[]" noSelection="['null': 'Please choose Department']" />
 
-Until i figure out why....
 
+Please note - using selectPrimary if multiple calls of it are made on one gsp the ids: id="selectPrimaryTest2" must differ per call. Since JavaScript created is bound to this name
 
 
 
