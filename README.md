@@ -33,22 +33,6 @@ Grails plugin using auto complete to fill first form field, using the id it bind
 
 
 
-# Provides:
-	
-	g:selectPrimary - Methods: Controller:autoComplete | Actions: ajaxSelectSecondary
-  	g:autoCompletePrimary  - Methods: Controller:autoComplete   | Actions: autocompletePrimaryAction
-   	g:autoCompleteSecondary - Methods: Controller:autoComplete | Actions: autocompleteSecondaryAction
- 	g:autocomplete - Methods: Controller:autoComplete | Actions: autocomplete, autocompleteShowCollect
- 	g:selectController - Methods: Controller:autoComplete | Actions: ajaxSelectControllerAction
- 	
- # Multi dimension auto complete:
- 
- 	g:autoCompletePrimary  - Methods: Controller: autoCompletePrimary | Actions: autocompletePrimaryAction 
- 	g:autoCompletePrimary  - Methods: Controller: autoCompleteSecondary | Actions:   autocompleteSecondaryAction
- 	
-Above example expanded means a primary is called with its action, a secondary can be called as many times as required last call should not include:
-# setId
-
 
 2. 2 domain classes that depend on each other here is an example:
 
@@ -142,8 +126,6 @@ h3. This example shows the collection field in the drop down box and is what is 
 # Select dependancy :
 
  	<g:selectPrimary id="selectPrimary" name="MyCountry"
-       		action='ajaxSelectSecondary'
-            controller='autoComplete'
             domain='testingv.MyCountry'
             domain2='testingv.MyCity'
             bindid="mycountry.id"
@@ -164,8 +146,6 @@ Please note selects can only be done once per gsp page -
 # On second gsp page the following could be done:
 
  	<g:selectPrimary id="selectPrimaryTest2" name="Department"
-       		action='ajaxSelectSecondary'
-            controller='autoComplete'
             domain='testingv.Department'
             domain2='testingv.Employee'
             bindid="department.id"
@@ -186,18 +166,24 @@ Until i figure out why....
 
 # Gsp tag to query all controllers and using select dependancy show its relevant actions - useful for permissions or anything related to what actions controllers have avaialble:
 
-	<g:selectController id="selectPrimaryTest2" name="Department"
-       		action='ajaxSelectControllerAction'
-            controller='autoComplete'
+	<form method=post action=exampl5>
+   		<g:selectController id="selectPrimaryTest2" name="Department"
             searchField='name'
-            collectField='id'
             noSelection="['null': 'Please choose Controller']" 
             setId="ControllerActions"
             value=''/>
     
-	 <g:select name="myactions" id="ControllerActions"  	
-       		optionKey="id" optionValue="name" 
+       	<g:select name="myname" id="ControllerActions"  	
+       		optionKey="name" optionValue="name" 
        		from="[]" noSelection="['null': 'Please choose controller']" />
+       		<br> 		
+     	<input type=submit value=go>  
+     	</form> 
+     
+     
+returns:
+
+      [ name ='Department':myContinent, myname:list, action:exampl5, controller:myCountry] -->
        		
        		
 
@@ -205,11 +191,9 @@ Until i figure out why....
 
 # Multi dimension Auto Completion:
 
-       <form method=post action=exampl5>
-       <label>Continent:</label>
-      <g:autoCompletePrimary id="primarySearch1" name="continentName"
-            action='autocompletePrimaryAction'
-            controller='autoComplete'
+     	<form method=post action=exampl5>
+       	<label>Continent:</label>
+      	<g:autoCompletePrimary id="primarySearch1" name="continentName"
             domain='testingv.MyContinent'
             searchField='name'
             collectField='id'
@@ -222,9 +206,7 @@ Until i figure out why....
 
 
   	<label>Country:</label>
-  	<g:autoCompleteSecondary id="secondarySearch2" name="countryName"
-            action='autocompleteSecondaryAction'
-            controller='autoComplete'
+  	<g:autoCompleteSecondary id="secondarySearch2" name="countryName"  
             domain='testingv.MyCountry'
             primarybind='mycontinent.id'
             hidden='hidden3'
@@ -240,8 +222,6 @@ Until i figure out why....
 
   	<label>City:</label>
   	<g:autoCompleteSecondary id="secondarySearch3" name="cityName"
-            action='autocompleteSecondaryAction'
-            controller='autoComplete'
             domain='testingv.MyCity'
             primarybind='mycountry.id'
             hidden='hidden4'
@@ -253,12 +233,11 @@ Until i figure out why....
     	<input type=hidden id="hidden5" name="cityId" value=""/>
     
      	<input type=submit value=go>   
-          </form>  
-            
+        </form>  
+          
  Above returns:
  
- 	[countryId:2, continentName:Europe, countryName:Britain, continentId:1, cityId:2, cityName:London, action:exampl5, controller:myCountry]
- 
+ 	[countryId:4, continentName:Asia, countryName:India, continentId:2, cityId:4, cityName:Bombay, action:exampl5, controller:myCountry]
 
 Above example lists continents, then countries and finally cities, 
 the key was in the actions called if you notice the 2nd calls Middle action, 
@@ -271,10 +250,12 @@ h3. Auto complete multiple times on one page
 
 h2. First example uses the default id primarySearch, thus no requirement to use the variable setId
 
-       <label>Countries:</label>
-       <g:autoCompletePrimary id="primarySearch" name="myCountryName"
-            action='autocompletePrimaryAction'
-            controller='autoComplete'
+EXAMPLE Primary / Secondary autocomplete:
+     
+       <form method=post action=exampl5>
+       <label>Continent:</label>
+       		<label>Countries:</label>
+      	<g:autoCompletePrimary id="primarySearch" name="myCountryId"
             domain='testingv.MyCountry'
             searchField='name'
             collectField='id'
@@ -282,22 +263,28 @@ h2. First example uses the default id primarySearch, thus no requirement to use 
             value=''/>
 
 
-       <input type=hidden id="hidden2" name="myCountryId" value=""/>
+  	<input type=hidden id="hidden2" name="hiddenField" value=""/>
 
 
-       <label>Cities:</label>
-       <g:autoCompleteSecondary id="secondarySearch" name="myCity"
-            action='autocompleteSecondaryAction'
-            controller='autoComplete'
+  	<label>Cities:</label>
+  	<g:autoCompleteSecondary id="secondarySearch" name="myCityId"
             domain='testingv.MyCity'
             primarybind='mycountry.id'
-           hidden='hidden2'
-             hidden2='hidden3'
+             hidden='hidden2'
+             hidden2='hidden5'
             searchField='name'
             collectField='id'
             value=''/>    
-              <input type=hidden id="hidden3" name="myCityId" value=""/>
-       <br/><br/>
+                     
+    	<input type=hidden id="hidden5" name="cityId" value=""/>
+    
+     	<input type=submit value=go>  
+     	</form> 
+     
+returns:
+
+	[cityId:4, myCityId:Bombay, hiddenField:4, myCountryId:India, action:exampl5, controller:myCountry]
+        
             
 In this example which is actually on the same gsp page, the id's have to differ inorder for correct results to be returned, 
 
@@ -363,6 +350,26 @@ Secondary:
 This must match the field that there is a corelation with in the sql it will by mycountry_id in the domain class it was MyCountry mycountry, in this it needs to be
 
        name_you_selected_for_mapping.id
+
+
+
+
+# How it works internally:
+
+(Please note controllers/actions are no longer required to be defined as part of the call) - this is just for the purpose of understanding how plugin works:
+	
+	g:selectPrimary - Methods: Controller:autoComplete | Actions: ajaxSelectSecondary
+  	g:autoCompletePrimary  - Methods: Controller:autoComplete   | Actions: autocompletePrimaryAction
+   	g:autoCompleteSecondary - Methods: Controller:autoComplete | Actions: autocompleteSecondaryAction
+ 	g:autocomplete - Methods: Controller:autoComplete | Actions: autocomplete, autocompleteShowCollect
+ 	g:selectController - Methods: Controller:autoComplete | Actions: ajaxSelectControllerAction
+ 	
+ # Multi dimension auto complete:
+ 
+ 	g:autoCompletePrimary  - Methods: Controller: autoCompletePrimary | Actions: autocompletePrimaryAction 
+ 	g:autoCompletePrimary  - Methods: Controller: autoCompleteSecondary | Actions:   autocompleteSecondaryAction
+ 	
+Above example expanded means a primary is called with its action, a secondary can be called as many times as required last call should not include: setId
 
 
 
