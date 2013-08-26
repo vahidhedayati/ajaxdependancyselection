@@ -23,8 +23,8 @@ class AutoCompleteTagLib {
 			name = " name ='${attrs.id}'"
 		}
 		
-		List primarylist=autoCompleteService.returnControllerList()
-		def gsattrs=[ 'id': "${attrs.id}", value: "${attrs.value}", name: name]
+		def primarylist=autoCompleteService.returnControllerList()
+		def gsattrs=[ 'id': "${attrs.id}", value: "${attrs.value}", name: name, optionKey: "${attrs.searchField}", optionValue: "${attrs.collectField}" ]
 		gsattrs['from'] = primarylist
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value)',onSuccess:'updateControllerAction(data)')}"
@@ -52,7 +52,7 @@ class AutoCompleteTagLib {
 		out << "}\n}\n}\n}\n"
 		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
 		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
-		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"updateControllerAction(e)")}\n"
+		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"updateControllerAction(data)")}\n"
 		out << "</script>\n"
 
 	}
@@ -117,7 +117,7 @@ class AutoCompleteTagLib {
 		out << "}\n}\n}\n}\n"
 		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
 		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
-		out << "${remoteFunction(controller:"AutoComplete", action:"ajaxSelectSecondary", params:"'id=' + zopt.value", onComplete:"updateSecondary(e)")}\n"
+		out << "${remoteFunction(controller:"AutoComplete", action:"ajaxSelectSecondary", params:"'id=' + zopt.value", onComplete:"updateSecondary(data)")}\n"
 		out << "</script>\n"
 	}
 	def autocomplete = {attrs ->
