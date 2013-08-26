@@ -96,7 +96,8 @@ The GSP:
 	
 	
 	
-h3. Standard call with no dependancy - a simple auto complete function
+# Standard call with no dependancy 
+- a simple auto complete function
 
 This example shows the  name but set the value as collectField in this case the id for name..
 
@@ -110,7 +111,7 @@ This example shows the  name but set the value as collectField in this case the 
             
 
             
-h3. This example shows the collection field in the drop down box and is what is to be set:
+# Show collection as result:
 
        <label>Countries:</label>
        <g:autocomplete id="primarySearch2" name="myId2"
@@ -187,7 +188,7 @@ returns:
 
 
 
-# Multi dimension Auto Completion:
+# Multiple elements in Auto Completion:
 
      	<form method=post action=exampl5>
        	<label>Continent:</label>
@@ -244,9 +245,9 @@ this can be repeated on further nested situations. ie keep recalling autocomplet
 
 
 
-h3. Auto complete multiple times on one page
+# Multiple calls of auto complete on one page
 
-h2. First example uses the default id primarySearch, thus no requirement to use the variable setId
+First example uses the default id primarySearch, thus no requirement to use the variable setId
 
 EXAMPLE Primary / Secondary autocomplete:
      
