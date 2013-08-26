@@ -2,7 +2,6 @@ package ajaxdependancyselection
 
 
 class AutoCompleteTagLib {
-	
 	def autoCompleteService
 	
 	def selectController = {attrs ->
@@ -11,7 +10,9 @@ class AutoCompleteTagLib {
 		}
 		def clazz = ""
 		def name = ""
-		if (!attrs.setId) attrs.setId = "ControllerActions"
+		if (!attrs.controller)  attrs.controller= "autoComplete"
+		if (!attrs.action) attrs.action= "ajaxSelectControllerAction"
+		if (!attrs.setId) attrs.setId = "selectSecondary"
 		if (!attrs.value) attrs.value =""
 		if (!attrs.collectField) attrs.collectField = attrs.searchField
 		if (attrs.class) clazz = " class='${attrs.class}'"
@@ -60,16 +61,11 @@ class AutoCompleteTagLib {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
 
-		if (!attrs.controller) {
-			throwTagError("Tag [autoComplete] is missing required attribute [controller]")
-		}
+		if (!attrs.controller)  attrs.controller= "autoComplete" 
+		if (!attrs.action) attrs.action= "ajaxSelectSecondary"
 		if (!attrs.noSelection) {
 			throwTagError("Tag [autoComplete] is missing required attribute [noSelection]")
 		}
-		if (!attrs.action) {
-			throwTagError("Tag [autoComplete] is missing required attribute [action]")
-		}
-
 		if (!attrs.domain) {
 			throwTagError("Tag [autoComplete] is missing required attribute [domain]")
 		}
@@ -128,18 +124,14 @@ class AutoCompleteTagLib {
 		if (attrs.id == null)
 				throwTagError("Tag [autoComplete] is missing required attribute [id]")
 
-		if (attrs.controller == null)
-				throwTagError("Tag [autoComplete] is missing required attribute [controller]")
-
-		if (attrs.action == null)
-				throwTagError("Tag [autoComplete] is missing required attribute [action]")
-
-		if (attrs.domain == null)
-				throwTagError("Tag [autoComplete] is missing required attribute [domain]")
-
-		if (attrs.searchField == null)
+		if (!attrs.controller)  attrs.controller= "autoComplete"
+		if (!attrs.action) attrs.action= "autocomplete"
+		if (attrs.domain == null) {
+			throwTagError("Tag [autoComplete] is missing required attribute [domain]")
+		}
+		if (attrs.searchField == null) {
 				throwTagError("Tag [autoComplete] is missing required attribute [searchField]")
-
+		}
 		def clazz = ""
 		def name = ""
 		def styles = ""
@@ -179,27 +171,17 @@ class AutoCompleteTagLib {
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
-
-		if (!attrs.controller) {
-			throwTagError("Tag [autoComplete] is missing required attribute [controller]")
-		}
-
-		if (!attrs.action) {
-			throwTagError("Tag [autoComplete] is missing required attribute [action]")
-		}
-
+		if (!attrs.controller)  attrs.controller= "autoComplete"
+		if (!attrs.action) attrs.action= "autocompletePrimaryAction"
 		if (!attrs.domain) {
 			throwTagError("Tag [autoComplete] is missing required attribute [domain]")
 		}
-
 		if (!attrs.searchField) {
 			throwTagError("Tag [autoComplete] is missing required attribute [searchField]")
 		}
-
 		if (!attrs.hidden) {
 			throwTagError("Tag [autoComplete] is missing required attribute [hidden]")
 		}
-
 		def clazz = ""
 		def name = ""
 		def cid=""
@@ -221,9 +203,7 @@ class AutoCompleteTagLib {
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
 		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${styles} ${name} />"
 		out << "<script type='text/javascript'>"
-
 		out << " \$(document).ready(function() {"
-
 		out << "\$('#" + attrs.id+"').autocomplete({ "
 		out << " source: '"
 		out << createLink(link)
@@ -233,46 +213,43 @@ class AutoCompleteTagLib {
 		out << "&max="+attrs.max
 		out << "&order="+attrs.order
 		out << "&collectField="+attrs.collectField
-		out << "',select: function(event, ui) {"
-		out << "    \$('#" + attrs.hidden+"').val(ui.item.id);"
-		out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
-		out <<"}"
-		out << ", dataType: 'json'"
+		out << "',"
+		if ((attrs.setId)||(attrs.hidden)) {
+			out << "select: function(event, ui) {"
+			if(attrs.hidden) {
+				out << "    \$('#" + attrs.hidden+"').val(ui.item.id);"
+			}
+			if (attrs.setId) {
+				out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
+			}	
+			out <<"},"
+		}
+		out << " dataType: 'json'"
 		out << "});"
 
 		out << "});"
 		out << "</script>"
 	}
+	
 
 	def autoCompleteSecondary = {attrs ->
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
-
-		if (!attrs.controller) {
-			throwTagError("Tag [autoComplete] is missing required attribute [controller]")
-		}
-
-		if (!attrs.action) {
-			throwTagError("Tag [autoComplete] is missing required attribute [action]")
-		}
-
+		if (!attrs.controller)  attrs.controller= "autoComplete"
+		if (!attrs.action) attrs.action= "autocompleteSecondaryAction"
 		if (!attrs.domain) {
 			throwTagError("Tag [autoComplete] is missing required attribute [domain]")
 		}
-
 		if (!attrs.primarybind) {
 			throwTagError("Tag [autoComplete] is missing required attribute [primarybind]")
 		}
-
 		if (!attrs.searchField) {
 			throwTagError("Tag [autoComplete] is missing required attribute [searchField]")
 		}
-
 		if (!attrs.hidden) {
 			throwTagError("Tag [autoComplete] is missing required attribute [hidden]")
 		}
-
 		def clazz = ""
 		def name = ""
 		def cid=""
