@@ -238,10 +238,10 @@ returns:
  
  	[countryId:4, continentName:Asia, countryName:India, continentId:2, cityId:4, cityName:Bombay, action:exampl5, controller:myCountry]
 
-Above example lists continents, then countries and finally cities, 
-the key was in the actions called if you notice the 2nd calls Middle action, 
-this can be repeated on further nested situations. ie keep recalling autocompleteMiddleAction and for the final turn call autocompleteSecondaryAction. Following their structures since the middle one has lots of extra values
-
+      
+Above example lists continents, then countries and finally cities, the key was in the actions called if you 
+notice the 2nd calls autocompleteSecondary with a setid where as the last autocomplete has none. 
+Repeat this for a bigger dependant autocomplete selection, and as shown on the last do not include the setId.
 
 
 
