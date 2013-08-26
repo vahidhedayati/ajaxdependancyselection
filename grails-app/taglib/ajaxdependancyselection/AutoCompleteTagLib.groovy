@@ -94,10 +94,10 @@ class AutoCompleteTagLib {
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = primarylist
 		gsattrs['noSelection'] =attrs.noSelection
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField+'&searchField='+attrs.searchField+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:'updateSecondary(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField+'&searchField='+attrs.searchField+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out<<  g.select(gsattrs) 
 		out << "<script type='text/javascript'>\n"
-		out << "function updateSecondary(data) { \n"
+		out << "function ${attrs.id}Update(data) { \n"
 		out << "var e=data;\n"
 		out << "if (e) { \n"
 		out << "  var rselect = document.getElementById('" + attrs.setId+"')\n"
@@ -118,7 +118,7 @@ class AutoCompleteTagLib {
 		out << "}\n}\n}\n}\n"
 		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
 		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
-		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"updateSecondary(data)")}\n"
+		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"${attrs.id}Update(data)")}\n"
 		out << "</script>\n"
 	}
 	def autocomplete = {attrs ->
