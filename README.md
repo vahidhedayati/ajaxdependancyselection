@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.9
+ajaxdependancyselection 0.10
 =======================
 
 Grails plugin using auto complete to fill first form field, using the id it binds to second form field and auto complete option of 2nd field based on first chosen auto completed box. This is in cases where domain object 1 hasMany of domainclass2 and domainclass2 belongs to domainclass1
@@ -123,7 +123,8 @@ This example shows the  name but set the value as collectField in this case the 
 
 # Select dependancy :
 
- 	<g:selectPrimary id="selectPrimary" name="MyCountry"
+ 	<form method=post action=exampl5>
+	<g:selectPrimary id="selectPrimary" name="MyCountry"
             domain='testingv.MyCountry'
             domain2='testingv.MyCity'
             bindid="mycountry.id"
@@ -133,9 +134,19 @@ This example shows the  name but set the value as collectField in this case the 
             setId="MyCity1"
             value=''/>
     
-       	<g:select name="testingv.MyCity1" id="MyCity1"  
+       	<g:select name="MyCity" id="MyCity1"  
        		optionKey="id" optionValue="name" 
+
        		from="[]" noSelection="['null': 'Please choose Country']" />
+ <input type=submit value=go>  
+     </form> 
+
+returns:
+
+	[MyCity:2, MyCountry:2, action:exampl5, controller:myCountry]
+	params.Mycity=2 params.MyCountry=2
+	
+Please note using this select option the value returned is the id of selection
 
 
 Please note selects can only be done once per gsp page - 
@@ -166,8 +177,9 @@ Until i figure out why....
 tag to query all controllers and using select dependancy show its relevant actions - useful for permissions or anything related to what actions controllers have avaialble:
 
 	<form method=post action=exampl5>
-   	<g:selectController id="selectPrimaryTest2" name="Department"
+   	<g:selectController id="selectPrimaryTest2" name="mycontrollers"
             searchField='name'
+             collectField='name'
             noSelection="['null': 'Please choose Controller']" 
             setId="ControllerActions"
             value=''/>
@@ -182,7 +194,8 @@ tag to query all controllers and using select dependancy show its relevant actio
      
 returns:
 
-      [ name ='Department':myContinent, myname:list, action:exampl5, controller:myCountry] -->
+     [mycontrollers:employee, myname:list, action:exampl5, controller:myCountry]
+     params.myname=list params.mycontroller=employee 
        		
        		
 
