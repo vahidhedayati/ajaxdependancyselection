@@ -177,7 +177,7 @@ class AutoCompleteService {
 					}
 				}
 			}
-			def results = list.collect {	[name:it] }.unique()
+			def results = list.collect {	['id':it,'name':it] }.unique()
 			return results as JSON
 		}
 	}
