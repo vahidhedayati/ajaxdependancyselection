@@ -102,8 +102,6 @@ This example shows the  name but set the value as collectField in this case the 
 
        <label>Countries:</label>
        <g:autocomplete id="primarySearch" name="myId"
-            action='autocomplete'
-            controller='autoComplete'
             domain='testingv.MyCountry'
             searchField='name'
             collectField='id'
@@ -117,7 +115,6 @@ h3. This example shows the collection field in the drop down box and is what is 
        <label>Countries:</label>
        <g:autocomplete id="primarySearch2" name="myId2"
             action='autocompleteShowCollect'
-            controller='autoComplete'
             domain='testingv.MyCountry'
             searchField='name'
             collectField='id'
@@ -167,7 +164,7 @@ Until i figure out why....
 # Gsp tag to query all controllers and using select dependancy show its relevant actions - useful for permissions or anything related to what actions controllers have avaialble:
 
 	<form method=post action=exampl5>
-   		<g:selectController id="selectPrimaryTest2" name="Department"
+   	<g:selectController id="selectPrimaryTest2" name="Department"
             searchField='name'
             noSelection="['null': 'Please choose Controller']" 
             setId="ControllerActions"
@@ -295,8 +292,6 @@ Please take note:
 
             <label>Department:</label>
        <g:autoCompletePrimary id="primarySearch1" name="deparmentName"
-            action='autocompletePrimaryAction'
-            controller='autoComplete'
             domain='testingv.Department'
             searchField='name'
             collectField='id'
@@ -309,8 +304,6 @@ Please take note:
 
        <label>Cities:</label>
        <g:autoCompleteSecondary id="secondarySearch2" name="employeeName"
-            action='autocompleteSecondaryAction'
-            controller='autoComplete'
             domain='testingv.Employee'
             primarybind='department.id'
             hidden='hidden44'
