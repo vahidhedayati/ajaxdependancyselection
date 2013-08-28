@@ -140,18 +140,18 @@ Example2:
          domain='ajaxdependancyselectexample.MyCountry' 
          searchField='countryName' 
          collectField='id'
-
-	domain2='ajaxdependancyselectexample.MyCity' 
-	bindid="mycountry.id" 
-	searchField2='cityName' 
-	collectField2='id'
-
-	noSelection="['null': 'Please choose Country']" setId="MyCity1" value=''/>
-
-	<g:select name="MyCity1" id="MyCity1" 
-	optionKey="id" optionValue="cityName" 
-	from="[]" 
-	noSelection="['null': 'Please choose Country']" />
+         
+         domain2='ajaxdependancyselectexample.MyCity' 
+         bindid="mycountry.id" 
+         searchField2='cityName' 
+         collectField2='id'
+         
+         noSelection="['null': 'Please choose Country']" setId="MyCity1" value=''/>
+         
+         <g:select name="MyCity1" id="MyCity1" 
+         optionKey="id" optionValue="cityName" 
+         from="[]" 
+         noSelection="['null': 'Please choose Country']" />
 
 
 the tag g:selectPrimary followed by its id and name, the domain and domain variables are domain is the actual domain for the select you wish to display, domain2 is the secondary domain this object is bound with. followed by bindid, the bindid is the object name.id as defined in your domainClass. In my city domainclass I had MyCountry mycountry, so the bindid here was mycountry.id, the search and collectFields are usually the id and the given field which would represent the name of the object.
