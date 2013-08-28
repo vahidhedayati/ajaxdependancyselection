@@ -130,6 +130,28 @@ This part of the plugin is based on http://www.grails.org/AJAX-Driven+SELECTs+in
   	<g:select name="MyCity1" id="MyCity1"  
         optionKey="id" optionValue="name" 
         from="[]" noSelection="['null': 'Please choose Country']" />
+        
+        
+        
+Example2: 
+
+         <g:selectPrimary id="MyContinent1" 
+         name="MyContinent1" 
+         domain='ajaxdependancyselectexample.MyCountry' 
+         searchField='countryName' 
+         collectField='id'
+
+	domain2='ajaxdependancyselectexample.MyCity' 
+	bindid="mycountry.id" 
+	searchField2='cityName' 
+	collectField2='id'
+
+	noSelection="['null': 'Please choose Country']" setId="MyCity1" value=''/>
+
+	<g:select name="MyCity1" id="MyCity1" 
+	optionKey="id" optionValue="cityName" 
+	from="[]" 
+	noSelection="['null': 'Please choose Country']" />
 
 
 the tag g:selectPrimary followed by its id and name, the domain and domain variables are domain is the actual domain for the select you wish to display, domain2 is the secondary domain this object is bound with. followed by bindid, the bindid is the object name.id as defined in your domainClass. In my city domainclass I had MyCountry mycountry, so the bindid here was mycountry.id, the search and collectFields are usually the id and the given field which would represent the name of the object.
@@ -137,6 +159,11 @@ the tag g:selectPrimary followed by its id and name, the domain and domain varia
 With this now in place a simple g:select box with from set to [] and id that matches the setId of the actual g:selectPrimary : setId="MyCity1" followed by <g:select ... id="MyCity1"  
 
 This is a basic two object mapping that works fine in order to expand to multiple objects go to 1.1
+
+
+
+I have added Example 2 above which works fine on verion 0.14 onwards.. It has new searchField2 and collectionField2, if these are not defined it will default to searchField and collectField. Due to this object containing a cityName and countryName there had to be differet definition made. Sorry my examples were all very basic I have had to update plugin to work with more dynamic setups.
+
 
 
 # 1.1 g:autocomplete Multi element autocomplete example
