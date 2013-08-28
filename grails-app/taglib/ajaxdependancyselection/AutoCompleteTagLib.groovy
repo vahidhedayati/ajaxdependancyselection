@@ -79,6 +79,9 @@ class AutoCompleteTagLib {
 		}
 		def clazz = ""
 		def name = ""
+		if (attrs.searchField == null) {
+			throwTagError("Tag [autoComplete] is missing required attribute [searchField]")
+		}
 		if (!attrs.setId) attrs.setId = "selectSecondary"
 		if (!attrs.value) attrs.value =""
 		if (!attrs.collectField) attrs.collectField = attrs.searchField
@@ -89,13 +92,15 @@ class AutoCompleteTagLib {
 		else {
 			name = "${attrs.id}"
 		}
+		if (!attrs.collectField2) attrs.collectField2=attrs.collectField
+		if (!attrs.searchField2) attrs.searchField2=attrs.searchField
 		
 		List primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = primarylist
 		gsattrs['noSelection'] =attrs.noSelection
 		
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField+'&searchField='+attrs.searchField+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
 		out<<  g.select(gsattrs)
 		out << "\n<script type='text/javascript'>\n"
@@ -137,7 +142,9 @@ class AutoCompleteTagLib {
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
-
+		if (attrs.searchField == null) {
+			throwTagError("Tag [autoComplete] is missing required attribute [searchField]")
+		}
 		if (!attrs.controller)  attrs.controller= "autoComplete"
 		if (!attrs.action) attrs.action= "ajaxSelectSecondary"
 		if (!attrs.noSelection) {
@@ -155,6 +162,8 @@ class AutoCompleteTagLib {
 		if (!attrs.setId) attrs.setId = "selectSecondary"
 		if (!attrs.value) attrs.value =""
 		if (!attrs.collectField) attrs.collectField = attrs.searchField
+		if (!attrs.collectField2) attrs.collectField2=attrs.collectField
+		if (!attrs.searchField2) attrs.searchField2=attrs.searchField
 		if (attrs.class) clazz = " class='${attrs.class}'"
 		if (attrs.name) {
 			name = "${attrs.name}"
@@ -163,10 +172,11 @@ class AutoCompleteTagLib {
 			name = "${attrs.id}"
 		}
 		
+		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
 		gsattrs['noSelection'] =attrs.noSelection
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField+'&searchField='+attrs.searchField+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out<<  g.select(gsattrs)
 		out << "\n<script type='text/javascript'>\n"
 	
