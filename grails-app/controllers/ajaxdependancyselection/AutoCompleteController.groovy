@@ -9,17 +9,17 @@ class AutoCompleteController {
 	}	
 	def ajaxSelectSecondary() {
 		render autoCompleteService.selectSecondary(params)
-	 }
+	}
 	def autocomplete() {
 		render autoCompleteService.autocompletePrimaryAction(params)
-	 }
+	}
 	def autocompleteShowCollect() {
 		render autoCompleteService.autocomplete(params)
-	 }
+	}
 	def autocompletePrimaryAction() {
-	   render autoCompleteService.autocompletePrimaryAction(params)
+	   	render autoCompleteService.autocompletePrimaryAction(params)
 	}
 	def autocompleteSecondaryAction() {
-	   render autoCompleteService.autocompleteSecondaryAction(params)
+	   	render autoCompleteService.autocompleteSecondaryAction(params)
 	}
 }
