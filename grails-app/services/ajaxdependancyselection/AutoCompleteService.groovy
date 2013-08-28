@@ -128,8 +128,10 @@ class AutoCompleteService {
 			def primarySelectList = []
 			results.each {
 				def primaryMap = [:]
-				primaryMap.put(params.collectField, it[0])
-				primaryMap.put(params.searchField, it[1])
+				//primaryMap.put(params.collectField, it[0])
+				//primaryMap.put(params.searchField, it[1])
+				primaryMap.put('id', it[0])
+				primaryMap.put('name', it[1])
 				primarySelectList.add(primaryMap)
 			}
 			return primarySelectList as JSON
