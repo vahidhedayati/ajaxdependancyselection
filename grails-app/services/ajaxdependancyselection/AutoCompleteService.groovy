@@ -7,12 +7,8 @@ import grails.web.Action
 import java.lang.reflect.Method
 
 class AutoCompleteService {
-
 	static transactional = false
-
 	def grailsApplication
-
-	
 	def autocomplete (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
 
@@ -32,34 +28,13 @@ class AutoCompleteService {
 		return results as JSON
 	}
 	
-	
-	/*
-	def autocompleteSecondaryAction (params) {
-		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
-		def results = domainClass.createCriteria().list {
-			eq (params.primarybind, params.primaryid.toLong())
-			ilike params.searchField, params.term + '%'
-			order(params.searchField, params.order)
-		}
-		if (results.size()< 5){
-			results = domainClass.createCriteria().list {
-				eq (params.primarybind, params.primaryid.toLong())
-				ilike   params.searchField,'%' + params.term + '%'
-				order(params.searchField, params.order)
-			}
-		}
-		results = results.collect {	[label:it."${params.collectField}"] }.unique()
-		return results as JSON
-	}
-	*/
-	
 	def autocompletePrimaryAction (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
 		def query = {
 			or{
 				ilike params.searchField, params.term + '%'
 			}
-			projections { // good to select only the required columns.
+			projections { 
 				property(params.collectField)
 				property(params.searchField)
 			}
@@ -70,7 +45,7 @@ class AutoCompleteService {
 			or{
 				ilike params.searchField, "%${params.term}%"
 			}
-			projections { // good to select only the required columns.##
+			projections { 
 				property(params.collectField)
 				property(params.searchField)
 			}
@@ -99,7 +74,7 @@ class AutoCompleteService {
 				
 				ilike params.searchField, params.term + '%'
 			}
-			projections { // good to select only the required columns.
+			projections { 
 				property(params.collectField)
 				property(params.searchField)
 			}
@@ -112,7 +87,7 @@ class AutoCompleteService {
 				
 				ilike params.searchField, "%${params.term}%"
 			}
-			projections { // good to select only the required columns.##
+			projections { 
 				property(params.collectField)
 				property(params.searchField)
 			}
@@ -133,14 +108,17 @@ class AutoCompleteService {
 		return primarySelectList as JSON
 	}
 	
+	def returnControllerList() {
+		def clazz=grailsApplication.controllerClasses.logicalPropertyName
+		def results = clazz.collect {[	'id': it, 'name': it ]}.unique()
+		return results
+	}
 	def selectSecondary(params) {	
-		if ((!params.id!='') && (params.id!=null) && (params.id!='null')) {
+		if ((!params.domain2!='') && (params.domain2!=null) && (params.domain2!='null')) {
 			def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
 			def query = {
-				 
-					eq params.bindid, params.id.toLong()
-					
-				projections { // good to select only the required columns.##
+				eq params.bindid, params.id.toLong()
+				projections { 
 					property(params.collectField)
 					property(params.searchField)
 				}
@@ -150,28 +128,19 @@ class AutoCompleteService {
 			def primarySelectList = []
 			results.each {
 				def primaryMap = [:]
-				primaryMap.put('id', it[0])
-				primaryMap.put('name', it[1])
+				primaryMap.put(params.collectField, it[0])
+				primaryMap.put(params.searchField, it[1])
 				primarySelectList.add(primaryMap)
 			}
 			return primarySelectList as JSON
 		}
 	}
-	
 	List returnPrimaryList(String className) {
 		if (!className.equals('')) {
 			Class clazz = grailsApplication.getDomainClass(className).clazz
 			clazz.list()
 		}
-		
 	}
-	
-	def returnControllerList() {
-		def clazz=grailsApplication.controllerClasses.logicalPropertyName
-		def results = clazz.collect {[	'id': it, 'name': it ]}.unique()
-		return results
-	}
-	
 	def returnControllerActions(params) {
 		if ((!params.id!='') && (params.id!=null) && (params.id!='null')) {
 			String s = params.id
@@ -197,4 +166,5 @@ class AutoCompleteService {
 			return results as JSON
 		}
 	}
+	
 }
