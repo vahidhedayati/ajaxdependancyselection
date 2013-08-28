@@ -1,9 +1,9 @@
 class AjaxdependancyselectionGrailsPlugin {
-	def version = "0.11"
+	def version = "0.12"
 	def grailsVersion = "2.0 > *"
  
 	def title = "Ajax Dependancy Selection Plugin"
-	def description = 'Defines secondary auto completion form field values ensuring it is bound on first auto completed form field. Ver 0.3  provides support for select dependancy. taglibs to query a grails project controllers and set actions for that controller in select dependancy boxes. Added feature of nested auto completion'
+	def description = 'Defines next auto completion/selection form field values ensuring it is bound on previous auto completed/selected form field. This can be used on two or more objects of hasMany and belongsTo. Provides: g:autocomplete, g:autoCompletePrimary, g:autoCompleteSecondary, g:selectPrimary, g:selectSecondary &  g:selectController.'
 	def documentation = "http://grails.org/plugin/ajaxdependancyselection"
 	def license = "GPL2"
 	def developers = [
