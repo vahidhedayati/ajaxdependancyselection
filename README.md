@@ -168,7 +168,7 @@ I have added Example 2 above which works fine on verion 0.14 onwards.. It has ne
 
 
 
-# 1.1 g:autocomplete Multi element autocomplete example
+# 1.1 g:selectPrimary Multi element autocomplete example
 
 	<form method=post action=exampl5>
 	<g:selectPrimary id="MyContinent1" name="MyContinent1"
@@ -202,7 +202,7 @@ The only thing different in this block is the new usage of <g:selectSecondary, t
 
 
 
-# 1.2 g:autocomplete Multiple times on one gp:
+# 1.2 g:selectPrimary Multiple times on one gp:
 
 	<g:selectPrimary id="MyContinent1" name="MyContinent1"
         domain='testingv.MyContinent'
