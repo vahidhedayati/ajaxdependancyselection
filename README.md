@@ -441,6 +441,26 @@ static belongsTo = SomeDomainClass
 
 
 
+		package ajaxdependancyselectexample
+
+		class MyCity {
+
+			String cityName
+			MyCountry mycountry
+			static hasMany=[myborough: MyBorough]
+			String toString()  { "${cityName}"}
+		}
+		
+		
+		
+		package ajaxdependancyselectexample
+		class MyBorough {
+			String actualName
+			static belongsTo = [MyCity]
+			String toString() { "${actualName}" }
+		}
+
+
 			<form method=post action=example5>
 			<g:selectPrimary id="MyContinent2" name="MyContinent2"
 			    domain='ajaxdependancyselectexample.MyContinent'
