@@ -10,6 +10,9 @@ class AutoCompleteController {
 	def ajaxSelectSecondary() {
 		render autoCompleteService.selectSecondary(params)
 	}
+	def ajaxSelectSecondaryNR() {
+		render autoCompleteService.selectSecondaryNR(params)
+	}
 	def autocomplete() {
 		render autoCompleteService.autocompletePrimaryAction(params)
 	}
