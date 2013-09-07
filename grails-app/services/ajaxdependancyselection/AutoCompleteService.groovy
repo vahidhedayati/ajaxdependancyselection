@@ -107,6 +107,46 @@ class AutoCompleteService {
 		}
 		return primarySelectList as JSON
 	}
+	// No reference auto complete service
+	def autocompleteSecondaryNR (params) {
+		if ((!params.domain2!='') && (params.domain2!=null) && (params.domain2!='null')) {
+			def domainClass2 = grailsApplication.getDomainClass(params.domain2).clazz
+			def domainClass = grailsApplication.getDomainClass(params.domain).clazz
+			def domaininq=domainClass.get(params.primaryid.toLong())	
+			def primarySelectList = []
+			domaininq."${params.primarybind}".each { dq ->
+				def query = {
+					eq (params.searchField , dq.toString().trim())
+					and { ilike  params.searchField ,params.term+ '%'}
+					projections {
+						property(params.collectField)
+						property(params.searchField)
+					}
+					order(params.searchField)
+				}
+				def query1 = {
+					eq (params.searchField , dq.toString().trim())
+					and { ilike  params.searchField ,"%${params.term}%"}
+					projections {
+						property(params.collectField)
+						property(params.searchField)
+					}
+					order(params.searchField)
+				}
+				def results =domainClass2.createCriteria().list(query)
+				if (results.size()< 5){
+					results = domainClass2.createCriteria().list(query1)
+				}
+				results.each {
+					def primaryMap = [:]
+					primaryMap.put('id', it[0])
+					primaryMap.put('label', it[1])
+					primarySelectList.add(primaryMap)
+				}
+			}
+		return primarySelectList as JSON
+		}
+	}
 	
 	def returnControllerList() {
 		def clazz=grailsApplication.controllerClasses.logicalPropertyName
