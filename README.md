@@ -17,7 +17,7 @@ Refer to: https://github.com/vahidhedayati/ajaxdependancyselectexample for examp
 
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.15"
+	compile ":ajaxdependancyselection:0.16"
 
 Or via grails command line:
 
