@@ -109,7 +109,7 @@ Create example2 3 4 5 gsp files in your views for mycountry for now containing:
 	3. g:selectController : Your apps controllers & actions 
 
 
-
+	Finally  g:selectSecondaryNR  This lets you query no reference structures.
 
 
 
