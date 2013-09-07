@@ -72,9 +72,7 @@ which has these domains - left out Deparment/employee same as mycountry/mycity
 # Add new controller actions
 Now generated controllers and views for above, once done edit the controller for master which is MyCountry add :
 
-	def example2() {}
-	def example3() {}
-	def example4() {}
+	def example() {}
 	def example5() {}
 
 
@@ -433,34 +431,43 @@ Country|City, Continent|Country, Department|Employee
 The list goes on...
 
 
-# 0.15  no reference calls
+# New features of 0.15  : 
 
-Some new stuff added to 0.15 g:selectSecondaryNR
+	select no reference calls, appendValue and appendName
+	
 
-This tag allows you to query a relationship where the child has a no reference relationship with its parent
 
-I used City has Many boroughs, in Borough its typical Mycity city but then a Borough has many streets and streets are set to be a no reference.
+g:selectSecondaryNR  lets you query a relationship where the child has a no reference relationship with its parent
 
-		static belongsTo = MyBorough
+In MyBorough https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/domain/ajaxdependancyselectexample/MyBorough.groovy
 
-This I have queried using the new tag of g:selectSecondaryNR further down
+# MyBrogough.groovy has a no reference relationship to my MyCity
 
-For the full example refer to the ajaxdependancyselectexampl project which has been updated with all of this 
+		static belongsTo = [MyCity]
 
-Further new features include the addition of a new field to all g:select calls:
+To make this work a new tag has been added called :  g:selectSecondaryNR
+
+
+For the full working example refer to https://github.com/vahidhedayati/ajaxdependancyselectexample/
+
+If you do end up loadin it up have a look at norefselection.gsp and norefselectionext.gsp
+
+
+# Further new features for all g:select calls:
 
   
             appendValue='*'
             appendName='All Items'
             
  
-If this is added then when a value is selected on the top of the results what ever you choose here will be shown before the dynamically updated list.
-
-If nothing is defined it should show the previous defaule of value = null name=Values updated..
+If the above is added to a g:select block then the default value and name shown when results updated are what is set in them, otherwise the previous hard coded Values updated and null value are set
 
 
 
 
+
+
+Here is the domain classes that require the NR feature: 
 
 		package ajaxdependancyselectexample
 
@@ -480,6 +487,9 @@ If nothing is defined it should show the previous defaule of value = null name=V
 			static belongsTo = [MyCity]
 			String toString() { "${actualName}" }
 		}
+
+
+Here is the GSP making a nested call where an element has a no reference relationship, the gsp page in the example called norefselectionext.gsp goes back out of a NR relationship and calls Streets domain after borough to then load up a further relationsip
 
 
 			form method=post action=example5>
