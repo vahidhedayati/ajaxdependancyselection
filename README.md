@@ -433,10 +433,32 @@ Country|City, Continent|Country, Department|Employee
 The list goes on...
 
 
-# 0.15 Not released as yet supports no reference calls
+# 0.15  no reference calls
+
+Some new stuff added to 0.15 g:selectSecondaryNR
+
+This tag allows you to query a relationship where the child has a no reference relationship with its parent
+
+I used City has Many boroughs, in Borough its typical Mycity city but then a Borough has many streets and streets are set to be a no reference.
+
+		static belongsTo = MyBorough
+
+This I have queried using the new tag of g:selectSecondaryNR further down
+
+For the full example refer to the ajaxdependancyselectexampl project which has been updated with all of this 
+
+Further new features include the addition of a new field to all g:select calls:
+
+  
+            appendValue='*'
+            appendName='All Items'
+            
+ 
+If this is added then when a value is selected on the top of the results what ever you choose here will be shown before the dynamically updated list.
+
+If nothing is defined it should show the previous defaule of value = null name=Values updated..
 
 
-static belongsTo = SomeDomainClass  
 
 
 
