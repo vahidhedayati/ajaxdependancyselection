@@ -433,9 +433,8 @@ Country|City, Continent|Country, Department|Employee
 The list goes on...
 
 
-# 0.15 Not released as yet supports no relation cases like this ( I am still testing and want to ensure values get passed further down)
+# 0.15 Not released as yet supports no reference calls
 
-For now it will pass values to last case being a:
 
 static belongsTo = SomeDomainClass  
 
