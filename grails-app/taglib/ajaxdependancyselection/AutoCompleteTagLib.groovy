@@ -4,7 +4,7 @@ package ajaxdependancyselection
 class AutoCompleteTagLib {
 	def autoCompleteService
 	
-	def selectController = {attrs ->
+		def selectController = {attrs ->
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
@@ -25,6 +25,8 @@ class AutoCompleteTagLib {
 		if (!attrs.noSelection) {
 			throwTagError("Tag [autoComplete] is missing required attribute [noSelection]")
 		}
+		if (!attrs.appendValue)  attrs.appendValue='null'
+		if (!attrs.appendName) attrs.appendName='Values Updated'
 		def primarylist=autoCompleteService.returnControllerList()
 		def gsattrs=[ 'id': "${attrs.id}", value: "${attrs.value}", name: name, optionKey: "${attrs.searchField}", optionValue: "${attrs.collectField}" ]
 		gsattrs['from'] = primarylist
@@ -42,6 +44,15 @@ class AutoCompleteTagLib {
 		out << "   l--\n"
 		out << "   rselect.remove(l)\n"
 		out <<"   }\n"
+		out << "var opt = document.createElement('option');\n"
+		
+		out << "opt.value='"+attrs.appendValue+"'\n"
+		out << "opt.text='"+attrs.appendName+"'\n "
+		out << "    try {\n"
+		out << "  	    	rselect.add(opt, null)\n"
+		out << "    } catch(ex) {\n"
+		out << "	  rselect.add(opt)\n"
+		out << "}"
 		out << "  for (var i=0; i < e.length; i++) {\n"
 		out << "    var s = e[i]\n"
 		out << "    var opt = document.createElement('option');\n"
@@ -58,7 +69,7 @@ class AutoCompleteTagLib {
 		out << "</script>\n"
 
 	}
-	
+
 	def selectPrimary = {attrs ->
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
@@ -94,6 +105,8 @@ class AutoCompleteTagLib {
 		}
 		if (!attrs.collectField2) attrs.collectField2=attrs.collectField
 		if (!attrs.searchField2) attrs.searchField2=attrs.searchField
+		if (!attrs.appendValue)  attrs.appendValue='null'
+		if (!attrs.appendName) attrs.appendName='Values Updated'
 		
 		List primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
@@ -114,8 +127,8 @@ class AutoCompleteTagLib {
 		out << "   rselect.remove(l)\n"
 		out <<"   }\n"
 		out << "var opt = document.createElement('option');\n"
-		out << "opt.value='null'\n"
-		out << "opt.text='Values Updated'\n "
+		out << "opt.value='"+attrs.appendValue+"'\n"
+		out << "opt.text='"+attrs.appendName+"'\n "
 		out << "    try {\n"
 		out << "  	    	rselect.add(opt, null)\n"
 		out << "    } catch(ex) {\n"
@@ -172,6 +185,8 @@ class AutoCompleteTagLib {
 			name = "${attrs.id}"
 		}
 		
+		if (!attrs.appendValue)  attrs.appendValue='null'
+		if (!attrs.appendName) attrs.appendName='Values Updated'
 		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
@@ -190,8 +205,8 @@ class AutoCompleteTagLib {
 		out << "   rselect.remove(l)\n"
 		out <<"   }\n"
 		out << "var opt = document.createElement('option');\n"
-		out << "opt.value='null'\n"
-		out << "opt.text='Values Updated'\n "
+		out << "opt.value='"+attrs.appendValue+"'\n"
+		out << "opt.text='"+attrs.appendName+"'\n "
 		out << "    try {\n"
 		out << "  	    	rselect.add(opt, null)\n"
 		out << "    } catch(ex) {\n"
@@ -213,7 +228,8 @@ class AutoCompleteTagLib {
 		out << "</script>\n"
 	}
 
-	// NR Taglib
+	
+	// No Reference Selection
 	def selectSecondaryNR = {attrs ->
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
@@ -248,7 +264,9 @@ class AutoCompleteTagLib {
 			name = "${attrs.id}"
 		}
 	   
-	   
+		if (!attrs.appendValue)  attrs.appendValue='null'
+		if (!attrs.appendName) attrs.appendName='Values Updated'
+		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
 		gsattrs['noSelection'] =attrs.noSelection
@@ -266,12 +284,12 @@ class AutoCompleteTagLib {
 		out << "   rselect.remove(l)\n"
 		out <<"   }\n"
 		out << "var opt = document.createElement('option');\n"
-		out << "opt.value='null'\n"
-		out << "opt.text='Values Updated'\n "
+		out << "opt.value='"+attrs.appendValue+"'\n"
+		out << "opt.text='"+attrs.appendName+"'\n "
 		out << "    try {\n"
-		out << "              rselect.add(opt, null)\n"
+		out << "  	    	rselect.add(opt, null)\n"
 		out << "    } catch(ex) {\n"
-		out << "      rselect.add(opt)\n"
+		out << "	  rselect.add(opt)\n"
 		out << "}"
 		out << "  for (var i=0; i < e.length; i++) {\n"
 		out << "    var s = e[i]\n"
@@ -288,7 +306,6 @@ class AutoCompleteTagLib {
 		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"'${attrs.id}Update(data)'")}\n"
 		out << "</script>\n"
 	}
-   
    
    
 	def autocomplete = {attrs ->
