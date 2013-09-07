@@ -25,4 +25,7 @@ class AutoCompleteController {
 	def autocompleteSecondaryAction() {
 	   	render autoCompleteService.autocompleteSecondaryAction(params)
 	}
+	def autocompleteSecondaryNR() {
+		render autoCompleteService.autocompleteSecondaryNR(params)
+	}
 }
