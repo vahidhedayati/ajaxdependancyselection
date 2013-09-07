@@ -589,4 +589,12 @@ class AutoCompleteTagLib {
 		out << "        { background: white url(${resource(dir:'images',file:'ajax-loader.gif')}) right center no-repeat   }"
 		out << " </style>"
 	}
+	
+	def autoCompleteSecondaryNRHeader = { attrs ->
+		out << "<style>"
+		out <<  ".ui-autocomplete-loading"
+		out << "        { background: white url(${resource(dir:'images',file:'ajax-loader.gif')}) right center no-repeat   }"
+		out << " </style>"
+	}
+}
 }
