@@ -492,6 +492,82 @@ class AutoCompleteTagLib {
 		out << "</script>"
 	}
 	
+	// No reference Auto complete tag lib
+	def autoCompleteSecondaryNR = {attrs ->
+		if (!attrs.id) {
+			throwTagError("Tag [autoComplete] is missing required attribute [id]")
+		}
+		if (!attrs.controller)  attrs.controller= "autoComplete"
+		if (!attrs.action) attrs.action= "autocompleteSecondaryNR"
+		if (!attrs.domain) {
+			throwTagError("Tag [autoComplete] is missing required attribute [domain]")
+		}
+		if (!attrs.domain2) {
+			throwTagError("Tag [autoComplete] is missing required attribute [domain2]")
+		}
+		if (!attrs.primarybind) {
+			throwTagError("Tag [autoComplete] is missing required attribute [primarybind]")
+		}
+		if (!attrs.searchField) {
+			throwTagError("Tag [autoComplete] is missing required attribute [searchField]")
+		}
+		if (!attrs.hidden) {
+			throwTagError("Tag [autoComplete] is missing required attribute [hidden]")
+		}
+		def clazz = ""
+		def name = ""
+		def cid=""
+		def styles = ""
+		def var1="";
+		if (!attrs.max) attrs.max = 10
+		if (!attrs.value) attrs.value =""
+		
+		if (attrs.cid ==null ) attrs.cid =""
+		if (!attrs.order) attrs.order = "asc"
+		if (!attrs.collectField) attrs.collectField = attrs.searchField
+		if (attrs.class) clazz = " class='${attrs.class}'"
+		if (attrs.style) styles = " styles='${attrs.style}'"
+		if (attrs.name) {
+			name = " name ='${attrs.name}'"
+		}
+		else {
+			name = " name ='${attrs.id}'"
+		}
+
+		def link = ['action': attrs.action , 'controller': attrs.controller ]
+		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${styles} ${name} />"
+		out << "<script type='text/javascript'>"
+		out << " \$(document).ready(function() {"
+		out << "\$('#" + attrs.id+"').autocomplete({ "
+		out << " source: "
+		out << " function(request, response) { "
+		out << " \$.getJSON(' "
+		out << createLink(link)
+		out << "?"
+		out << "term=' + request.term + '"
+		out << "&domain="+ attrs.domain
+		out << "&domain2="+ attrs.domain2
+		out << "&primarybind="+ attrs.primarybind
+		out << "&searchField="+attrs.searchField
+		out << "&max="+attrs.max
+		out << "&order="+attrs.order
+		out << "&collectField="+attrs.collectField
+		out << "', { primaryid: \$('#" + attrs.hidden+"').val() }, "
+		out << " response);  }, "
+		if ((attrs.setId)||(attrs.hidden2)) {
+			out << "select: function(event, ui) {"
+			if(attrs.hidden2) {
+				out << "    \$('#" + attrs.hidden2+"').val(ui.item.id);"
+			}
+			if (attrs.setId) {
+				out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
+			}
+			out <<"},"
+		}
+		out << " dataType: 'json'"
+		out << "});});"
+		out << "</script>"
+	}
 	def autoCompleteHeader = {
 		out << "<style>"
 		out <<  ".ui-autocomplete-loading"
