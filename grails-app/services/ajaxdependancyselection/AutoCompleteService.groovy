@@ -138,7 +138,7 @@ class AutoCompleteService {
 		}
 	}
 	
-	// No relations SELECT FUNCTION
+	// Mp reference selection method i.e. belongsTo=UpperClass 
 	def selectSecondaryNR(params) {
 		if ((!params.domain2!='') && (params.domain2!=null) && (params.domain2!='null')) {
 			def domainClass2 = grailsApplication.getDomainClass(params.domain2).clazz
