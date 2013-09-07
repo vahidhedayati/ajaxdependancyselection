@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.15
+ajaxdependancyselection 0.16
 =======================
 
 Grails plugin using auto complete to fill first form field, using the id it binds to second form field and auto complete option of 2nd field based on first chosen auto completed box. This is in cases where domain object 1 hasMany of domainclass2 and domainclass2 belongs to domainclass1
@@ -565,3 +565,66 @@ Here is the GSP making a nested call where an element has a no reference relatio
             from="[]" noSelection="['null': 'Please choose City']" />
 
         <br> <input type=submit value=go> </form>
+        
+        
+
+No Reference Auto Complete from 0.16
+			
+			<form method=post action=example5>
+			<label>Continent:</label>
+			<g:autoCompletePrimary id="primarySearch1"  
+			name="NAMEOFcontinentName"
+			domain='ajaxdependancyselectexample.MyContinent'
+			searchField='continentName'
+			collectField='id'
+			setId="secondarySearch2"
+			hidden='hidden3'
+			value=''/>
+			
+			<input type=hidden id="hidden3" name="continentId" value=""/>
+			
+			<label>Country:</label> 
+			<g:autoCompleteSecondary id="secondarySearch2" 
+			name="NAMEOFcountryName" 
+			domain='ajaxdependancyselectexample.MyCountry' 
+			primarybind='mycontinent.id' 
+			hidden='hidden3' 
+			hidden2='hidden4' 
+			searchField='countryName' 
+			collectField='id'
+			setId="secondarySearch3" 
+			value=''/>
+			
+			<input type=hidden id="hidden4" name="countryId" value=""/>
+			
+			<label>City:</label>
+			<g:autoCompleteSecondary id="secondarySearch3" 
+			name="NAMEOFcityName" 
+			domain='ajaxdependancyselectexample.MyCity' 
+			primarybind='mycountry.id' 
+			hidden='hidden4' 
+			hidden2='hidden5' 
+			searchField='cityName' 
+			collectField='id' 
+			setId="secondarySearch4"
+			value=''/>
+			
+			<input type=hidden id="hidden5" name="cityId" value=""/>
+			
+			<label>Borough:</label>
+			<g:autoCompleteSecondaryNR id="secondarySearch4" 
+			name="NAMEOFcityName" 
+			domain='ajaxdependancyselectexample.MyCity' 
+			domain2='ajaxdependancyselectexample.MyBorough' 
+			primarybind='myborough' 
+			hidden='hidden5' 
+			hidden2='hidden6' 
+			searchField='actualName' 
+			collectField='id' 
+			
+			value=''/>
+			
+			<input type=hidden id="hidden6" name="BoroughID" value=""/>
+			
+			<input type=submit value=go> </form>
+			
