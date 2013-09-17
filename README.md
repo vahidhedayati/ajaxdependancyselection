@@ -4,7 +4,7 @@ ajaxdependancyselection 0.17
 
 Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide either select or auto complete form fields. This can be any combination of either fully dependant objects or full dependant as well as no reference bindings.
 
-0.17 has no real changes, besides a tidy up on services and taglib.
+0.17 has no real changes, besides a tidy up of services and taglib.
 
 # Installation:
 
