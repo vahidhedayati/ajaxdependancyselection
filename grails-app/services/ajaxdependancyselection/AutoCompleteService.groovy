@@ -11,7 +11,6 @@ class AutoCompleteService {
 	def grailsApplication
 	def autocomplete (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
-
 		def results = domainClass.createCriteria().list {
 			ilike params.searchField, params.term + '%'
 			maxResults(Integer.parseInt(params.max,10))
@@ -19,9 +18,9 @@ class AutoCompleteService {
 		}
 		if (results.size()< 5){
 			results = domainClass.createCriteria().list {
-					ilike params.searchField, "%${params.term}%"
-					maxResults(Integer.parseInt(params.max,10))
-					order(params.searchField, params.order)
+				ilike params.searchField, "%${params.term}%"
+				maxResults(Integer.parseInt(params.max,10))
+				order(params.searchField, params.order)
 			}
 		}
 		results = results.collect {     [label:it."${params.collectField}"] }.unique()
@@ -71,7 +70,6 @@ class AutoCompleteService {
 		def query = {
 			eq (params.primarybind, params.primaryid.toLong())
 			and{
-				
 				ilike params.searchField, params.term + '%'
 			}
 			projections { 
@@ -109,43 +107,41 @@ class AutoCompleteService {
 	}
 	// No reference auto complete service
 	def autocompleteSecondaryNR (params) {
-		if ((!params.domain2!='') && (params.domain2!=null) && (params.domain2!='null')) {
-			def domainClass2 = grailsApplication.getDomainClass(params.domain2).clazz
-			def domainClass = grailsApplication.getDomainClass(params.domain).clazz
-			def domaininq=domainClass.get(params.primaryid.toLong())	
-			def primarySelectList = []
-			domaininq."${params.primarybind}".each { dq ->
-				def query = {
-					eq (params.searchField , dq.toString().trim())
-					and { ilike  params.searchField ,params.term+ '%'}
-					projections {
-						property(params.collectField)
-						property(params.searchField)
-					}
-					order(params.searchField)
+		def domainClass2 = grailsApplication.getDomainClass(params.domain2).clazz
+		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
+		def domaininq=domainClass.get(params.primaryid.toLong())	
+		def primarySelectList = []
+		domaininq."${params.primarybind}".each { dq ->
+			def query = {
+				eq (params.searchField , dq.toString().trim())
+				and { ilike  params.searchField ,params.term+ '%'}
+				projections {
+					property(params.collectField)
+					property(params.searchField)
 				}
-				def query1 = {
-					eq (params.searchField , dq.toString().trim())
-					and { ilike  params.searchField ,"%${params.term}%"}
-					projections {
-						property(params.collectField)
-						property(params.searchField)
-					}
-					order(params.searchField)
-				}
-				def results =domainClass2.createCriteria().list(query)
-				if (results.size()< 5){
-					results = domainClass2.createCriteria().list(query1)
-				}
-				results.each {
-					def primaryMap = [:]
-					primaryMap.put('id', it[0])
-					primaryMap.put('label', it[1])
-					primarySelectList.add(primaryMap)
-				}
+				order(params.searchField)
 			}
-		return primarySelectList as JSON
+			def query1 = {
+				eq (params.searchField , dq.toString().trim())
+				and { ilike  params.searchField ,"%${params.term}%"}
+				projections {
+					property(params.collectField)
+					property(params.searchField)
+				}
+				order(params.searchField)
+			}
+			def results =domainClass2.createCriteria().list(query)
+			if (results.size()< 5){
+				results = domainClass2.createCriteria().list(query1)
+			}
+			results.each {
+				def primaryMap = [:]
+				primaryMap.put('id', it[0])
+				primaryMap.put('label', it[1])
+				primarySelectList.add(primaryMap)
+			}
 		}
+		return primarySelectList as JSON
 	}
 	
 	def returnControllerList() {
@@ -153,58 +149,52 @@ class AutoCompleteService {
 		def results = clazz.collect {[	'id': it, 'name': it ]}.unique()
 		return results
 	}
+	
 	def selectSecondary(params) {	
-		if ((!params.domain2!='') && (params.domain2!=null) && (params.domain2!='null')) {
-			def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
+		def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
+		def query = {
+			eq params.bindid, params.id.toLong()
+			projections { 
+				property(params.collectField)
+				property(params.searchField)
+			}
+			order(params.searchField)
+		}
+		def results =domainClass.createCriteria().list(query)
+		def primarySelectList = []
+		results.each {
+			def primaryMap = [:]
+			primaryMap.put('id', it[0])
+			primaryMap.put('name', it[1])
+			primarySelectList.add(primaryMap)
+		}
+		return primarySelectList as JSON
+	}
+	
+	// Mp reference selection method i.e. belongsTo=UpperClass 
+	def selectSecondaryNR(params) {
+		def domainClass2 = grailsApplication.getDomainClass(params.domain2).clazz
+		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
+		def domaininq=domainClass.get(params.id.toLong())
+		def primarySelectList = []
+		domaininq."${params.bindid}".each { dq ->
 			def query = {
-				eq params.bindid, params.id.toLong()
-				projections { 
+				eq (params.searchField , dq.toString().trim())
+				projections {
 					property(params.collectField)
 					property(params.searchField)
 				}
 				order(params.searchField)
 			}
-			def results =domainClass.createCriteria().list(query)
-			def primarySelectList = []
+			def results =domainClass2.createCriteria().list(query)
 			results.each {
 				def primaryMap = [:]
-				//primaryMap.put(params.collectField, it[0])
-				//primaryMap.put(params.searchField, it[1])
 				primaryMap.put('id', it[0])
 				primaryMap.put('name', it[1])
 				primarySelectList.add(primaryMap)
 			}
-			return primarySelectList as JSON
 		}
-	}
-	
-	// Mp reference selection method i.e. belongsTo=UpperClass 
-	def selectSecondaryNR(params) {
-		if ((!params.domain2!='') && (params.domain2!=null) && (params.domain2!='null')) {
-			def domainClass2 = grailsApplication.getDomainClass(params.domain2).clazz
-			def domainClass = grailsApplication.getDomainClass(params.domain).clazz
-			def domaininq=domainClass.get(params.id.toLong())
-			
-			def primarySelectList = []
-			domaininq."${params.bindid}".each { dq ->
-				def query = {
-					eq (params.searchField , dq.toString().trim())
-					projections {
-						property(params.collectField)
-						property(params.searchField)
-					}
-					order(params.searchField)
-				}
-				def results =domainClass2.createCriteria().list(query)
-				results.each {
-					def primaryMap = [:]
-					primaryMap.put('id', it[0])
-					primaryMap.put('name', it[1])
-					primarySelectList.add(primaryMap)
-				}
-			}
-			return primarySelectList as JSON
-		}
+		return primarySelectList as JSON
 	}
 	
 	List returnPrimaryList(String className) {
@@ -214,29 +204,28 @@ class AutoCompleteService {
 		}
 	}
 	def returnControllerActions(params) {
-		if ((!params.id!='') && (params.id!=null) && (params.id!='null')) {
-			String s = params.id
-			String domclass1= (s.substring(0,1).toUpperCase())
-			String domclass2=s.substring(1,s.length())
-			String domclass=domclass1+domclass2
-			def fp=grailsApplication.metadata['app.name']
-			def gp=fp+"."+domclass
-			Class clazz = grailsApplication.getDomainClass(fp+"."+domclass).clazz
-			List<String> list=new ArrayList<String>();
-			grailsApplication.controllerClasses.each { DefaultGrailsControllerClass controller ->
-				Class controllerClass = controller.clazz
-				if (controllerClass.name.startsWith(gp.toString())) {
-					String logicalControllerName = controller.logicalPropertyName
-					controllerClass.methods.each { Method method ->
-						if (method.getAnnotation(Action)) {
-							list.add(method.name)
-						}
+		String s = params.id
+		String domclass1= (s.substring(0,1).toUpperCase())
+		String domclass2=s.substring(1,s.length())
+		String domclass=domclass1+domclass2
+		def fullPath=grailsApplication.metadata['app.name']
+		def currentController=fullPath+"."+domclass
+		Class clazz = grailsApplication.getDomainClass(currentController).clazz
+		List<String> list=new ArrayList<String>();
+		grailsApplication.controllerClasses.each { DefaultGrailsControllerClass controller ->
+			Class controllerClass = controller.clazz
+			if (controllerClass.name.startsWith(currentController.toString())) {
+				String logicalControllerName = controller.logicalPropertyName
+				controllerClass.methods.each { Method method ->
+					if (method.getAnnotation(Action)) {
+						list.add(method.name)
 					}
 				}
 			}
-			def results = list.collect {	['id':it,'name':it] }.unique()
-			return results as JSON
 		}
+		def results = list.collect {	['id':it,'name':it] }.unique()
+		return results as JSON
 	}
+	
 	
 }
