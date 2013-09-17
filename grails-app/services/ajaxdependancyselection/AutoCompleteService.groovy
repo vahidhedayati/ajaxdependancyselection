@@ -107,8 +107,8 @@ class AutoCompleteService {
 	}
 	// No reference auto complete service
 	def autocompleteSecondaryNR (params) {
-		def domainClass2 = grailsApplication.getDomainClass(params.domain2).clazz
-		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
+		def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
+		def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 		def domaininq=domainClass.get(params.primaryid.toLong())	
 		def primarySelectList = []
 		domaininq."${params.primarybind}".each { dq ->
@@ -151,30 +151,32 @@ class AutoCompleteService {
 	}
 	
 	def selectSecondary(params) {	
-		def domainClass = grailsApplication.getDomainClass(params.domain2).clazz
-		def query = {
-			eq params.bindid, params.id.toLong()
-			projections { 
-				property(params.collectField)
-				property(params.searchField)
+		if (params.domain2) {
+			def domainClass = grailsApplication?.getDomainClass(params?.domain2)?.clazz
+			def query = {
+				eq params.bindid, params.id.toLong()
+				projections { 
+					property(params.collectField)
+					property(params.searchField)
+				}
+				order(params.searchField)
 			}
-			order(params.searchField)
+			def results =domainClass.createCriteria().list(query)
+			def primarySelectList = []
+			results.each {
+				def primaryMap = [:]
+				primaryMap.put('id', it[0])
+				primaryMap.put('name', it[1])
+				primarySelectList.add(primaryMap)
+			}
+			return primarySelectList as JSON
 		}
-		def results =domainClass.createCriteria().list(query)
-		def primarySelectList = []
-		results.each {
-			def primaryMap = [:]
-			primaryMap.put('id', it[0])
-			primaryMap.put('name', it[1])
-			primarySelectList.add(primaryMap)
-		}
-		return primarySelectList as JSON
 	}
 	
 	// Mp reference selection method i.e. belongsTo=UpperClass 
 	def selectSecondaryNR(params) {
-		def domainClass2 = grailsApplication.getDomainClass(params.domain2).clazz
-		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
+		def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
+		def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 		def domaininq=domainClass.get(params.id.toLong())
 		def primarySelectList = []
 		domaininq."${params.bindid}".each { dq ->
@@ -210,7 +212,7 @@ class AutoCompleteService {
 		String domclass=domclass1+domclass2
 		def fullPath=grailsApplication.metadata['app.name']
 		def currentController=fullPath+"."+domclass
-		Class clazz = grailsApplication.getDomainClass(currentController).clazz
+		Class clazz = grailsApplication?.getDomainClass(currentController)?.clazz
 		List<String> list=new ArrayList<String>();
 		grailsApplication.controllerClasses.each { DefaultGrailsControllerClass controller ->
 			Class controllerClass = controller.clazz
