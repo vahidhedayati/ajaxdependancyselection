@@ -1,15 +1,16 @@
-ajaxdependancyselection 0.16
+ajaxdependancyselection 0.17
 =======================
 
 
 Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide either select or auto complete form fields. This can be any combination of either fully dependant objects or full dependant as well as no reference bindings.
 
+0.17 has no real changes, besides a tidy up on services and taglib.
 
 # Installation:
 
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.16"
+	compile ":ajaxdependancyselection:0.17"
 
 Or via grails command line:
 
@@ -62,7 +63,7 @@ The auto complete feature can be used on a nested set of lookups and can be
 
 
 
-# Further new features for all g:select calls:
+# New features since 0.16 for all g:select calls:
 
   
             appendValue='*'
@@ -85,6 +86,8 @@ your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationR
 	…
 	<g:layoutHead/>
 
+
+The jquery-ui should only be required for autocomplete calls
 
 
 Sample domainclasses for below examples (all under my test app called testingv which all classes are packages with:
@@ -116,9 +119,8 @@ which has these domains - left out Deparment/employee same as mycountry/mycity
 
 
 
-Here is the domain classes that require the NR feature: 
+Here are two domain classes with a no reference set up and require g:selectSecondaryNR feature: 
 
-		package ajaxdependancyselectexample
 		class MyCity {
 
 			String cityName
@@ -127,9 +129,6 @@ Here is the domain classes that require the NR feature:
 			String toString()  { "${cityName}"}
 		}
 		
-		
-		
-		package ajaxdependancyselectexample
 		class MyBorough {
 			String actualName
 			static belongsTo = [MyCity]
@@ -138,6 +137,7 @@ Here is the domain classes that require the NR feature:
 
 
 
+Refer to example 1.1 for above example call
 
 
 
