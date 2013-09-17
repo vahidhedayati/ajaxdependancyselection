@@ -25,9 +25,12 @@ Or via grails command line:
 
 
 A common problem when it comes to making a website is having objects that are independant and when a user selects an option what to do next ? do you refresh the page to update the next set of values or look into some jquery/java scripts to auto update the next set of select option.
-Using this plugin which can be found used here in a sample project:
+Using this plugin with the grails framework  you are able to achieve this without all of the complications. Refer to this sample project which makes use of all of the examples below with some objects already pre-added to the sample projecet. 
+which can be found used here in a sample project:
 
 https://github.com/vahidhedayati/ajaxdependancyselectexample
+
+Use Europe/United Kingdom/London or Oxford for a full completed example within the above example project when loading it up.
 
 
 # Select dependancy calls:
@@ -227,7 +230,7 @@ This is a basic two object mapping that works fine in order to expand to multipl
 1.1 Here is the GSP making a nested call where an element has a no reference relationship, the gsp page in the example called norefselectionext.gsp goes back out of a NR relationship and calls Streets domain after borough to then load up a further relationsip
 
 
-			form method=post action=example5>
+	  <form method=post action=example5>
 	  <g:selectPrimary id="MyContinent2" name="MyContinent2"
 	     domain='ajaxdependancyselectexample.MyContinent'
             searchField='continentName'
@@ -268,7 +271,7 @@ This is a basic two object mapping that works fine in order to expand to multipl
         <g:selectSecondaryNR id="MyCity11" name="MyCity11"
             domain='ajaxdependancyselectexample.MyCity'
             bindid="myborough"
-        searchField='cityName'
+            searchField='cityName'
             collectField='id'
 
             domain2='ajaxdependancyselectexample.MyBorough'
