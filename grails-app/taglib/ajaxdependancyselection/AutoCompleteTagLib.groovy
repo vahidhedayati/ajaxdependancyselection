@@ -87,7 +87,7 @@ class AutoCompleteTagLib {
 		def clazz = ""
 		def name = ""
 		if (!attrs.id) {
-			throwTagError("Tag [autoComplete] is missing required attribute [id]")
+			throwTagError("Tag [selectPrimary] is missing required attribute [id]")
 		}
 		if (!attrs.controller) {
 			attrs.controller= "autoComplete"
@@ -96,19 +96,19 @@ class AutoCompleteTagLib {
 			attrs.action= "ajaxSelectSecondary"
 		}	
 		if (!attrs.noSelection) {
-			throwTagError("Tag [autoComplete] is missing required attribute [noSelection]")
+			throwTagError("Tag [selectPrimary] is missing required attribute [noSelection]")
 		}
 		if (!attrs.domain) {
-			throwTagError("Tag [autoComplete] is missing required attribute [domain]")
+			throwTagError("Tag [selectPrimary] is missing required attribute [domain]")
 		}
 		if (!attrs.domain2) {
-			throwTagError("Tag [autoComplete] is missing required attribute [domain2]")
+			throwTagError("Tag [selectPrimary] is missing required attribute [domain2]")
 		}
 		if (!attrs.bindid) {
-			throwTagError("Tag [autoComplete] is missing required attribute [bindid]")
+			throwTagError("Tag [selectPrimary] is missing required attribute [bindid]")
 		}
 		if (attrs.searchField == null) {
-			throwTagError("Tag [autoComplete] is missing required attribute [searchField]")
+			throwTagError("Tag [selectPrimary] is missing required attribute [searchField]")
 		}
 		if (!attrs.setId) {
 			attrs.setId = "selectSecondary"
@@ -184,10 +184,10 @@ class AutoCompleteTagLib {
 		def clazz = ""
 		def name = ""
 		if (!attrs.id) {
-			throwTagError("Tag [autoComplete] is missing required attribute [id]")
+			throwTagError("Tag [selectScondary] is missing required attribute [id]")
 		}
-		if (attrs.searchField == null) {
-			throwTagError("Tag [autoComplete] is missing required attribute [searchField]")
+		if (!attrs.searchField2) {
+			throwTagError("Tag [selectScondary] is missing required attribute [searchField2]")
 		}
 		if (!attrs.controller)  {
 			attrs.controller= "autoComplete"
@@ -196,13 +196,13 @@ class AutoCompleteTagLib {
 			attrs.action= "ajaxSelectSecondary"
 		}	
 		if (!attrs.noSelection) {
-			throwTagError("Tag [autoComplete] is missing required attribute [noSelection]")
+			throwTagError("Tag [selectScondary] is missing required attribute [noSelection]")
 		}
 		if (!attrs.domain2) {
-			throwTagError("Tag [autoComplete] is missing required attribute [domain2]")
+			throwTagError("Tag [selectScondary] is missing required attribute [domain2]")
 		}
 		if (!attrs.bindid) {
-			throwTagError("Tag [autoComplete] is missing required attribute [bindid]")
+			throwTagError("Tag [selectScondary] is missing required attribute [bindid]")
 		}
 		if (!attrs.setId) {
 			attrs.setId = "selectSecondary"
@@ -210,15 +210,15 @@ class AutoCompleteTagLib {
 		if (!attrs.value) {
 			attrs.value =""
 		}	
-		if (!attrs.collectField) {
-			attrs.collectField = attrs.searchField
-		}	
 		if (!attrs.collectField2) {
-			attrs.collectField2=attrs.collectField
-		}	
-		if (!attrs.searchField2) {
-			attrs.searchField2=attrs.searchField
-		}	
+			attrs.collectField2 = attrs.searchField2
+		}
+		if (!attrs.searchField) {
+			attrs.searchField = attrs.searchField2
+		}
+		if (!attrs.collectField) {
+			attrs.collectField = attrs.searchField2
+		}
 		if (attrs.class) {
 			clazz = " class='${attrs.class}'"
 		}	
