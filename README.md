@@ -198,7 +198,7 @@ This part of the plugin is based on http://www.grails.org/AJAX-Driven+SELECTs+in
         
         
         
-Example2: 
+Example2 situation where your hasMany has id of id and field you are looking up called countryName, the above example both domains were looking up id and name, in this example we are in a situation where both the hasMany and belongsTo have different searchFields: 
 
          <g:selectPrimary id="MyContinent1" 
          name="MyContinent1" 
