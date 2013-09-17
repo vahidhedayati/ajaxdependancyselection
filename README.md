@@ -13,7 +13,7 @@ Add plugin Dependency :
 
 Or via grails command line:
 
-       grails install-plugin ajaxdependancyselection
+	grails install-plugin ajaxdependancyselection
 
 
 #Required:
