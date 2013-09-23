@@ -152,7 +152,7 @@ class AutoCompleteService {
 	
 	def selectSecondary(params) {	
 		if (params.domain2) {
-			def domainClass = grailsApplication?.getDomainClass(params?.domain2)?.clazz
+			def domainClass = grailsApplication?.getDomainClass(params?.domain)?.clazz
 			def query = {
 				eq params.bindid, params.id.toLong()
 				projections { 
