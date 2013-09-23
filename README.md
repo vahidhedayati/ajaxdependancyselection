@@ -249,10 +249,10 @@ This is a basic two object mapping that works fine in order to expand to multipl
             value=''/>
 
         <g:selectSecondary id="MyCountry11" name="MyCountry11"
-            domain2='ajaxdependancyselectexample.MyCity'
+            domain='ajaxdependancyselectexample.MyCity'
             bindid="mycountry.id"
-            searchField2='cityName'
-            collectField2='id'
+            searchField='cityName'
+            collectField='id'
 
             appendValue='optional_Additional_Value_'
             appendName='Optional Additional Name'
@@ -316,10 +316,10 @@ I have added Example 2 above which works fine on verion 0.14 onwards.. It has ne
         value=''/>
         
 	<g:selectSecondary id="MyCountry1" name="MyCountry1"
-	domain2='testingv.MyCity'
+	domain='testingv.MyCity'
         bindid="mycountry.id"
-        searchField2='name'
-        collectField2='id'
+        searchField='name'
+        collectField='id'
         noSelection="['null': 'Please choose Continent']" 
         setId="MyCity1"
         value=''/>
