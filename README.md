@@ -6,6 +6,9 @@ Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide 
 
 0.17 has no real changes, besides a tidy up of services and taglib.
 
+0.19 is a broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
+
+
 # Installation:
 
 Add plugin Dependency :
