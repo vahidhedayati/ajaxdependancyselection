@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.19
+ajaxdependancyselection 0.20
 =======================
 
 
@@ -10,7 +10,7 @@ Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide 
 
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.19"
+	compile ":ajaxdependancyselection:0.20"
 
 Or via grails command line:
 
@@ -249,10 +249,10 @@ This is a basic two object mapping that works fine in order to expand to multipl
             value=''/>
 
         <g:selectSecondary id="MyCountry11" name="MyCountry11"
-            domain='ajaxdependancyselectexample.MyCity'
+            domain2='ajaxdependancyselectexample.MyCity'
             bindid="mycountry.id"
-            searchField='cityName'
-            collectField='id'
+            searchField2='cityName'
+            collectField2='id'
 
             appendValue='optional_Additional_Value_'
             appendName='Optional Additional Name'
@@ -316,10 +316,10 @@ I have added Example 2 above which works fine on verion 0.14 onwards.. It has ne
         value=''/>
         
 	<g:selectSecondary id="MyCountry1" name="MyCountry1"
-	domain='testingv.MyCity'
+	domain2='testingv.MyCity'
         bindid="mycountry.id"
-        searchField='name'
-        collectField='id'
+        searchField2='name'
+        collectField2='id'
         noSelection="['null': 'Please choose Continent']" 
         setId="MyCity1"
         value=''/>
