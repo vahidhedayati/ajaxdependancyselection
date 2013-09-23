@@ -180,28 +180,16 @@ class AutoCompleteTagLib {
 		out << "</script>\n"
 	}
 	
+	//  Reveted back changes - this was not working 
+	// selectSecondary is used by both gsp calls to g:selectPrimary and g:selectSecondary 
 	def selectSecondary = {attrs ->
 		def clazz = ""
 		def name = ""
 		if (!attrs.id) {
 			throwTagError("Tag [selectScondary] is missing required attribute [id]")
 		}
-		// Tidy up of domain and domain2 and searchField/searchField 2  
-		// backward compatibility for historic versions
-		if (attrs.domain2) {
-			attrs.domain=attrs.domain2
-		}
-		if (attrs.searchField2) {
-			attrs.searchField=attrs.searchField2	
-		}	
-		if (!attrs.domain) {
-			throwTagError("Tag [selectScondary] is missing required attribute [domain]")
-		}
-		if (!attrs.searchField) {
-			throwTagError("Tag [selectScondary] is missing required attribute [searchField]")
-		}
-		if (!attrs.collectField) {
-			attrs.collectField = attrs.searchField
+		if (!attrs.searchField2) {
+			throwTagError("Tag [selectScondary] is missing required attribute [searchField2]")
 		}
 		if (!attrs.controller)  {
 			attrs.controller= "autoComplete"
@@ -212,6 +200,9 @@ class AutoCompleteTagLib {
 		if (!attrs.noSelection) {
 			throwTagError("Tag [selectScondary] is missing required attribute [noSelection]")
 		}
+		if (!attrs.domain2) {
+			throwTagError("Tag [selectScondary] is missing required attribute [domain2]")
+		}
 		if (!attrs.bindid) {
 			throwTagError("Tag [selectScondary] is missing required attribute [bindid]")
 		}
@@ -221,6 +212,15 @@ class AutoCompleteTagLib {
 		if (!attrs.value) {
 			attrs.value =""
 		}	
+		if (!attrs.collectField2) {
+			attrs.collectField2 = attrs.searchField2
+		}
+		if (!attrs.searchField) {
+			attrs.searchField = attrs.searchField2
+		}
+		if (!attrs.collectField) {
+			attrs.collectField = attrs.searchField2
+		}
 		if (attrs.class) {
 			clazz = " class='${attrs.class}'"
 		}	
@@ -234,7 +234,7 @@ class AutoCompleteTagLib {
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
 		gsattrs['noSelection'] =attrs.noSelection
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField+'&searchField='+attrs.searchField+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out<<  g.select(gsattrs)
 		out << "\n<script type='text/javascript'>\n"
 		out << "function ${attrs.id}Update(data) { \n"
