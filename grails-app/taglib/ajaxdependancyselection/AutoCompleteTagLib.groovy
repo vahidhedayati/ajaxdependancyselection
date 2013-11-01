@@ -180,6 +180,96 @@ class AutoCompleteTagLib {
 		out << "</script>\n"
 	}
 	
+	// Added taglib for primary No reference look ups
+	// When a user has a primary item that secondary is a no reference
+	def selectPrimaryNR = {attrs ->
+		def clazz = ""
+		def name = ""
+		if (!attrs.id) {
+			throwTagError("Tag [selectPrimary] is missing required attribute [id]")
+		}
+		if (!attrs.controller) {
+			attrs.controller= "autoComplete"
+		}
+		if (!attrs.action) {
+			attrs.action= "ajaxSelectSecondaryNR"
+		}
+		if (!attrs.noSelection) {
+			throwTagError("Tag [selectPrimary] is missing required attribute [noSelection]")
+		}
+		if (!attrs.domain) {
+			throwTagError("Tag [selectPrimary] is missing required attribute [domain]")
+		}
+		if (!attrs.domain2) {
+			throwTagError("Tag [selectPrimary] is missing required attribute [domain2]")
+		}
+		if (attrs.searchField == null) {
+			throwTagError("Tag [selectPrimary] is missing required attribute [searchField]")
+		}
+		if (!attrs.setId) {
+			attrs.setId = "selectSecondaryNR"
+		}
+		if (!attrs.value) {
+			attrs.value =""
+		}
+		if (!attrs.collectField) {
+			attrs.collectField = attrs.searchField
+		}
+		if (attrs.class) {
+			clazz = " class='${attrs.class}'"
+		}
+		if (attrs.name) {
+			name = "${attrs.name}"
+		} else {
+			name = "${attrs.id}"
+		}
+		if (!attrs.appendValue)  {
+			attrs.appendValue='null'
+		}
+		if (!attrs.appendName) {
+			attrs.appendName='Values Updated'
+		}
+		List primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
+		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
+		gsattrs['from'] = primarylist
+		gsattrs['noSelection'] =attrs.noSelection
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&bindid='+ attrs.bindid+'&domain='+attrs.domain+'&domain2='+attrs.domain2+'&setId='+attrs.setId+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		def link = ['action': attrs.action , 'controller': attrs.controller ]
+		out<<  g.select(gsattrs)
+		out << "\n<script type='text/javascript'>\n"
+		out << "function ${attrs.id}Update(data) { \n"
+		out << "var e=data;\n"
+		out << "if (e) { \n"
+		out << "  var rselect = document.getElementById('" + attrs.setId+"')\n"
+		out << "  var l = rselect.length\n"
+		out << "  while (l > 0) {\n"
+		out << "   l--\n"
+		out << "   rselect.remove(l)\n"
+		out <<"   }\n"
+		out << "var opt = document.createElement('option');\n"
+		out << "opt.value='"+attrs.appendValue+"'\n"
+		out << "opt.text='"+attrs.appendName+"'\n "
+		out << "    try {\n"
+		out << "  	    	rselect.add(opt, null)\n"
+		out << "    } catch(ex) {\n"
+		out << "	  rselect.add(opt)\n"
+		out << "}"
+		out << "  for (var i=0; i < e.length; i++) {\n"
+		out << "    var s = e[i]\n"
+		out << "    var opt = document.createElement('option');\n"
+		out << "    opt.text = s.name\n"
+		out << "    opt.value = s.id\n"
+		out << "    try {\n"
+		out << "  	    	rselect.add(opt, null)\n"
+		out << "    } catch(ex) {\n"
+		out << "	  rselect.add(opt)\n"
+		out << "}}}}\n"
+		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
+		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
+		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"'${attrs.id}Update(data)'")}\n"
+		out << "</script>\n"
+	}
+	
 	//  Reveted back changes - this was not working 
 	// selectSecondary is used by both gsp calls to g:selectPrimary and g:selectSecondary 
 	def selectSecondary = {attrs ->
