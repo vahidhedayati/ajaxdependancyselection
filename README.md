@@ -76,6 +76,57 @@ The auto complete feature can be used on a nested set of lookups and can be
 If the above is added to a g:select block then the default value and name shown when results updated are what is set in them, otherwise the previous hard coded Values updated and null value are set
 
 
+# Some tags explained:
+## Normal mapping:
+
+	class PrimaryDomain {
+ 		String name
+ 		static hasMany = [ secondarydomain: SecondaryDomain ]
+	}
+
+	class SecondaryDomain {
+ 		String name
+		static belongsTo = [ primarydomain:  PrimaryDomain ]
+	}
+
+	This you would use g:selectPrimary the bindid is primarydomain.id the field highlighted in bold above as the bindid
+
+
+
+## no reference mapping
+	class PrimaryDomain {
+ 		String name
+ 		static hasMany = [ secondarydomain: SecondaryDomain ]
+	}
+
+	class SecondaryDomain {
+ 		String name
+		static belongsTo = [PrimaryDomain ]
+	}
+
+
+This you would use g:selectPrimaryNR the bindid is secondarydomain the field highlighted in bold above as the bindid
+
+
+Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
+
+
+# setId tag:
+This is the id for the next selectionBox - you must set the value of this to equal the value of id='something' for your next select box
+
+
+#  searchField & collectField:
+This are the values it uses to search your domainclasses, so usually collectField is the id of the value selected and SearchField is the field name to search
+
+	searchField='name'
+        collectField='id'
+        
+If you had String myField inside the domainclass the search and collect fields would be:
+
+	searchField='myField'
+        collectField='id'
+        
+        
 
 # Howto:
 
