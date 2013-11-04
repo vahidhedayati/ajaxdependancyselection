@@ -88,8 +88,13 @@ If the above is added to a g:select block then the default value and name shown 
  		String name
 		static belongsTo = [ primarydomain:  PrimaryDomain ]
 	}
+	
+	
+Now within your call the bindid would be:	
 
-	This you would use g:selectPrimary the bindid is primarydomain.id the field highlighted in bold above as the bindid
+	bindid="primarydomain.id"
+
+This you would use g:selectPrimary the bindid is primarydomain.id the field highlighted in bold above as the bindid
 
 
 
@@ -103,6 +108,10 @@ If the above is added to a g:select block then the default value and name shown 
  		String name
 		static belongsTo = [PrimaryDomain ]
 	}
+
+Now within your call the bindid would be:	
+
+	bindid="secondarydomain"
 
 
 This you would use g:selectPrimaryNR the bindid is secondarydomain the field highlighted in bold above as the bindid
