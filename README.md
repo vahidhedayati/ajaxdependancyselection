@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.20
+ajaxdependancyselection 0.21
 =======================
 
 
@@ -13,7 +13,7 @@ Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide 
 
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.20"
+	compile ":ajaxdependancyselection:0.21"
 
 Or via grails command line:
 
