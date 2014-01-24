@@ -418,7 +418,7 @@ The only thing different in this block is the new usage of <g:selectSecondary, t
         
 	<g:select name="MyCountry1" id="MyCountry1"  
         optionKey="id" optionValue="name" 
-        from="[]" noSelection="['null': 'Please choose Continent']" />
+        from="[]" noSelection="['': 'Please choose Continent']" />
 
 
 	<g:selectPrimary id="MyCountry22" name="MyCountry22"
