@@ -37,7 +37,7 @@ class AutoCompleteTagLib {
 			throwTagError("Tag [autoComplete] is missing required attribute [noSelection]")
 		}
 		if (!attrs.appendValue) {
-			attrs.appendValue='null'
+			attrs.appendValue=''
 		}	
 		if (!attrs.appendName) {
 			attrs.appendName='Values Updated'
@@ -142,7 +142,7 @@ class AutoCompleteTagLib {
 			attrs.searchField2=attrs.searchField
 		}	
 		if (!attrs.appendValue)  {
-			attrs.appendValue='null'
+			attrs.appendValue=''
 		}	
 		if (!attrs.appendName) {
 			attrs.appendName='Values Updated'
@@ -239,7 +239,7 @@ class AutoCompleteTagLib {
 			name = "${attrs.id}"
 		}
 		if (!attrs.appendValue)  {
-			attrs.appendValue='null'
+			attrs.appendValue=''
 		}
 		if (!attrs.appendName) {
 			attrs.appendName='Values Updated'
@@ -345,8 +345,8 @@ class AutoCompleteTagLib {
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
-		if (!attrs.appendValue)  attrs.appendValue='null'
-		if (!attrs.appendName) attrs.appendName='Values Updated'
+		if (!attrs.appendValue)  { attrs.appendValue='' }
+		if (!attrs.appendName) { attrs.appendName='Values Updated' }
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
 		if (requireField) {
@@ -442,7 +442,7 @@ class AutoCompleteTagLib {
 			name = "${attrs.id}"
 		}
 		if (!attrs.appendValue)  {
-			attrs.appendValue='null'
+			attrs.appendValue=''
 		}	
 		if (!attrs.appendName) {
 			attrs.appendName='Values Updated'
