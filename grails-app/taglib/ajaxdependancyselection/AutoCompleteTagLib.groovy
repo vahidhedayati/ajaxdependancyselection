@@ -41,10 +41,18 @@ class AutoCompleteTagLib {
 		}	
 		if (!attrs.appendName) {
 			attrs.appendName='Values Updated'
-		}	
+		}
+		Boolean requireField=true
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
+		
 		def primarylist=autoCompleteService.returnControllerList()
 		def gsattrs=[ 'id': "${attrs.id}", value: "${attrs.value}", name: name, optionKey: "${attrs.searchField}", optionValue: "${attrs.collectField}" ]
 		gsattrs['from'] = primarylist
+		if (requireField) {
+			gsattrs['required'] = 'required'
+		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value)',onSuccess:'updateControllerAction(data)')}"
 		out<<  g.select(gsattrs)
@@ -138,10 +146,17 @@ class AutoCompleteTagLib {
 		}	
 		if (!attrs.appendName) {
 			attrs.appendName='Values Updated'
-		}	
+		}
+		Boolean requireField=true
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
 		List primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = primarylist
+		if (requireField) {
+			gsattrs['required'] = 'required'
+		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
@@ -229,9 +244,16 @@ class AutoCompleteTagLib {
 		if (!attrs.appendName) {
 			attrs.appendName='Values Updated'
 		}
+		Boolean requireField=true
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
 		List primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = primarylist
+		if (requireField) {
+			gsattrs['required'] = 'required'
+		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&bindid='+ attrs.bindid+'&domain='+attrs.domain+'&domain2='+attrs.domain2+'&setId='+attrs.setId+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
@@ -319,10 +341,17 @@ class AutoCompleteTagLib {
 		} else {
 			name = "${attrs.id}"
 		}
+		Boolean requireField=true
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
 		if (!attrs.appendValue)  attrs.appendValue='null'
 		if (!attrs.appendName) attrs.appendName='Values Updated'
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
+		if (requireField) {
+			gsattrs['required'] = 'required'
+		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out<<  g.select(gsattrs)
@@ -417,9 +446,16 @@ class AutoCompleteTagLib {
 		}	
 		if (!attrs.appendName) {
 			attrs.appendName='Values Updated'
-		}	
+		}
+		Boolean requireField=true
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
+		if (requireField) {
+			gsattrs['required'] = 'required'
+		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out<<  g.select(gsattrs)
@@ -500,8 +536,16 @@ class AutoCompleteTagLib {
 		} else {
 			name = " name ='${attrs.id}'"
 		}
+		Boolean requireField=true
+		def  required=""
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
+		if (requireField) {
+			 required=" required='required' "
+		}
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${styles} ${name} />"
+		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />"
 		out << "<script type='text/javascript'>"
 		out << " \$(document).ready(function() {"
 		out << "\$('#" + attrs.id+"').autocomplete({ "
@@ -570,8 +614,16 @@ class AutoCompleteTagLib {
 		} else {
 			name = " name ='${attrs.id}'"
 		}
+		Boolean requireField=true
+		def  required=""
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
+		if (requireField) {
+			 required=" required='required' "
+		}
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${styles} ${name} />"
+		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />"
 		out << "<script type='text/javascript'>"
 		out << " \$(document).ready(function() {"
 		out << "\$('#" + attrs.id+"').autocomplete({ "
@@ -654,8 +706,16 @@ class AutoCompleteTagLib {
 		} else {
 			name = " name ='${attrs.id}'"
 		}
+		Boolean requireField=true
+		def  required=""
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
+		if (requireField) {
+			 required=" required='required' "
+		}
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${styles} ${name} />"
+		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />"
 		out << "<script type='text/javascript'>"
 		out << " \$(document).ready(function() {"
 		out << "\$('#" + attrs.id+"').autocomplete({ "
@@ -744,8 +804,16 @@ class AutoCompleteTagLib {
 		} else {
 			name = " name ='${attrs.id}'"
 		}
+		Boolean requireField=true
+		def  required=""
+		if (attrs.require) {
+			requireField=attrs.remove('require')?.toBoolean()
+		}
+		if (requireField) {
+			 required=" required='required' "
+		}
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${styles} ${name} />"
+		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />"
 		out << "<script type='text/javascript'>"
 		out << " \$(document).ready(function() {"
 		out << "\$('#" + attrs.id+"').autocomplete({ "
