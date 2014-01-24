@@ -256,13 +256,13 @@ This part of the plugin is based on http://www.grails.org/AJAX-Driven+SELECTs+in
         bindid="mycountry.id"
         searchField='name'
         collectField='id'
-        noSelection="['null': 'Please choose Country']" 
+        noSelection="['': 'Please choose Country']" 
         setId="MyCity1"
         value=''/>
 
   	<g:select name="MyCity1" id="MyCity1"  
         optionKey="id" optionValue="name" 
-        from="[]" noSelection="['null': 'Please choose Country']" />
+        from="[]" required="required" noSelection="['': 'Please choose Country']" />
         
         
         
@@ -279,12 +279,12 @@ Example2 situation where your hasMany has id of id and field you are looking up 
          searchField2='cityName' 
          collectField2='id'
          
-         noSelection="['null': 'Please choose Country']" setId="MyCity1" value=''/>
+         noSelection="['': 'Please choose Country']" setId="MyCity1" value=''/>
          
          <g:select name="MyCity1" id="MyCity1" 
          optionKey="id" optionValue="cityName" 
-         from="[]" 
-         noSelection="['null': 'Please choose Country']" />
+         from="[]" required="required"
+         noSelection="['': 'Please choose Country']" />
 
 
 the tag g:selectPrimary followed by its id and name, the domain and domain variables are domain is the actual domain for the select you wish to display, domain2 is the secondary domain this object is bound with. followed by bindid, the bindid is the object name.id as defined in your domainClass. In my city domainclass I had MyCountry mycountry, so the bindid here was mycountry.id, the search and collectFields are usually the id and the given field which would represent the name of the object.
@@ -312,7 +312,7 @@ This is a basic two object mapping that works fine in order to expand to multipl
             appendValue='*'
             appendName='All Items'
             
-            noSelection="['null': 'Please choose Continent']"
+            noSelection="['': 'Please choose Continent']"
             setId="MyCountry11"
             value=''/>
 
@@ -324,7 +324,7 @@ This is a basic two object mapping that works fine in order to expand to multipl
 
             appendValue='optional_Additional_Value_'
             appendName='Optional Additional Name'
-            noSelection="['null': 'Please choose Continent']"
+            noSelection="['': 'Please choose Continent']"
             setId="MyCity11"
             
             appendValue='*'
@@ -349,7 +349,7 @@ This is a basic two object mapping that works fine in order to expand to multipl
 
 
 
-            noSelection="['null': 'Please choose City']"
+            noSelection="['': 'Please choose City']"
             setId="MyBorough11"
             
             appendValue='*'
@@ -361,7 +361,7 @@ This is a basic two object mapping that works fine in order to expand to multipl
 
             <g:select name="MyBorough11" id="MyBorough11" 
             optionKey="id" optionValue="name"
-            from="[]" noSelection="['null': 'Please choose City']" />
+            from="[]" required="required"  noSelection="['': 'Please choose City']" />
 
         <br> <input type=submit value=go> </form>
         
@@ -379,7 +379,7 @@ I have added Example 2 above which works fine on verion 0.14 onwards.. It has ne
         bindid="mycontinent.id"
         searchField='name'
         collectField='id'
-        noSelection="['null': 'Please choose Continent']" 
+        noSelection="['': 'Please choose Continent']" 
         setId="MyCountry1"
         value=''/>
         
@@ -388,14 +388,14 @@ I have added Example 2 above which works fine on verion 0.14 onwards.. It has ne
         bindid="mycountry.id"
         searchField2='name'
         collectField2='id'
-        noSelection="['null': 'Please choose Continent']" 
+        noSelection="['': 'Please choose Continent']" 
         setId="MyCity1"
         value=''/>
         
 
     	<g:select name="MyCity1" id="MyCity1"  
         optionKey="id" optionValue="name" 
-        from="[]" noSelection="['null': 'Please choose Country']" />
+        from="[]" required="required" noSelection="['': 'Please choose Country']" />
  
      	<input type=submit value=go>  
     	</form>
@@ -412,7 +412,7 @@ The only thing different in this block is the new usage of <g:selectSecondary, t
         bindid="mycontinent.id"
         searchField='name'
         collectField='id'
-        noSelection="['null': 'Please choose Continent']" 
+        noSelection="['': 'Please choose Continent']" 
         setId="MyCountry1"
         value=''/>
         
@@ -427,13 +427,13 @@ The only thing different in this block is the new usage of <g:selectSecondary, t
         bindid="mycountry.id"
         searchField='name'
         collectField='id'
-        noSelection="['null': 'Please choose Country']" 
+        noSelection="['': 'Please choose Country']" 
         setId="MyCity11"
         value=''/>
 
     	<g:select name="MyCity11" id="MyCity11"  
         optionKey="id" optionValue="name" 
-        from="[]" noSelection="['null': 'Please choose Country']" />
+        from="[]" required="required" noSelection="['': 'Please choose Country']" />
 
 
 
@@ -556,7 +556,7 @@ This part of the plugin expands on this idea: https://github.com/alidadasb/Count
   	collectField='id' 
   	value=''/>
 
-	<input type=hidden id="hidden5" name="cityId" value=""/>
+	<input type=hidden id="hidden5" name="cityId" required="required"  value=""/>
 
 	<input type=submit value=go> </form>
 
@@ -662,13 +662,13 @@ tag to query all controllers and using select dependancy show its relevant actio
 	<g:selectController id="selectPrimaryTest2" name="mycontrollers"
   	searchField='name'
   	collectField='name'
-  	noSelection="['null': 'Please choose Controller']" 
+  	noSelection="['': 'Please choose Controller']" 
   	setId="ControllerActions"
   	value=''/>
 
 	<g:select name="myname" id="ControllerActions" 
-	optionKey="name" optionValue="name" 
-	from="[]" noSelection="['null': 'Please choose controller']" /> 
+	optionKey="name" optionValue="name"  required="required"
+	from="[]" noSelection="['': 'Please choose controller']" /> 
 	<br> <input type=submit value=go> </form>
 
 
