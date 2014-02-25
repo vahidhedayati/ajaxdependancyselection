@@ -70,10 +70,10 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 
 ### g:selectPrimary 
-####### (relationship: fully dependent ) in conjunction with g:selectSecondary
-########## refer to above notes on jquery requirements
+###### (relationship: fully dependent ) in conjunction with g:selectSecondary
+###### refer to above notes on jquery requirements
 
-######## Fully dependent domainClasses:
+###### Fully dependent domainClasses:
 
 
 	class PrimaryDomain {
@@ -145,8 +145,8 @@ is what is represented on the html end
 
 ### g:selectSecondary 
 
-####### (relationship: fully dependent ) in conjunction with g:selectPrimary
-########## refer to above notes on jquery requirements
+###### (relationship: fully dependent ) in conjunction with g:selectPrimary
+###### refer to above notes on jquery requirements
 
 
 This is a tag that can be used over and over again to go through nested situations, you can also use the selectSeondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
@@ -155,15 +155,17 @@ Back to g:selectSecondary example:
 
 
         <g:selectSecondary 
-        id="MyCountry" 			// Required - must be setId of previous selectPrimary or selectSecondary	
-        name="MyCountry"		// Required - your field name for this select box
-        domain2='your.package.MyCity'	// Requird - your next nested call or dependent class 
-        bindid="mycountry.id"		// Like in primary this is your bind id of the 3rd belongsTo.id
-        searchField2='cityName'		// table field to display
-        collectField2='id'		// table field to set as value
-        appendValue='*'			// Optional set a value to be appended to the list
-        appendName='All Countries'	// If you set appendValue then set the display name for it
-        noSelection="['': 'Please choose Continent']"	//default no selection value
+	id="MyCountry" 			// Required - must be setId of previous selectPrimary or selectSecondary
+	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 		// Optional - default "ajaxSelectSecondary" (part of this plugin)
+	name="MyCountry"		// Required - your field name for this select box
+	domain2='your.package.MyCity'	// Requird - your next nested call or dependent class 
+	bindid="mycountry.id"		// Like in primary this is your bind id of the 3rd belongsTo.id
+	searchField2='cityName'		// table field to display
+	collectField2='id'		// table field to set as value
+	appendValue='*'			// Optional set a value to be appended to the list
+	appendName='All Countries'	// If you set appendValue then set the display name for it
+	noSelection="['': 'Please choose Continent']"	//default no selection value
         setId="MyCity"			//Required - your next select id to update
         value="${params.MyCountry}"	// Default value of select box
         required="false"		// optional add this if you wish to disable required set by default
@@ -176,6 +178,8 @@ This is a simple auto complete tag lib that allows you to auto complete from a s
 
 	<g:autocomplete 
 	id="primarySearch" 	// Required - your objectID referred to by css has no importance
+	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 		// Optional - default "autocomplete" (part of this plugin)
 	name="myId"		// Required - your form field name
 	domain='your.class.MyCountry'	// Required what domainClass to search
 	searchField='name'		// Required the table field to search and display
@@ -189,38 +193,45 @@ This is a simple auto complete tag lib that allows you to auto complete from a s
 ###g:autoCompletePrimary
 
 
-	<g:autoCompletePrimary id="primarySearch1"  
-			name="NAMEOFcontinentName"
-			domain='ajaxdependancyselectexample.MyContinent'
-			searchField='continentName'
-			collectField='id'
-			setId="secondarySearch2"
-			hidden='hidden3'
-			value=''/>
+	<g:autoCompletePrimary id="primarySearch1"  	// Required - your objectID referred to by css has no importance
+	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 		// Optional - default "autocompletePrimaryAction" (part of this plugin)
+	name="NAMEOFcontinentName"			// Required - your objectID referred to by css has no importance
+	domain='ajaxdependancyselectexample.MyContinent'// Required what domainClass to search	
+	searchField='continentName'			// Required the table field to search and display
+	collectField='id'				// optional  the table field to use as value - if not set defaults to above
+	setId="secondarySearch2"			// Required - your next autocomplete id to update
+	hidden='hidden3'				// Required - this is the hidden field where value is also stored
+	value=''					// your value if you wish
+	max="10"			// Optional max records to show default is 10
+	order="asc"			// optional default is asc
+	required="false"		// optional add this if you wish to disable required set by default
+	/>
 
 
 
 ###g:autoCompleteSecondary
 
 
-	<input type=hidden id="hidden3" name="continentId" value=""/>
-			
-			<label>Country:</label> 
-			<g:autoCompleteSecondary id="secondarySearch2" 
-			name="NAMEOFcountryName" 
-			domain='ajaxdependancyselectexample.MyCountry' 
-			primarybind='mycontinent.id' 
-			hidden='hidden3' 
-			hidden2='hidden4' 
-			searchField='countryName' 
-			collectField='id'
-			setId="secondarySearch3" 
-			value=''/>
+
+	<g:autoCompleteSecondary
+	id="secondarySearch2" 
+	name="NAMEOFcountryName" 
+	domain='ajaxdependancyselectexample.MyCountry' 
+	primarybind='mycontinent.id' 
+	hidden='hidden3' 
+	hidden2='hidden4' 
+	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 		// Optional - default "autocompleteSecondaryAction" (part of this plugin)
+	searchField='countryName' 
+	collectField='id'
+	setId="secondarySearch3" 
+	value=''/>
 			
 
 ###g:selectPrimaryNR
 
-######## no reference mapping
+###### no reference mapping
 	class PrimaryDomain {
  		String name
  		static hasMany = [ secondarydomain: SecondaryDomain ]
@@ -248,6 +259,8 @@ Example call:
 	id="selectZip" 
 	name="selectZip"
 	domain='Postcode' 
+	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 		// Optional - default "ajaxSelectSecondaryNR" (part of this plugin)
 	searchField='postcode' 
 	collectField='id'
 	bindid="myarea"
@@ -435,71 +448,71 @@ Here is the GSP making a nested call where an element has a no reference relatio
 
 
 		<g:autoCompletePrimary id="primarySearch1"  
-			name="NAMEOFcontinentName"
-			domain='ajaxdependancyselectexample.MyContinent'
-			searchField='continentName'
-			collectField='id'
-			setId="secondarySearch2"
-			hidden='hidden3'
-			value=''/>
+	name="NAMEOFcontinentName"
+	domain='ajaxdependancyselectexample.MyContinent'
+	searchField='continentName'
+	collectField='id'
+	setId="secondarySearch2"
+	hidden='hidden3'
+	value=''/>
 			
-			<input type=hidden id="hidden3" name="continentId" value=""/>
+	<input type=hidden id="hidden3" name="continentId" value=""/>
+	
+	<label>Country:</label> 
+	<g:autoCompleteSecondary id="secondarySearch2" 
+	name="NAMEOFcountryName" 
+	domain='ajaxdependancyselectexample.MyCountry' 
+	primarybind='mycontinent.id' 
+	hidden='hidden3' 
+	hidden2='hidden4' 
+	searchField='countryName' 
+	collectField='id'
+	setId="secondarySearch3" 
+	value=''/>
+	
+	<input type=hidden id="hidden4" name="countryId" value=""/>
+	
+	<label>City:</label>
+	<g:autoCompleteSecondary id="secondarySearch3" 
+	name="NAMEOFcityName" 
+	domain='ajaxdependancyselectexample.MyCity' 
+	primarybind='mycountry.id' 
+	hidden='hidden4' 
+	hidden2='hidden5' 
+	searchField='cityName' 
+	collectField='id' 
+	setId="secondarySearch4"
+	value=''/>
 			
-			<label>Country:</label> 
-			<g:autoCompleteSecondary id="secondarySearch2" 
-			name="NAMEOFcountryName" 
-			domain='ajaxdependancyselectexample.MyCountry' 
-			primarybind='mycontinent.id' 
-			hidden='hidden3' 
-			hidden2='hidden4' 
-			searchField='countryName' 
-			collectField='id'
-			setId="secondarySearch3" 
-			value=''/>
+	<input type=hidden id="hidden5" name="cityId" value=""/>
 			
-			<input type=hidden id="hidden4" name="countryId" value=""/>
+	<label>Borough:</label>
+	<g:autoCompleteSecondaryNR id="secondarySearch4" 
+	name="NAMEOFcityName" 
+	domain='ajaxdependancyselectexample.MyCity' 
+	domain2='ajaxdependancyselectexample.MyBorough' 
+	primarybind='myborough' 
+	hidden='hidden5' 
+	hidden2='hidden6' 
+	searchField='actualName' 
+	collectField='id' 
 			
-			<label>City:</label>
-			<g:autoCompleteSecondary id="secondarySearch3" 
-			name="NAMEOFcityName" 
-			domain='ajaxdependancyselectexample.MyCity' 
-			primarybind='mycountry.id' 
-			hidden='hidden4' 
-			hidden2='hidden5' 
-			searchField='cityName' 
-			collectField='id' 
-			setId="secondarySearch4"
-			value=''/>
+	value=''/>
 			
-			<input type=hidden id="hidden5" name="cityId" value=""/>
+	<input type=hidden id="hidden6" name="BoroughID" value=""/>
 			
-			<label>Borough:</label>
-			<g:autoCompleteSecondaryNR id="secondarySearch4" 
-			name="NAMEOFcityName" 
-			domain='ajaxdependancyselectexample.MyCity' 
-			domain2='ajaxdependancyselectexample.MyBorough' 
-			primarybind='myborough' 
-			hidden='hidden5' 
-			hidden2='hidden6' 
-			searchField='actualName' 
-			collectField='id' 
-			
-			value=''/>
-			
-			<input type=hidden id="hidden6" name="BoroughID" value=""/>
-			
-			<input type=submit value=go> </form>
+	<input type=submit value=go> </form>
 			
 			
 ## Thanks to:
 
 
 
-### Alidad 
+##### Alidad 
 Plugin expands on this idea: https://github.com/alidadasb/CountryCityAutoComplete
 
-### Burt for cleaning it all up 
+##### Burt for cleaning it all up 
 
 
-### domurtag for identifying and helping improve plugin
+##### domurtag for identifying and helping improve plugin
 
