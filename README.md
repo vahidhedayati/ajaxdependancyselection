@@ -70,9 +70,10 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 
 ### g:selectPrimary 
-(relationship: fully dependent ) in conjunction with g:selectSecondary, refer to above notes on jquery requirements
+####### (relationship: fully dependent ) in conjunction with g:selectSecondary
+########## refer to above notes on jquery requirements
 
-Example domainClasses:
+######## Fully dependent domainClasses:
 
 
 	class PrimaryDomain {
@@ -143,7 +144,9 @@ is what is represented on the html end
 
 
 ### g:selectSecondary 
-(relationship: fully dependent ) in conjunction with g:selectPrimary, refer to above notes on jquery requirements
+
+####### (relationship: fully dependent ) in conjunction with g:selectPrimary
+########## refer to above notes on jquery requirements
 
 
 This is a tag that can be used over and over again to go through nested situations, you can also use the selectSeondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
@@ -217,7 +220,7 @@ This is a simple auto complete tag lib that allows you to auto complete from a s
 
 ###g:selectPrimaryNR
 
-### no reference mapping
+######## no reference mapping
 	class PrimaryDomain {
  		String name
  		static hasMany = [ secondarydomain: SecondaryDomain ]
@@ -266,40 +269,42 @@ Example call:
 
 ###g:selectSecondaryNR
 
- <g:selectSecondaryNR id="MyCity11" name="MyCity11"
-            domain='ajaxdependancyselectexample.MyCity'
-            bindid="myborough"
-            searchField='cityName'
-            collectField='id'
-            domain2='ajaxdependancyselectexample.MyBorough'
-            searchField2='actualName'
-            collectField2='id'
-            noSelection="['': 'Please choose City']"
-            setId="MyBorough11"
-            appendValue='*'
-            appendName='All Items'
-            value=''/>
+
+	<g:selectSecondaryNR 
+	id="MyCity11" 
+	name="MyCity11"
+	domain='ajaxdependancyselectexample.MyCity'
+	bindid="myborough"
+	searchField='cityName'
+	collectField='id'
+	domain2='ajaxdependancyselectexample.MyBorough'
+	searchField2='actualName'
+	collectField2='id'
+	noSelection="['': 'Please choose City']"
+	setId="MyBorough11"
+	appendValue='*'
+	appendName='All Items'
+	value=''/>
 
 
 
 ###g:autoCompleteSecondaryNR
 
 	<g:autoCompleteSecondaryNR id="secondarySearch4" 
-			name="NAMEOFcityName" 
-			domain='ajaxdependancyselectexample.MyCity' 
-			domain2='ajaxdependancyselectexample.MyBorough' 
-			primarybind='myborough' 
-			hidden='hidden5' 
-			hidden2='hidden6' 
-			searchField='actualName' 
-			collectField='id' 
-			
-			value=''/>
+	name="NAMEOFcityName" 
+	domain='ajaxdependancyselectexample.MyCity' 
+	domain2='ajaxdependancyselectexample.MyBorough' 
+	primarybind='myborough' 
+	hidden='hidden5' 
+	hidden2='hidden6' 
+	searchField='actualName' 
+	collectField='id' 
+	value=''/>
 			
 			
 
 ### g:selectController 
-Controller action discovery, refer to above notes on jquery requirements
+####### Controller action discovery, refer to above notes on jquery requirements
 
 
 This will display all your controllers then let you Choose available actions of this controller:
