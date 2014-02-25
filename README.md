@@ -217,8 +217,6 @@ This is a simple auto complete tag lib that allows you to auto complete from a s
 
 ###g:selectPrimaryNR
 
-
-
 ### no reference mapping
 	class PrimaryDomain {
  		String name
@@ -239,6 +237,31 @@ This you would use g:selectPrimaryNR the bindid is secondarydomain the field hig
 
 
 Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
+
+
+Example call:
+
+	<g:selectPrimaryNR 
+	id="selectZip" 
+	name="selectZip"
+	domain='Postcode' 
+	searchField='postcode' 
+	collectField='id'
+	bindid="myarea"
+	domain2='Area' 
+	searchField2='area' 
+	collectField2='id'
+	noSelection="['null': 'Please choose zipcode']" setId="PickupIDbinder" /> 
+	
+	Pick up area: 
+	<g:select 
+	name="selectPickup" 
+	id="PickupIDbinder" 
+	optionKey="id" 
+	optionValue="name" 
+	from="[]" noSelection="['null': 'Please choose zipcode']" />
+
+
 
 
 ###g:selectSecondaryNR
@@ -320,31 +343,8 @@ The from on this is set to [] which gets filled in by g:selectController setId r
 
 
 
-
-
-
-
-
-
-
-
-
-        
-        
-
-
-
-			
-
-
-
-
-
-
-	
-	
-
-
+##### Examples below
+#########################################
 
 
 
@@ -496,5 +496,5 @@ Plugin expands on this idea: https://github.com/alidadasb/CountryCityAutoComplet
 ### Burt for cleaning it all up 
 
 
-### 
+### domurtag for identifying and helping improve plugin
 
