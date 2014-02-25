@@ -145,22 +145,22 @@ Here are the values explained:
 
 
 	<g:selectPrimary 
-    	id="MyContinent2" 		// Required - your objectID referred to by css has no importance
-    	setId="MyCountry"  		// Required the ID of your next selectBox to update actions
+	id="MyContinent2" 		// Required - your objectID referred to by css has no importance
+	setId="MyCountry"  		// Required the ID of your next selectBox to update actions
 	name="MyContinent" 		// Required - your form field name
 	noSelection="['': 'Please choose Continent']"  //default message for 
     	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "ajaxSelectSecondary" (part of this plugin)
 	appendValue='*'			// Optional set a value to be appended to the list
 	appendName='All Items'		// If you set appendValue then set the display name for it
-    	bindid="mycontinent.id"		// Explained above in example domainClasses	
-    	domain='your.package.MyContinent'	// Required your primary domainClass full classpath.
- 	searchField='continentName'  		// Required - search for field called contintentName
+	bindid="mycontinent.id"		// Explained above in example domainClasses	
+	domain='your.package.MyContinent'	// Required your primary domainClass full classpath.
+	searchField='continentName'  		// Required - search for field called contintentName
 	collectField='id' 			// Required : if not defaults to searchField value 
-        domain2='your.package.MyCountry'	// Required your secondary depenent domainClass full classpath.
-        searchField2='countryName'		//  Required - search for field called contintentName
-        collectField2='id'
-        required="false"		// optional add this if you wish to disable required set by default
+	domain2='your.package.MyCountry'	// Required your secondary depenent domainClass full classpath.
+	searchField2='countryName'		//  Required - search for field called contintentName
+	collectField2='id'
+	required="false"		// optional add this if you wish to disable required set by default
 	value="${params.MyContinent}"	// your value if you are posting form back
         />
          
@@ -172,11 +172,11 @@ So in the case of Country city, the above is fine to call to a city select area 
 	<g:select  
 	id="MyCountry"  
 	name="MyCity1"
-        optionKey="id"
-        optionValue="name" 
-        from="[]" 
-        required="required" 
-        noSelection="['': 'Please choose Country']" />
+	optionKey="id"
+	optionValue="name" 
+	from="[]" 
+	required="required" 
+	noSelection="['': 'Please choose Country']" />
         
         
         
