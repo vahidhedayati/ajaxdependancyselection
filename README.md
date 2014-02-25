@@ -72,8 +72,12 @@ Here are the values explained:
 
 	<g:selectController
 	
-	id="selectPrimaryTest22"  	// Required - your objectID referred to by css has no importance
-	setId="ControllerActions"  	// Required the ID of your next selectBox to update actions
+	id="selectPrimaryTest22"  	 
+	<!-- Required - your objectID referred to by css has no importance -->
+	
+	setId="ControllerActions"  	
+	<!-- Required the ID of your next selectBox to update actions -->
+	
 	name="mycontrollers" 		// Required - your form field name
 	searchField='name'  		// optional - search name of controllers
 	collectField='name' 		// optional - will default to searchField from 0.24+
