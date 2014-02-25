@@ -38,13 +38,13 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 
 	
 
-# version info:
+## version info:
 	0.23 - removed null from values updated (default additional selection field added when values update), this now means user has to still choose this value 
 	0.22 - added required by default set to required for all taglib calls. 
 	0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
 
 
-# Example site:
+## Example site:
 Using this plugin with the grails framework  you are able to achieve this without all of the complications. Refer to this sample project which makes use of all of the examples below with some objects already pre-added to the sample projecet. Found here in this sample project:
 
 https://github.com/vahidhedayati/ajaxdependancyselectexample
@@ -55,7 +55,7 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 
 
-# Taglibs provided:
+## Taglibs provided:
 
 	g:selectController
 	g:selectPrimary
@@ -70,8 +70,8 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 
 
-# g:selectController 
-Controller action discovery 
+### g:selectController 
+####Controller action discovery 
 
 
 This will display all your controllers then let you Choose available actions of this controller:
@@ -113,10 +113,8 @@ The from on this is set to [] which gets filled in by g:selectController setId r
 
 
 
-
-
-# g:selectPrimary 
-(relationship: fully dependent ) in conjunction with g:selectSecondary
+### g:selectPrimary 
+####(relationship: fully dependent ) in conjunction with g:selectSecondary
 
 Example domainClasses:
 
@@ -188,8 +186,8 @@ is what is represented on the html end
 
 
 
-# g:selectSecondary 
-(relationship: fully dependent ) in conjunction with g:selectPrimary
+### g:selectSecondary 
+####(relationship: fully dependent ) in conjunction with g:selectPrimary
 
 
 This is a tag that can be used over and over again to go through nested situations, you can also use the selectSeondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
@@ -214,47 +212,12 @@ Back to g:selectSecondary example:
 
 
 
-
-In this secondary Call we have defined a domain2 and search and collectField2 now this is 
-
-
-## no reference mapping
-	class PrimaryDomain {
- 		String name
- 		static hasMany = [ secondarydomain: SecondaryDomain ]
-	}
-
-	class SecondaryDomain {
- 		String name
-		static belongsTo = [PrimaryDomain ]
-	}
-
-Now within your call the bindid would be:	
-
-	bindid="secondarydomain"
-
-
-This you would use g:selectPrimaryNR the bindid is secondarydomain the field highlighted in bold above as the bindid
-
-
-Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
-
-
-Here are two domain classes with a no reference set up and require g:selectSecondaryNR feature: 
-
-		class MyCity {
-
-			String cityName
-			MyCountry mycountry
-			static hasMany=[myborough: MyBorough]
-			String toString()  { "${cityName}"}
-		}
-		
-		class MyBorough {
-			String actualName
-			static belongsTo = [MyCity]
-			String toString() { "${actualName}" }
-		}
+###g:autocomplete
+###g:autoCompletePrimary
+###g:autoCompleteSecondary
+###g:selectPrimaryNR
+###g:selectSecondaryNR
+###g:autoCompleteSecondaryNR
 
 
 
@@ -267,81 +230,11 @@ Here are two domain classes with a no reference set up and require g:selectSecon
 
 
 
-
-1.1 Here is the GSP making a nested call where an element has a no reference relationship, the gsp page in the example called norefselectionext.gsp goes back out of a NR relationship and calls Streets domain after borough to then load up a further relationsip
-
-
-	  <form method=post action=example5>
-	  <g:selectPrimary id="MyContinent2" name="MyContinent2"
-	     domain='ajaxdependancyselectexample.MyContinent'
-            searchField='continentName'
-            collectField='id'
-
-            domain2='ajaxdependancyselectexample.MyCountry'
-            bindid="mycontinent.id"
-            searchField2='countryName'
-            collectField2='id'
-            
-            appendValue='*'
-            appendName='All Items'
-            
-            noSelection="['': 'Please choose Continent']"
-            setId="MyCountry11"
-            value=''/>
-
-        <g:selectSecondary id="MyCountry11" name="MyCountry11"
-            domain2='ajaxdependancyselectexample.MyCity'
-            bindid="mycountry.id"
-            searchField2='cityName'
-            collectField2='id'
-
-            appendValue='optional_Additional_Value_'
-            appendName='Optional Additional Name'
-            noSelection="['': 'Please choose Continent']"
-            setId="MyCity11"
-            
-            appendValue='*'
-            appendName='All Items'
-            
-            value=''/>
-
-
-
-
-
-        <g:selectSecondaryNR id="MyCity11" name="MyCity11"
-            domain='ajaxdependancyselectexample.MyCity'
-            bindid="myborough"
-            searchField='cityName'
-            collectField='id'
-
-            domain2='ajaxdependancyselectexample.MyBorough'
-             searchField2='actualName'
-            collectField2='id'
-
-
-
-
-            noSelection="['': 'Please choose City']"
-            setId="MyBorough11"
-            
-            appendValue='*'
-            appendName='All Items'
-            
-            
-            value=''/>
-
-
-            <g:select name="MyBorough11" id="MyBorough11" 
-            optionKey="id" optionValue="name"
-            from="[]" required="required"  noSelection="['': 'Please choose City']" />
-
-        <br> <input type=submit value=go> </form>
         
         
 
 
-I have added Example 2 above which works fine on verion 0.14 onwards.. It has new searchField2 and collectionField2, if these are not defined it will default to searchField and collectField. Due to this object containing a cityName and countryName there had to be differet definition made. Sorry my examples were all very basic I have had to update plugin to work with more dynamic setups.
+
 
 # 1.2 g:selectPrimary Multi element autocomplete example
 
@@ -561,3 +454,107 @@ PrimaryObject has its own hiddenField, secondary objects all have two definition
 
 	<label>Cities:</label>
 	<g:autoCompleteSecondary 
+	
+	
+	
+
+
+
+
+
+
+### no reference mapping
+	class PrimaryDomain {
+ 		String name
+ 		static hasMany = [ secondarydomain: SecondaryDomain ]
+	}
+
+	class SecondaryDomain {
+ 		String name
+		static belongsTo = [PrimaryDomain ]
+	}
+
+Now within your call the bindid would be:	
+
+	bindid="secondarydomain"
+
+
+This you would use g:selectPrimaryNR the bindid is secondarydomain the field highlighted in bold above as the bindid
+
+
+Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
+
+
+Here are two domain classes with a no reference set up and require g:selectSecondaryNR feature: 
+
+		class MyCity {
+
+			String cityName
+			MyCountry mycountry
+			static hasMany=[myborough: MyBorough]
+			String toString()  { "${cityName}"}
+		}
+		
+		class MyBorough {
+			String actualName
+			static belongsTo = [MyCity]
+			String toString() { "${actualName}" }
+		}
+
+
+
+
+
+### Examples of primary to secondary then to seoncdaryNR
+
+Here is the GSP making a nested call where an element has a no reference relationship, the gsp page in the example called norefselectionext.gsp goes back out of a NR relationship and calls Streets domain after borough to then load up a further relationsip
+
+
+	  <form method=post action=example5>
+	  <g:selectPrimary id="MyContinent2" name="MyContinent2"
+	    domain='ajaxdependancyselectexample.MyContinent'
+            searchField='continentName'
+            collectField='id'
+            domain2='ajaxdependancyselectexample.MyCountry'
+            bindid="mycontinent.id"
+            searchField2='countryName'
+            collectField2='id'
+            appendValue='*'
+            appendName='All Items'
+            noSelection="['': 'Please choose Continent']"
+            setId="MyCountry11"
+            value=''/>
+
+        <g:selectSecondary id="MyCountry11" name="MyCountry11"
+            domain2='ajaxdependancyselectexample.MyCity'
+            bindid="mycountry.id"
+            searchField2='cityName'
+            collectField2='id'
+            appendValue='optional_Additional_Value_'
+            appendName='Optional Additional Name'
+            noSelection="['': 'Please choose Continent']"
+            setId="MyCity11"
+            appendValue='*'
+            appendName='All Items'
+            value=''/>
+
+
+        <g:selectSecondaryNR id="MyCity11" name="MyCity11"
+            domain='ajaxdependancyselectexample.MyCity'
+            bindid="myborough"
+            searchField='cityName'
+            collectField='id'
+            domain2='ajaxdependancyselectexample.MyBorough'
+            searchField2='actualName'
+            collectField2='id'
+            noSelection="['': 'Please choose City']"
+            setId="MyBorough11"
+            appendValue='*'
+            appendName='All Items'
+            value=''/>
+
+        <g:select name="MyBorough11" id="MyBorough11" 
+            optionKey="id" optionValue="name"
+            from="[]" required="required"  noSelection="['': 'Please choose City']" />
+
+        <br> <input type=submit value=go> </form>	
