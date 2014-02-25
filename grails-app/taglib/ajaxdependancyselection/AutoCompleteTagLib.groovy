@@ -16,6 +16,9 @@ class AutoCompleteTagLib {
 		if (!attrs.action) { 
 			attrs.action= "ajaxSelectControllerAction"
 		}	
+		if (!attrs.searchField) {
+			attrs.searchField="name"
+		}
 		if (!attrs.setId) {
 			attrs.setId = "selectSecondary"
 		}	
