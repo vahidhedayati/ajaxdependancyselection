@@ -2,35 +2,34 @@ ajaxdependancyselection 0.23
 =======================
 
 
-Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide either select or auto complete form fields. This can be any combination of either fully dependant objects or full dependant as well as no reference bindings.
-
-0.23 - removed null from values updated (default additional selection field added when values update) - this now means user has to still choose this value 
-
-0.22 - added required by default set to required for all taglib calls.
-       if user wishes not to require a field then they must specifiy:
-       required="false" in any of the below calls
-
-0.17 has no real changes, besides a tidy up of services and taglib.
-
-0.19 is a broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
+Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide either select or auto complete form fields. This can be any combination of either fully dependent objects or full dependent as well as no reference bindings.
 
 
 # Installation:
 
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.23"
+	compile ":ajaxdependancyselection:0.24" (unreleased fixing some issues)
 
 Or via grails command line:
 
 	grails install-plugin ajaxdependancyselection
 
 
-#Required:
-
-	jquery-ui
+# Required:
 	ajaxdependancyselection
 
+# For autocomplete:	
+	compile ":jquery-ui:1.10.3"
+	
+
+0.23 - removed null from values updated (default additional selection field added when values update), this now means user has to still choose this value 
+
+0.22 - added required by default set to required for all taglib calls.
+       if user wishes not to require a field then they must specifiy:
+       required="false" in any of the below calls
+
+0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
 
 
 
@@ -42,17 +41,57 @@ https://github.com/vahidhedayati/ajaxdependancyselectexample
 
 Use Europe/United Kingdom/London or Oxford for a full completed example within the above example project when loading it up.
 
+# Taglibs made available via this plugin:
 
-# Select dependancy calls:
+	g:selectController
+	g:selectPrimary
+	g:selectPrimaryNR
+	g:selectSecondary
+	g:selectSecondaryNR
+	g:autocomplete
+	g:autoCompletePrimary
+	g:autoCompleteSecondary
+	g:autoCompleteSecondaryNR
+
+# g:selectController used for your own Controller discovery 
+This will display all your controllers then let you Choose available actions of this controller:
+https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/example.gsp 
+Line 210 onwards has an example here are the values explained:
+
+	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 		// Optional - default "ajaxSelectControllerAction" (part of this plugin)
+	
+	id="selectPrimaryTest22"  	// Required - your objectID referred to by css nothing important here
+	name="mycontrollers" 		// Required - your form field name
+	searchField='name'  		// optional - search name of controllers
+	collectField='name' 		// optional - will default to searchField from 0.24+
+	noSelection="['': 'Please choose Controller']"  //default message for 
+	setId="ControllerActions"  	// Required the ID of your next selectBox to update actions
+	required="false"		// optional add this if you wish to disable required set by default
+	value="${params.mycontrollers}"	// your value if you are posting form back
+
+This now gets passed to a standard <g:select call where id="ControllerActions"
+
+
+	<g:select name="myname" id="ControllerActions"
+	optionKey="name" optionValue="name"
+	from="[]" required="required" noSelection="['': 'Please choose controller']" /> 
+
+
+
+
+# Select dependency calls:
 
  Select method to choose first field , using the id it binds to second form field where its values are based on first chosen select field. This can include multiple hasMany belongsTo and or no reference relationships
  
- There are examples below showing:
  
- 	1.0 g:selectPrimary -  One object dependant on another hasMany + belongsTo
- 	1.1 g:selectSecondaryNR  - How to do call a no reference object
-	1.2 g:selectPrimary & g:selectSecondary multiple calls with more than id and name values..
-	1.3 g:selectPrimary Multiple calls on one gsp
+ There are examples below showing:
+ 	
+ 	1.0 g:selectPrimary/Secondary input fields
+ 	1.1 g:selectPrimary -  One object dependant on another hasMany + belongsTo
+ 	1.2 g:selectSecondaryNR  - How to do call a no reference object
+	1.3 g:selectPrimary & g:selectSecondary multiple calls with more than id and name values..
+	1.4 g:selectPrimary Multiple calls on one gsp
 
 
 # Auto complete dependancy or single call:
@@ -61,14 +100,52 @@ using auto complete to fill first form field, using the id it binds to second fo
 
 There are examples below showing:
 
-	2.0 g:autoCompletePrimary & g:autoCompleteSecondary - How to do use autoCompletePrimary/Secondary function  
-	2.1 g:autoCompleteSecondaryNR - This is called from a primary object which can be g:autoCompletePrimary or g:autoCompleteSecondary
-	2.2 g:autocomplete Multi element autocomplete example
-	2.3 g:autocomplete Multiple calls on one gsp
-	2.4 g:autocomplete showing name setting value as collectionField
-	2.5 g:autocomplete return result showing collectionField
+	2.0 g:autoComplete fields explained
+	2.1 g:autoCompletePrimary & g:autoCompleteSecondary - How to do use autoCompletePrimary/Secondary function  
+	2.2 g:autoCompleteSecondaryNR - This is called from a primary object which can be g:autoCompletePrimary or g:autoCompleteSecondary
+	2.3 g:autocomplete Multi element autocomplete example
+	2.4 g:autocomplete Multiple calls on one gsp
+	2.5 g:autocomplete showing name setting value as collectionField
+	2.6 g:autocomplete return result showing collectionField
 
-The auto complete feature can be used on a nested set of lookups and can be 	
+# 1.0 g:selectPrimarySecondary input fields:
+
+    <g:selectPrimary 
+    
+    id="MyContinent2" 		
+    name="MyContinent2"
+    domain='ajaxdependancyselectexample.MyContinent'
+            searchField='continentName'
+            collectField='id'
+
+            domain2='ajaxdependancyselectexample.MyCountry'
+            bindid="mycontinent.id"
+            searchField2='countryName'
+            collectField2='id'
+            
+            appendValue='*'
+            appendName='All Items'
+            
+            noSelection="['': 'Please choose Continent']"
+            setId="MyCountry11"
+            value=''/>
+
+        <g:selectSecondary id="MyCountry11" name="MyCountry11"
+            domain2='ajaxdependancyselectexample.MyCity'
+            bindid="mycountry.id"
+            searchField2='cityName'
+            collectField2='id'
+
+            appendValue='optional_Additional_Value_'
+            appendName='Optional Additional Name'
+            noSelection="['': 'Please choose Continent']"
+            setId="MyCity11"
+            
+            appendValue='*'
+            appendName='All Items'
+            
+            value=''/>
+
 
 
 
