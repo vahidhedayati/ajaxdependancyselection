@@ -7,25 +7,22 @@ Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide 
 A common problem when it comes to making a website is having objects that are independant and when a user selects an option what to do next ? do you refresh the page to update the next set of values or look into some jquery/java scripts to auto update the next set of select option.
 
 
-# Installation:
-
+## Installation:
 Add plugin Dependency :
-
 	compile ":ajaxdependancyselection:0.24" (unreleased fixing some issues)
 
 Or via grails command line:
-
 	grails install-plugin ajaxdependancyselection
 
 
 
 
-# Autocomplete requirements:	
+## Autocomplete requirements:	
 	compile ":jquery-ui:1.10.3"
 	
 
-# Autocomplete configuration  jquery, jquery-ui libraries:
-  
+## Autocomplete configuration  
+###jquery, jquery-ui libraries:
 your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationResources.groovy and ensure you refer to it in your main.gsp or relevant file
 
 	<g:javascript library="jquery-ui"/>
@@ -39,18 +36,14 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 	
 
 # version info:
-
 0.23 - removed null from values updated (default additional selection field added when values update), this now means user has to still choose this value 
-
 0.22 - added required by default set to required for all taglib calls.
        if user wishes not to require a field then they must specifiy:
        required="false" in any of the below calls
-
 0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
 
 
 # Example site:
-
 Using this plugin with the grails framework  you are able to achieve this without all of the complications. Refer to this sample project which makes use of all of the examples below with some objects already pre-added to the sample projecet. Found here in this sample project:
 
 https://github.com/vahidhedayati/ajaxdependancyselectexample
