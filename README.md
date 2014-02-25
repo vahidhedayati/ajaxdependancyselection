@@ -9,15 +9,18 @@ A common problem when it comes to making a website is having objects that are in
 
 ## Installation:
 Add plugin Dependency :
+
 	compile ":ajaxdependancyselection:0.24" (unreleased fixing some issues)
 
 Or via grails command line:
+
 	grails install-plugin ajaxdependancyselection
 
 
 
 
 ## Autocomplete requirements:	
+
 	compile ":jquery-ui:1.10.3"
 	
 
@@ -36,11 +39,9 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 	
 
 # version info:
-0.23 - removed null from values updated (default additional selection field added when values update), this now means user has to still choose this value 
-0.22 - added required by default set to required for all taglib calls.
-       if user wishes not to require a field then they must specifiy:
-       required="false" in any of the below calls
-0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
+	0.23 - removed null from values updated (default additional selection field added when values update), this now means user has to still choose this value 
+	0.22 - added required by default set to required for all taglib calls. 
+	0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
 
 
 # Example site:
