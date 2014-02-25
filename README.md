@@ -20,8 +20,22 @@ Or via grails command line:
 
 
 
-# For autocomplete:	
+# Autocomplete requirements:	
 	compile ":jquery-ui:1.10.3"
+	
+
+# Autocomplete configuration  jquery, jquery-ui libraries:
+  
+your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationResources.groovy and ensure you refer to it in your main.gsp or relevant file
+
+	<g:javascript library="jquery-ui"/>
+	<g:javascript library="jquery"/>
+	…
+	<g:layoutHead/>
+
+
+The jquery-ui should only be required for autocomplete calls, jquery will be needed by all the other functionality of this plugin, so please ensure you have enabled jquery in your gsp and is installed.
+
 	
 
 # version info:
@@ -62,7 +76,8 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 
 
-# g:selectController Controller action discovery 
+# g:selectController 
+Controller action discovery 
 
 
 This will display all your controllers then let you Choose available actions of this controller:
@@ -73,30 +88,18 @@ Here are the values explained:
 
 
 	<g:selectController
-	id="selectPrimaryTest22"  	 
-	<!-- Required - your objectID referred to by css has no importance -->
-	setId="ControllerActions"  	
-	<!-- Required the ID of your next selectBox to update actions -->
-	name="mycontrollers" 		
-	<!-- Required - your form field name -->
-	searchField='name'  		
-	<!-- optional from 0.24+ - search name of controllers  -->
-	collectField='name' 		
-	<!-- optional - will default to searchField -->
-	noSelection="['': 'Please choose Controller']"  
-	<!-- default message for no selection by user -->
-	controller = "something" 	
-	<!-- Optional - default "autoComplete" (part of this plugin) -->
-	action = "something"
-	<!-- Optional - default "ajaxSelectControllerAction" (part of this plugin) -->
-	appendValue='*'			
-	<!-- Optional set a value to be appended to the list -->
-	appendName='All Items'
-	<!-- only optional if above not defined If you set appendValue then set the display name for it -->
-        required="false"
-	<!-- Optional - add this if you wish to disable required set by default -->
-	value="${params.mycontrollers}"	 
-	<!--your value if you are posting form back-->
+	id="selectPrimaryTest22"		// Required - your objectID referred to by css has no importance
+	setId="ControllerActions"		// Required the ID of your next selectBox to update actions
+	name="mycontrollers" 			// Required - your form field name	
+	searchField='name'			// optional from 0.24+ - search name of controllers
+	collectField='name' 			// Optional - will default to searchField
+	noSelection="['': 'Please choose Controller']"  //default message for no selection by use
+	controller = "something" 		// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 			// Optional - default "ajaxSelectControllerAction" (part of this plugin)
+	appendValue='*'				// Optional set a value to be appended to the list
+	appendName='All Items' 			// only optional if above not defined
+        required="false"			// Optional - add this if you wish to disable required set by default
+	value="${params.mycontrollers}"	 	//your value if you are posting form back
 	/>
 
 This now gets passed to a standard select call where it has an id of "ControllerActions":
@@ -118,7 +121,8 @@ The from on this is set to [] which gets filled in by g:selectController setId r
 
 
 
-# g:selectPrimary (relationship: fully dependent ) in conjunction with g:selectSecondary
+# g:selectPrimary 
+(relationship: fully dependent ) in conjunction with g:selectSecondary
 
 Example domainClasses:
 
@@ -149,7 +153,7 @@ Here are the values explained:
 	setId="MyCountry"  		// Required the ID of your next selectBox to update actions
 	name="MyContinent" 		// Required - your form field name
 	noSelection="['': 'Please choose Continent']"  //default message for 
-    	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
+	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "ajaxSelectSecondary" (part of this plugin)
 	appendValue='*'			// Optional set a value to be appended to the list
 	appendName='All Items'		// If you set appendValue then set the display name for it
@@ -165,7 +169,7 @@ Here are the values explained:
         />
          
 
-Now this can be either passed to g:selectSecondary if you have further dependency that you wish to interogate or passed to a simple select box if you just had one thing to depend on.
+Now this can be either passed toa normal select or to a  g:selectSecondary where if if you have further dependency you wish to interogate.
 
 So in the case of Country city, the above is fine to call to a city select area that is a simple call like this:
 
@@ -190,7 +194,8 @@ is what is represented on the html end
 
 
 
-# g:selectSecondary (relationship: fully dependent ) in conjunction with g:selectPrimary
+# g:selectSecondary 
+(relationship: fully dependent ) in conjunction with g:selectPrimary
 
 
 This is a tag that can be used over and over again to go through nested situations, you can also use the selectSeondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
@@ -199,78 +204,24 @@ Back to g:selectSecondary example:
 
 
         <g:selectSecondary 
-        
-        id="MyCountry11" 
-        name="MyCountry11"
-        domain2='ajaxdependancyselectexample.MyCity'
-        bindid="mycountry.id"
-        searchField2='cityName'
-        collectField2='id'
-
-        appendValue='optional_Additional_Value_'
-        appendName='Optional Additional Name'
-        noSelection="['': 'Please choose Continent']"
-        setId="MyCity11"
-            
-        appendValue='*'
-        appendName='All Items'
-            
-        value=''
-        
+        id="MyCountry" 			// Required - must be setId of previous selectPrimary or selectSecondary	
+        name="MyCountry"		// Required - your field name for this select box
+        domain2='your.package.MyCity'	// Requird - your next nested call or dependent class 
+        bindid="mycountry.id"		// Like in primary this is your bind id of the 3rd belongsTo.id
+        searchField2='cityName'		// table field to display
+        collectField2='id'		// table field to set as value
+        appendValue='*'			// Optional set a value to be appended to the list
+        appendName='All Countries'	// If you set appendValue then set the display name for it
+        noSelection="['': 'Please choose Continent']"	//default no selection value
+        setId="MyCity"			//Required - your next select id to update
+        value="${params.MyCountry}"	// Default value of select box
+        required="false"		// optional add this if you wish to disable required set by default
         />
 
 
 
-# Select dependency calls:
 
- Select method to choose first field , using the id it binds to second form field where its values are based on first chosen select field. This can include multiple hasMany belongsTo and or no reference relationships
- 
- 
- There are examples below showing:
- 	
- 	1.0 g:selectPrimary/Secondary input fields
- 	1.1 g:selectPrimary -  One object dependant on another hasMany + belongsTo
- 	1.2 g:selectSecondaryNR  - How to do call a no reference object
-	1.3 g:selectPrimary & g:selectSecondary multiple calls with more than id and name values..
-	1.4 g:selectPrimary Multiple calls on one gsp
-
-
-# Auto complete dependancy or single call:
-
-using auto complete to fill first form field, using the id it binds to second form field and auto complete option of 2nd field based on first chosen auto completed box. This is in cases where domain object 1 hasMany of domainclass2 and domainclass2 belongs to domainclass1
-
-There are examples below showing:
-
-	2.0 g:autoComplete fields explained
-	2.1 g:autoCompletePrimary & g:autoCompleteSecondary - How to do use autoCompletePrimary/Secondary function  
-	2.2 g:autoCompleteSecondaryNR - This is called from a primary object which can be g:autoCompletePrimary or g:autoCompleteSecondary
-	2.3 g:autocomplete Multi element autocomplete example
-	2.4 g:autocomplete Multiple calls on one gsp
-	2.5 g:autocomplete showing name setting value as collectionField
-	2.6 g:autocomplete return result showing collectionField
-
-# 1.0 g:selectPrimarySecondary input fields:
-
-    
-
-
-
-
-# New features since 0.16 for all g:select calls:
-
-  
-            appendValue='*'
-            appendName='All Items'
-            
- 
-If the above is added to a g:select block then the default value and name shown when results updated are what is set in them, otherwise the previous hard coded Values updated and null value are set
-
-
-# Some tags explained:
-## Normal mapping:
-
-
-
+In this secondary Call we have defined a domain2 and search and collectField2 now this is 
 
 
 ## no reference mapping
@@ -295,68 +246,6 @@ This you would use g:selectPrimaryNR the bindid is secondarydomain the field hig
 Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
 
 
-# setId tag:
-This is the id for the next selectionBox - you must set the value of this to equal the value of id='something' for your next select box
-
-
-#  searchField & collectField:
-This are the values it uses to search your domainclasses, so usually collectField is the id of the value selected and SearchField is the field name to search
-
-	searchField='name'
-        collectField='id'
-        
-If you had String myField inside the domainclass the search and collect fields would be:
-
-	searchField='myField'
-        collectField='id'
-        
-        
-
-# Howto:
-
-
-# Configuration of your grails app - include jquery, jquery-ui libraries:
-  
-your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationResources.groovy and ensure you refer to it in your main.gsp or relevant file
-
-	<g:javascript library="jquery-ui"/>
-	<g:javascript library="jquery"/>
-	…
-	<g:layoutHead/>
-
-
-The jquery-ui should only be required for autocomplete calls
-
-
-Sample domainclasses for below examples (all under my test app called testingv which all classes are packages with:
-
-	package testingv
-
-
-which has these domains - left out Deparment/employee same as mycountry/mycity
-
-	class MyContinent {
-      		String name
-      		static hasMany=[mycountry: MyCountry]
-      		String toString()  { "${name}"}
-	}
-
-	class MyCountry { 
-      		String name 
-      		MyContinent mycontinent 
-      		static hasMany=[mycity: MyCity] 
-      		String toString()  { "${name}"}
-	}
-
-	class MyCity { 
-     		String name 
-    		MyCountry mycountry 
-    		String toString()  { "${name}"}
-	}
-
-
-
-
 Here are two domain classes with a no reference set up and require g:selectSecondaryNR feature: 
 
 		class MyCity {
@@ -375,31 +264,6 @@ Here are two domain classes with a no reference set up and require g:selectSecon
 
 
 
-Refer to example 1.1 for above example call
-
-
-
-# Add new controller actions
-Now generated controllers and views for above, once done edit the controller for master which is MyCountry add :
-
-	def example() {}
-	def example5() {}
-
-
-# Add new gsp pages
-Create example2 3 4 5 gsp files in your views for mycountry for now containing:
-
-	<%@ page import="testingv.MyContinent" %>
-	<%@ page import="testingv.MyCountry" %>
-	<%@ page import="testingv.MyCity" %>
-
-	<!DOCTYPE html> <html> <head> 
-	<meta name="layout" content="main"> <g:set var="entityName" 
-	value="${message(code: 'myCountry.label', default: 'MyCountry')}" /> 
-	<title><g:message code="default.create.label" args="[entityName]" /></title> </head>
-
-
-# Provided examples:,
 
 
 
@@ -407,61 +271,6 @@ Create example2 3 4 5 gsp files in your views for mycountry for now containing:
 
 
 
-	3. g:selectController : Your apps controllers & actions 
-
-
-	Finally  g:selectSecondaryNR  This lets you query no reference structures.
-
-
-
-
-
-# 1.0 g:selectPrimary
-This part of the plugin is based on http://www.grails.org/AJAX-Driven+SELECTs+in+GSP I have expanded the idea and made things modular enough for a gsp to provide the required values. In order to get your site to produce select dependancy options you will need to define:
-
-
-	<g:selectPrimary id="MyContinent1" name="MyContinent1"
-        domain='testingv.MyCountry'
-        domain2='testingv.MyCity'
-        bindid="mycountry.id"
-        searchField='name'
-        collectField='id'
-        noSelection="['': 'Please choose Country']" 
-        setId="MyCity1"
-        value=''/>
-
-  	<g:select name="MyCity1" id="MyCity1"  
-        optionKey="id" optionValue="name" 
-        from="[]" required="required" noSelection="['': 'Please choose Country']" />
-        
-        
-        
-Example2 situation where your hasMany has id of id and field you are looking up called countryName, the above example both domains were looking up id and name, in this example we are in a situation where both the hasMany and belongsTo have different searchFields: 
-
-         <g:selectPrimary id="MyContinent1" 
-         name="MyContinent1" 
-         domain='ajaxdependancyselectexample.MyCountry' 
-         searchField='countryName' 
-         collectField='id'
-         
-         domain2='ajaxdependancyselectexample.MyCity' 
-         bindid="mycountry.id" 
-         searchField2='cityName' 
-         collectField2='id'
-         
-         noSelection="['': 'Please choose Country']" setId="MyCity1" value=''/>
-         
-         <g:select name="MyCity1" id="MyCity1" 
-         optionKey="id" optionValue="cityName" 
-         from="[]" required="required"
-         noSelection="['': 'Please choose Country']" />
-
-
-the tag g:selectPrimary followed by its id and name, the domain and domain variables are domain is the actual domain for the select you wish to display, domain2 is the secondary domain this object is bound with. followed by bindid, the bindid is the object name.id as defined in your domainClass. In my city domainclass I had MyCountry mycountry, so the bindid here was mycountry.id, the search and collectFields are usually the id and the given field which would represent the name of the object.
-
-With this now in place a simple g:select box with from set to [] and id that matches the setId of the actual g:selectPrimary : setId="MyCity1" followed by <g:select ... id="MyCity1"  
-
-This is a basic two object mapping that works fine in order to expand to multiple objects go to 1.1
 
 
 
