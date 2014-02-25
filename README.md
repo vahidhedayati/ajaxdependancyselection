@@ -78,18 +78,35 @@ Here are the values explained:
 	setId="ControllerActions"  	
 	<!-- Required the ID of your next selectBox to update actions -->
 	
-	name="mycontrollers" 		// Required - your form field name
-	searchField='name'  		// optional - search name of controllers
-	collectField='name' 		// optional - will default to searchField from 0.24+
-	noSelection="['': 'Please choose Controller']"  //default message for 
+	name="mycontrollers" 		
+	<!-- Required - your form field name -->
+	searchField='name'  		
+	<!-- optional from 0.24+ - search name of controllers  -->
+	
+	collectField='name' 		
+	<!-- optional - will default to searchField -->
+	
+	noSelection="['': 'Please choose Controller']"  
+	<!-- default message for no selection by user -->
 	
 	
-	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
-	action = "something" 		// Optional - default "ajaxSelectControllerAction" (part of this plugin)
-	appendValue='*'			// Optional set a value to be appended to the list
-        appendName='All Items'		// If you set appendValue then set the display name for it
-	required="false"		// optional add this if you wish to disable required set by default
-	value="${params.mycontrollers}"	// your value if you are posting form back
+	controller = "something" 	
+	<!-- Optional - default "autoComplete" (part of this plugin) -->
+	
+	action = "something" 		
+	<!-- Optional - default "ajaxSelectControllerAction" (part of this plugin) -->
+	
+	appendValue='*'			
+	<!-- Optional set a value to be appended to the list -->
+	
+        appendName='All Items'		
+        <!-- only optional if above not defined If you set appendValue then set the display name for it -->
+        
+	required="false"
+	<!-- Optional - add this if you wish to disable required set by default -->
+	
+	value="${params.mycontrollers}"	 
+	<!--your value if you are posting form back-->
 	
 	/>
 
@@ -762,140 +779,4 @@ PrimaryObject has its own hiddenField, secondary objects all have two definition
 	<input type=hidden id="hidden2" name="hiddenField" value=""/>
 
 	<label>Cities:</label>
-	<g:autoCompleteSecondary id="secondarySearch"
-  	name="myCityId" 
-  	domain='testingv.MyCity' 
-  	primarybind='mycountry.id' 
-  	hidden='hidden2' 
-  	hidden2='hidden5' 
-  	searchField='name' 
-  	collectField='id' value=''/>
-	<input type=hidden id="hidden5" name="cityId" value=""/>
-
-	# secondary object - you will need to create these domain objects 
-	<label>Department:</label>
-	<g:autoCompletePrimary id="primarySearch1" name="deparmentName"
-  	domain='testingv.Department'
-  	searchField='name'
-  	collectField='id'
-  	setId="secondarySearch2"
-  	hidden='hidden44'
-	value=''/>
-	<input type=hidden id="hidden44" name="departmentId" value=""/>
-
-	<label>Cities:</label>
-	<g:autoCompleteSecondary id="secondarySearch2" 
-  	name="employeeName" 
-  	domain='testingv.Employee' 
-  	primarybind='department.id' 
-  	hidden='hidden44' 
-  	hidden2='hidden55' 
-  	searchField='name' 
-  	collectField='id' 
-  	value=''/> 
-	<input type=hidden id="hidden55" name="employeeId" value=""/> <br/><br/>
-
-	<input type=submit value=go> </form>
-
-
-The very first example of 2.2 has no setId this is because the default behaviour or Id of autoCompleteSecondary is secondarySearch, if either your id is different to this id for secondarySearch or if you need to call this multiple times, the please ensure you define the setId as per the 2nd example further down on 2.2 on autoCompletePrimary
-
-
-
-
-
-
-# 2.4 g:autocomplete showing name setting value as collectionField
-
-This example shows the name but set the value as collectField in this case the id for name..
-
-	<label>Countries:</label>
-	<g:autocomplete id="primarySearch" name="myId"
-  	domain='testingv.MyCountry'
-  	searchField='name'
-  	collectField='id'
-  	value=''/>
-
-
-# 2.5 g:autocomplete return result showing collectionField
-	
-	<label>Countries:</label>
-	<g:autocomplete id="primarySearch2" name="myId2"
-  	action='autocompleteShowCollect'
-  	domain='testingv.MyCountry'
-  	searchField='name'
-  	collectField='id'
-  	value=''/>
-
-
-
-# 3. g:selectController : Your apps controllers & actions 
-        
-tag to query all controllers and using select dependancy show its relevant actions - useful for permissions or anything related to what actions controllers have avaialble:
-
-	<form method=post action=exampl5>
-	<g:selectController id="selectPrimaryTest2" name="mycontrollers"
-  	searchField='name'
-  	collectField='name'
-  	noSelection="['': 'Please choose Controller']" 
-  	setId="ControllerActions"
-  	value=''/>
-
-	<g:select name="myname" id="ControllerActions" 
-	optionKey="name" optionValue="name"  required="required"
-	from="[]" noSelection="['': 'Please choose controller']" /> 
-	<br> <input type=submit value=go> </form>
-
-
-returns:
-
-	[mycontrollers:employee, myname:list, action:exampl5, controller:myCountry]
- 	params.myname=list params.mycontroller=employee (my selection at the time)
-
-{code}
-
-
-How it works internally:
-
-(Please note controllers/actions are no longer required to be defined as part of the call) - this is just for the purpose of understanding how plugin works:
-
-	g:selectPrimary - Methods: Controller:autoComplete | Actions: ajaxSelectSecondary
-	g:selectSecondary - Methods: Controller:autoComplete | Actions: ajaxSelectSecondary
-	g:autoCompletePrimary  - Methods: Controller:autoComplete   | Actions: autocompletePrimaryAction
-	g:autoCompleteSecondary - Methods: Controller:autoComplete | Actions: autocompleteSecondaryAction
-	g:autocomplete - Methods: Controller:autoComplete | Actions: autocomplete, autocompleteShowCollect
-	g:selectController - Methods: Controller:autoComplete | Actions: ajaxSelectControllerAction
-
-
-    
-
-Please note MyCity and Mycountry was just an example, you could create and call any of your own classes as long as the g:autocomplete tags then match the actual domain classes etc :
-
-Country|City, Continent|Country, Department|Employee
-
-The list goes on...
-
-
-# New features of 0.15  : 
-
-	select no reference calls, appendValue and appendName
-	
-
-
-g:selectSecondaryNR  lets you query a relationship where the child has a no reference relationship with its parent
-
-In MyBorough https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/domain/ajaxdependancyselectexample/MyBorough.groovy
-
-# MyBrogough.groovy has a no reference relationship to my MyCity
-
-		static belongsTo = [MyCity]
-
-To make this work a new tag has been added called :  g:selectSecondaryNR
-
-
-For the full working example refer to https://github.com/vahidhedayati/ajaxdependancyselectexample/
-
-If you do end up loadin it up have a look at norefselection.gsp and norefselectionext.gsp
-
-
-
+	<g:autoCompleteSecondary 
