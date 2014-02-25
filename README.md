@@ -4,6 +4,8 @@ ajaxdependancyselection 0.23
 
 Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide either select or auto complete form fields. This can be any combination of either fully dependent objects or full dependent as well as no reference bindings.
 
+A common problem when it comes to making a website is having objects that are independant and when a user selects an option what to do next ? do you refresh the page to update the next set of values or look into some jquery/java scripts to auto update the next set of select option.
+
 
 # Installation:
 
@@ -16,12 +18,13 @@ Or via grails command line:
 	grails install-plugin ajaxdependancyselection
 
 
-# Required:
-	ajaxdependancyselection
+
 
 # For autocomplete:	
 	compile ":jquery-ui:1.10.3"
 	
+
+# version info:
 
 0.23 - removed null from values updated (default additional selection field added when values update), this now means user has to still choose this value 
 
@@ -32,8 +35,8 @@ Or via grails command line:
 0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
 
 
+# Example site:
 
-A common problem when it comes to making a website is having objects that are independant and when a user selects an option what to do next ? do you refresh the page to update the next set of values or look into some jquery/java scripts to auto update the next set of select option.
 Using this plugin with the grails framework  you are able to achieve this without all of the complications. Refer to this sample project which makes use of all of the examples below with some objects already pre-added to the sample projecet. Found here in this sample project:
 
 https://github.com/vahidhedayati/ajaxdependancyselectexample
@@ -44,8 +47,7 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 
 
-
-# Taglibs made available via this plugin:
+# Taglibs provided:
 
 	g:selectController
 	g:selectPrimary
@@ -71,43 +73,30 @@ Here are the values explained:
 
 
 	<g:selectController
-	
 	id="selectPrimaryTest22"  	 
 	<!-- Required - your objectID referred to by css has no importance -->
-	
 	setId="ControllerActions"  	
 	<!-- Required the ID of your next selectBox to update actions -->
-	
 	name="mycontrollers" 		
 	<!-- Required - your form field name -->
 	searchField='name'  		
 	<!-- optional from 0.24+ - search name of controllers  -->
-	
 	collectField='name' 		
 	<!-- optional - will default to searchField -->
-	
 	noSelection="['': 'Please choose Controller']"  
 	<!-- default message for no selection by user -->
-	
-	
 	controller = "something" 	
 	<!-- Optional - default "autoComplete" (part of this plugin) -->
-	
-	action = "something" 		
+	action = "something"
 	<!-- Optional - default "ajaxSelectControllerAction" (part of this plugin) -->
-	
 	appendValue='*'			
 	<!-- Optional set a value to be appended to the list -->
-	
-        appendName='All Items'		
-        <!-- only optional if above not defined If you set appendValue then set the display name for it -->
-        
-	required="false"
+	appendName='All Items'
+	<!-- only optional if above not defined If you set appendValue then set the display name for it -->
+        required="false"
 	<!-- Optional - add this if you wish to disable required set by default -->
-	
 	value="${params.mycontrollers}"	 
 	<!--your value if you are posting form back-->
-	
 	/>
 
 This now gets passed to a standard select call where it has an id of "ControllerActions":
@@ -116,14 +105,12 @@ This now gets passed to a standard select call where it has an id of "Controller
 	<g:select 
 	id="ControllerActions"		//Required - your ObjectID - very important!
 	name="myname" 
-	
 	optionKey="name" 
 	optionValue="name"
-	
 	from="[]" 
-	
 	required="required" 
-	noSelection="['': 'Please choose controller']" /> 
+	noSelection="['': 'Please choose controller']" 
+	/> 
 	
 The from on this is set to [] which gets filled in by g:selectController setId return call.
 
@@ -158,32 +145,23 @@ Here are the values explained:
 
 
 	<g:selectPrimary 
-    
     	id="MyContinent2" 		// Required - your objectID referred to by css has no importance
     	setId="MyCountry"  		// Required the ID of your next selectBox to update actions
 	name="MyContinent" 		// Required - your form field name
 	noSelection="['': 'Please choose Continent']"  //default message for 
-	
     	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "ajaxSelectSecondary" (part of this plugin)
-	
 	appendValue='*'			// Optional set a value to be appended to the list
-        appendName='All Items'		// If you set appendValue then set the display name for it
-        
+	appendName='All Items'		// If you set appendValue then set the display name for it
     	bindid="mycontinent.id"		// Explained above in example domainClasses	
-    	
     	domain='your.package.MyContinent'	// Required your primary domainClass full classpath.
  	searchField='continentName'  		// Required - search for field called contintentName
 	collectField='id' 			// Required : if not defaults to searchField value 
-
         domain2='your.package.MyCountry'	// Required your secondary depenent domainClass full classpath.
         searchField2='countryName'		//  Required - search for field called contintentName
         collectField2='id'
-        
         required="false"		// optional add this if you wish to disable required set by default
 	value="${params.MyContinent}"	// your value if you are posting form back
-	    
-        
         />
          
 
