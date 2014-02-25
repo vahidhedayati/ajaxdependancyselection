@@ -176,12 +176,44 @@ This is a simple auto complete tag lib that allows you to auto complete from a s
 	name="myId"		// Required - your form field name
 	domain='your.class.MyCountry'	// Required what domainClass to search
 	searchField='name'		// Required the table field to search and display
-	collectField='id'		// Required the table field to use as value
+	collectField='id'		// optional  the table field to use as value - if not set defaults to above
 	value="${params.myId"
+	max="10"			// Optional max records to show default is 10
+	order="asc"			// optional default is asc
+	required="false"		// optional add this if you wish to disable required set by default
 	/>
 	
 ###g:autoCompletePrimary
+
+
+	<g:autoCompletePrimary id="primarySearch1"  
+			name="NAMEOFcontinentName"
+			domain='ajaxdependancyselectexample.MyContinent'
+			searchField='continentName'
+			collectField='id'
+			setId="secondarySearch2"
+			hidden='hidden3'
+			value=''/>
+
+
+
 ###g:autoCompleteSecondary
+
+
+	<input type=hidden id="hidden3" name="continentId" value=""/>
+			
+			<label>Country:</label> 
+			<g:autoCompleteSecondary id="secondarySearch2" 
+			name="NAMEOFcountryName" 
+			domain='ajaxdependancyselectexample.MyCountry' 
+			primarybind='mycontinent.id' 
+			hidden='hidden3' 
+			hidden2='hidden4' 
+			searchField='countryName' 
+			collectField='id'
+			setId="secondarySearch3" 
+			value=''/>
+			
 
 ###g:selectPrimaryNR
 
@@ -210,8 +242,38 @@ Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
 
 
 ###g:selectSecondaryNR
+
+ <g:selectSecondaryNR id="MyCity11" name="MyCity11"
+            domain='ajaxdependancyselectexample.MyCity'
+            bindid="myborough"
+            searchField='cityName'
+            collectField='id'
+            domain2='ajaxdependancyselectexample.MyBorough'
+            searchField2='actualName'
+            collectField2='id'
+            noSelection="['': 'Please choose City']"
+            setId="MyBorough11"
+            appendValue='*'
+            appendName='All Items'
+            value=''/>
+
+
+
 ###g:autoCompleteSecondaryNR
 
+	<g:autoCompleteSecondaryNR id="secondarySearch4" 
+			name="NAMEOFcityName" 
+			domain='ajaxdependancyselectexample.MyCity' 
+			domain2='ajaxdependancyselectexample.MyBorough' 
+			primarybind='myborough' 
+			hidden='hidden5' 
+			hidden2='hidden6' 
+			searchField='actualName' 
+			collectField='id' 
+			
+			value=''/>
+			
+			
 
 ### g:selectController 
 Controller action discovery, refer to above notes on jquery requirements
@@ -272,226 +334,13 @@ The from on this is set to [] which gets filled in by g:selectController setId r
 
 
 
-
-# 1.2 g:selectPrimary Multi element autocomplete example
-
-	<form method=post action=exampl5>
-	<g:selectPrimary id="MyContinent1" name="MyContinent1"
-        domain='testingv.MyContinent'
-        domain2='testingv.MyCountry'
-        bindid="mycontinent.id"
-        searchField='name'
-        collectField='id'
-        noSelection="['': 'Please choose Continent']" 
-        setId="MyCountry1"
-        value=''/>
-        
-	<g:selectSecondary id="MyCountry1" name="MyCountry1"
-	domain2='testingv.MyCity'
-        bindid="mycountry.id"
-        searchField2='name'
-        collectField2='id'
-        noSelection="['': 'Please choose Continent']" 
-        setId="MyCity1"
-        value=''/>
-        
-
-    	<g:select name="MyCity1" id="MyCity1"  
-        optionKey="id" optionValue="name" 
-        from="[]" required="required" noSelection="['': 'Please choose Country']" />
- 
-     	<input type=submit value=go>  
-    	</form>
-
-The only thing different in this block is the new usage of <g:selectSecondary, this now only takes in domain2 - which is the  secondary domain that it has a relationship with in the case of this example MyCountry has a relationship with MyCity, the very last call returns back to basic g:select call. Feel free to repeat g:selectSecondary on more objects finalising the call by the final g:select for the last object that is not supposed to be mapped to anything.
-
-
-
-# 1.3 g:selectPrimary Multiple times on one gp:
-
-	<g:selectPrimary id="MyContinent1" name="MyContinent1"
-        domain='testingv.MyContinent'
-        domain2='testingv.MyCountry'
-        bindid="mycontinent.id"
-        searchField='name'
-        collectField='id'
-        noSelection="['': 'Please choose Continent']" 
-        setId="MyCountry1"
-        value=''/>
-        
-	<g:select name="MyCountry1" id="MyCountry1"  
-        optionKey="id" optionValue="name" 
-        from="[]" noSelection="['': 'Please choose Continent']" />
-
-
-	<g:selectPrimary id="MyCountry22" name="MyCountry22"
-	domain='testingv.MyCountry'
-	domain2='testingv.MyCity'
-        bindid="mycountry.id"
-        searchField='name'
-        collectField='id'
-        noSelection="['': 'Please choose Country']" 
-        setId="MyCity11"
-        value=''/>
-
-    	<g:select name="MyCity11" id="MyCity11"  
-        optionKey="id" optionValue="name" 
-        from="[]" required="required" noSelection="['': 'Please choose Country']" />
-
-
-
-Above example is two calls of selectPrimary on one gsp and can be called more times if required
-
-If you are using g:selectPrimary/g:selectSecondary multiple times, please ensure the ids: i.e. id="selectPrimaryTest2" differ per call. Since JavaScript created is bound to this set id name.
-
-
-
-
-
-# 2.0 g:autoCompletePrimary/Secondary
-
-This part of the plugin expands on this idea: https://github.com/alidadasb/CountryCityAutoComplete, the g:autocomplete option has a variety methods to be called :
-
-
-
-
-
-# 2.1 No Reference Auto Complete from 0.16
-			
-			<form method=post action=example5>
-			<label>Continent:</label>
-			<g:autoCompletePrimary id="primarySearch1"  
-			name="NAMEOFcontinentName"
-			domain='ajaxdependancyselectexample.MyContinent'
-			searchField='continentName'
-			collectField='id'
-			setId="secondarySearch2"
-			hidden='hidden3'
-			value=''/>
-			
-			<input type=hidden id="hidden3" name="continentId" value=""/>
-			
-			<label>Country:</label> 
-			<g:autoCompleteSecondary id="secondarySearch2" 
-			name="NAMEOFcountryName" 
-			domain='ajaxdependancyselectexample.MyCountry' 
-			primarybind='mycontinent.id' 
-			hidden='hidden3' 
-			hidden2='hidden4' 
-			searchField='countryName' 
-			collectField='id'
-			setId="secondarySearch3" 
-			value=''/>
-			
-			<input type=hidden id="hidden4" name="countryId" value=""/>
-			
-			<label>City:</label>
-			<g:autoCompleteSecondary id="secondarySearch3" 
-			name="NAMEOFcityName" 
-			domain='ajaxdependancyselectexample.MyCity' 
-			primarybind='mycountry.id' 
-			hidden='hidden4' 
-			hidden2='hidden5' 
-			searchField='cityName' 
-			collectField='id' 
-			setId="secondarySearch4"
-			value=''/>
-			
-			<input type=hidden id="hidden5" name="cityId" value=""/>
-			
-			<label>Borough:</label>
-			<g:autoCompleteSecondaryNR id="secondarySearch4" 
-			name="NAMEOFcityName" 
-			domain='ajaxdependancyselectexample.MyCity' 
-			domain2='ajaxdependancyselectexample.MyBorough' 
-			primarybind='myborough' 
-			hidden='hidden5' 
-			hidden2='hidden6' 
-			searchField='actualName' 
-			collectField='id' 
-			
-			value=''/>
-			
-			<input type=hidden id="hidden6" name="BoroughID" value=""/>
-			
-			<input type=submit value=go> </form>
 			
 
 
 
-# 2.2 g:autocomplete Multi element autocomplete example
-
-	<form method=post action=exampl5>
-	<label>Continent:</label>
-	<g:autoCompletePrimary id="primarySearch1" 	
-  	name="continentName"
-  	domain='testingv.MyContinent'
-  	searchField='name'
-  	collectField='id'
-  	setId="secondarySearch2"
-  	hidden='hidden3'
-  	value=''/>
-
-	<input type=hidden id="hidden3" name="continentId" value=""/>
-
-	<label>Country:</label> 
-	<g:autoCompleteSecondary id="secondarySearch2" 
-  	name="countryName" 
-  	domain='testingv.MyCountry' 
-	primarybind='mycontinent.id' 
-  	hidden='hidden3' 
-  	hidden2='hidden4' 
-  	searchField='name' 
-  	collectField='id'
-  	setId="secondarySearch3" 
-  	value=''/>
-
-	<input type=hidden id="hidden4" name="countryId" value=""/>
-
-	<label>City:</label>
-	<g:autoCompleteSecondary id="secondarySearch3" 
-  	name="cityName" 
-  	domain='testingv.MyCity' 
-  	primarybind='mycountry.id' 
-  	hidden='hidden4' 
-  	hidden2='hidden5' 
-  	searchField='name' 
-  	collectField='id' 
-  	value=''/>
-
-	<input type=hidden id="hidden5" name="cityId" required="required"  value=""/>
-
-	<input type=submit value=go> </form>
 
 
-Above returns:
 
-	[countryId:4, continentName:Europe, countryName:France, continentId:2, cityId:4, cityName:Paris, action:exampl5, controller:myCountry]
-
-	
-g:autoCompletePrimary initially followed by g:autoCompleteSecondary as many times as required and on final g:autoCompleteSecondary there is no setId=
-
-Each object as a hidden variable which binds to its own hidden field, this stores the ids of the auto completed objects and the actual auto complete values are the names as can be seen in the output above
-
-PrimaryObject has its own hiddenField, secondary objects all have two definitions, hidden in secondary is the value from above hidden field and hidden2 is the hidden field for this secondary object to put its ID into and where another secondary object would query again..
-
-
-# 2.3 g:autocomplete Multiple calls on one gsp
-
-	<form method=post action=exampl5>
- 	<label>Continent:</label>
- 	<label>Countries:</label>
- 	<g:autoCompletePrimary id="primarySearch" name="myCountryId"
-     	domain='testingv.MyCountry'
-     	searchField='name'
-     	collectField='id'
-     	hidden='hidden2'
-     	value=''/>
-	<input type=hidden id="hidden2" name="hiddenField" value=""/>
-
-	<label>Cities:</label>
-	<g:autoCompleteSecondary 
-	
 	
 	
 
@@ -574,3 +423,78 @@ Here is the GSP making a nested call where an element has a no reference relatio
             from="[]" required="required"  noSelection="['': 'Please choose City']" />
 
         <br> <input type=submit value=go> </form>	
+        
+        
+### Examples Auto Complete Secondary to secondaryNR
+
+
+
+		<g:autoCompletePrimary id="primarySearch1"  
+			name="NAMEOFcontinentName"
+			domain='ajaxdependancyselectexample.MyContinent'
+			searchField='continentName'
+			collectField='id'
+			setId="secondarySearch2"
+			hidden='hidden3'
+			value=''/>
+			
+			<input type=hidden id="hidden3" name="continentId" value=""/>
+			
+			<label>Country:</label> 
+			<g:autoCompleteSecondary id="secondarySearch2" 
+			name="NAMEOFcountryName" 
+			domain='ajaxdependancyselectexample.MyCountry' 
+			primarybind='mycontinent.id' 
+			hidden='hidden3' 
+			hidden2='hidden4' 
+			searchField='countryName' 
+			collectField='id'
+			setId="secondarySearch3" 
+			value=''/>
+			
+			<input type=hidden id="hidden4" name="countryId" value=""/>
+			
+			<label>City:</label>
+			<g:autoCompleteSecondary id="secondarySearch3" 
+			name="NAMEOFcityName" 
+			domain='ajaxdependancyselectexample.MyCity' 
+			primarybind='mycountry.id' 
+			hidden='hidden4' 
+			hidden2='hidden5' 
+			searchField='cityName' 
+			collectField='id' 
+			setId="secondarySearch4"
+			value=''/>
+			
+			<input type=hidden id="hidden5" name="cityId" value=""/>
+			
+			<label>Borough:</label>
+			<g:autoCompleteSecondaryNR id="secondarySearch4" 
+			name="NAMEOFcityName" 
+			domain='ajaxdependancyselectexample.MyCity' 
+			domain2='ajaxdependancyselectexample.MyBorough' 
+			primarybind='myborough' 
+			hidden='hidden5' 
+			hidden2='hidden6' 
+			searchField='actualName' 
+			collectField='id' 
+			
+			value=''/>
+			
+			<input type=hidden id="hidden6" name="BoroughID" value=""/>
+			
+			<input type=submit value=go> </form>
+			
+			
+## Thanks to:
+
+
+
+### Alidad 
+Plugin expands on this idea: https://github.com/alidadasb/CountryCityAutoComplete
+
+### Burt for cleaning it all up 
+
+
+### 
+
