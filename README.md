@@ -57,7 +57,7 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 ## Taglibs provided:
 
-	g:selectController
+
 	g:selectPrimary
 	g:selectSecondary
 	g:autocomplete
@@ -66,51 +66,7 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 	g:selectPrimaryNR
 	g:selectSecondaryNR
 	g:autoCompleteSecondaryNR
-
-
-
-
-### g:selectController 
-####Controller action discovery 
-
-
-This will display all your controllers then let you Choose available actions of this controller:
-https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/example.gsp 
-Line 210 onwards has an example.Typically maybe used for identifying controller name and its available actions to store against something maybe for your own custom authentication control that binds all this with something else.
- 
-Here are the values explained:
-
-
-	<g:selectController
-	id="selectPrimaryTest22"		// Required - your objectID referred to by css has no importance
-	setId="ControllerActions"		// Required the ID of your next selectBox to update actions
-	name="mycontrollers" 			// Required - your form field name	
-	searchField='name'			// optional from 0.24+ - search name of controllers
-	collectField='name' 			// Optional - will default to searchField
-	noSelection="['': 'Please choose Controller']"  //default message for no selection by use
-	controller = "something" 		// Optional - default "autoComplete" (part of this plugin)
-	action = "something" 			// Optional - default "ajaxSelectControllerAction" (part of this plugin)
-	appendValue='*'				// Optional set a value to be appended to the list
-	appendName='All Items' 			// only optional if above not defined
-        required="false"			// Optional - add this if you wish to disable required set by default
-	value="${params.mycontrollers}"	 	//your value if you are posting form back
-	/>
-
-This now gets passed to a standard select call where it has an id of "ControllerActions":
-
-
-	<g:select 
-	id="ControllerActions"		//Required - your ObjectID - very important!
-	name="myname" 
-	optionKey="name" 
-	optionValue="name"
-	from="[]" 
-	required="required" 
-	noSelection="['': 'Please choose controller']" 
-	/> 
-	
-The from on this is set to [] which gets filled in by g:selectController setId return call.
-
+	g:selectController
 
 
 ### g:selectPrimary 
@@ -215,9 +171,79 @@ Back to g:selectSecondary example:
 ###g:autocomplete
 ###g:autoCompletePrimary
 ###g:autoCompleteSecondary
+
 ###g:selectPrimaryNR
+
+
+
+### no reference mapping
+	class PrimaryDomain {
+ 		String name
+ 		static hasMany = [ secondarydomain: SecondaryDomain ]
+	}
+
+	class SecondaryDomain {
+ 		String name
+		static belongsTo = [PrimaryDomain ]
+	}
+
+Now within your call the bindid would be:	
+
+	bindid="secondarydomain"
+
+
+This you would use g:selectPrimaryNR the bindid is secondarydomain the field highlighted in bold above as the bindid
+
+
+Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
+
+
 ###g:selectSecondaryNR
 ###g:autoCompleteSecondaryNR
+
+
+### g:selectController 
+####Controller action discovery 
+
+
+This will display all your controllers then let you Choose available actions of this controller:
+https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/example.gsp 
+Line 210 onwards has an example.Typically maybe used for identifying controller name and its available actions to store against something maybe for your own custom authentication control that binds all this with something else.
+ 
+Here are the values explained:
+
+
+	<g:selectController
+	id="selectPrimaryTest22"		// Required - your objectID referred to by css has no importance
+	setId="ControllerActions"		// Required the ID of your next selectBox to update actions
+	name="mycontrollers" 			// Required - your form field name	
+	searchField='name'			// optional from 0.24+ - search name of controllers
+	collectField='name' 			// Optional - will default to searchField
+	noSelection="['': 'Please choose Controller']"  //default message for no selection by use
+	controller = "something" 		// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 			// Optional - default "ajaxSelectControllerAction" (part of this plugin)
+	appendValue='*'				// Optional set a value to be appended to the list
+	appendName='All Items' 			// only optional if above not defined
+        required="false"			// Optional - add this if you wish to disable required set by default
+	value="${params.mycontrollers}"	 	//your value if you are posting form back
+	/>
+
+This now gets passed to a standard select call where it has an id of "ControllerActions":
+
+
+	<g:select 
+	id="ControllerActions"		//Required - your ObjectID - very important!
+	name="myname" 
+	optionKey="name" 
+	optionValue="name"
+	from="[]" 
+	required="required" 
+	noSelection="['': 'Please choose controller']" 
+	/> 
+	
+The from on this is set to [] which gets filled in by g:selectController setId return call.
+
+
 
 
 
@@ -462,28 +488,7 @@ PrimaryObject has its own hiddenField, secondary objects all have two definition
 
 
 
-
-### no reference mapping
-	class PrimaryDomain {
- 		String name
- 		static hasMany = [ secondarydomain: SecondaryDomain ]
-	}
-
-	class SecondaryDomain {
- 		String name
-		static belongsTo = [PrimaryDomain ]
-	}
-
-Now within your call the bindid would be:	
-
-	bindid="secondarydomain"
-
-
-This you would use g:selectPrimaryNR the bindid is secondarydomain the field highlighted in bold above as the bindid
-
-
-Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
-
+### Example no reference domain classes:
 
 Here are two domain classes with a no reference set up and require g:selectSecondaryNR feature: 
 
