@@ -113,6 +113,8 @@ The from on this is set to [] which gets filled in by g:selectController setId r
 # g:selectPrimary (relationship: fully dependent ) in conjunction with g:selectSecondary
 
 Example domainClasses:
+
+
 	class PrimaryDomain {
  		String name
  		static hasMany = [ secondarydomain: SecondaryDomain ]
@@ -137,35 +139,27 @@ Here are the values explained:
 	<g:selectPrimary 
     
     	id="MyContinent2" 		// Required - your objectID referred to by css has no importance
-    	
-    	
     	setId="MyCountry"  		// Required the ID of your next selectBox to update actions
 	name="MyContinent" 		// Required - your form field name
 	noSelection="['': 'Please choose Continent']"  //default message for 
-    	
+	
     	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "ajaxSelectSecondary" (part of this plugin)
 	
 	appendValue='*'			// Optional set a value to be appended to the list
         appendName='All Items'		// If you set appendValue then set the display name for it
         
-	
-	
-    	bindid="mycontinent.id"		//this is explained above its whats declared in second domain that belongsTo	
+    	bindid="mycontinent.id"		// Explained above in example domainClasses	
     	
-    	
-    	domain='your.package.MyContinent'
- 	searchField='continentName'  	// option description: Required - search for field called contintentName
-	collectField='id' 		// option value : required : if not defaults to searchField value 
+    	domain='your.package.MyContinent'	// Required your primary domainClass full classpath.
+ 	searchField='continentName'  		// Required - search for field called contintentName
+	collectField='id' 			// Required : if not defaults to searchField value 
 
-        
-        domain2='your.package.MyCountry'
-        searchField2='countryName'
+        domain2='your.package.MyCountry'	// Required your secondary depenent domainClass full classpath.
+        searchField2='countryName'		//  Required - search for field called contintentName
         collectField2='id'
         
-        
         required="false"		// optional add this if you wish to disable required set by default
-	
 	value="${params.MyContinent}"	// your value if you are posting form back
 	    
         
