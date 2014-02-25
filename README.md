@@ -70,7 +70,7 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 
 ### g:selectPrimary 
-####(relationship: fully dependent ) in conjunction with g:selectSecondary
+(relationship: fully dependent ) in conjunction with g:selectSecondary, refer to above notes on jquery requirements
 
 Example domainClasses:
 
@@ -143,7 +143,7 @@ is what is represented on the html end
 
 
 ### g:selectSecondary 
-####(relationship: fully dependent ) in conjunction with g:selectPrimary
+(relationship: fully dependent ) in conjunction with g:selectPrimary, refer to above notes on jquery requirements
 
 
 This is a tag that can be used over and over again to go through nested situations, you can also use the selectSeondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
@@ -169,6 +169,17 @@ Back to g:selectSecondary example:
 
 
 ###g:autocomplete
+This is a simple auto complete tag lib that allows you to auto complete from a single table, refer to above notes on jquery & jquery-ui requirements
+
+	<g:autocomplete 
+	id="primarySearch" 	// Required - your objectID referred to by css has no importance
+	name="myId"		// Required - your form field name
+	domain='your.class.MyCountry'	// Required what domainClass to search
+	searchField='name'		// Required the table field to search and display
+	collectField='id'		// Required the table field to use as value
+	value="${params.myId"
+	/>
+	
 ###g:autoCompletePrimary
 ###g:autoCompleteSecondary
 
@@ -203,7 +214,7 @@ Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
 
 
 ### g:selectController 
-####Controller action discovery 
+Controller action discovery, refer to above notes on jquery requirements
 
 
 This will display all your controllers then let you Choose available actions of this controller:
