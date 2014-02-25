@@ -58,6 +58,8 @@ This will display all your controllers then let you Choose available actions of 
 https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/example.gsp 
 Line 210 onwards has an example here are the values explained:
 
+	<g:selectController
+	
 	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "ajaxSelectControllerAction" (part of this plugin)
 	
@@ -69,6 +71,8 @@ Line 210 onwards has an example here are the values explained:
 	setId="ControllerActions"  	// Required the ID of your next selectBox to update actions
 	required="false"		// optional add this if you wish to disable required set by default
 	value="${params.mycontrollers}"	// your value if you are posting form back
+	
+	/>
 
 This now gets passed to a standard <g:select call where id="ControllerActions"
 
