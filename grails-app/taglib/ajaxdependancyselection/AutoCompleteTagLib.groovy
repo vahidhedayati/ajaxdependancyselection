@@ -58,7 +58,7 @@ class AutoCompleteTagLib {
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value)',onSuccess:''+attrs.id+'Update(data)')}"
 		out << g.select(gsattrs)
-		out << g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
+		out << g.render(contextPath: pluginContextPath,template: '/autoComplete/selectJs',  model: [attrs:attrs])
 	}
 
 	def selectPrimary = {attrs ->
@@ -130,7 +130,7 @@ class AutoCompleteTagLib {
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
 		out << g.select(gsattrs)
-		out << g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
+		out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs', model: [attrs:attrs])
 	}
 	
 	// Added taglib for primary No reference look ups
@@ -195,7 +195,7 @@ class AutoCompleteTagLib {
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&bindid='+ attrs.bindid+'&domain='+attrs.domain+'&domain2='+attrs.domain2+'&setId='+attrs.setId+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
 		out<< g.select(gsattrs)
-		out<< g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
+		out<< g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs',  model: [attrs:attrs])
 		
 	}
 	
@@ -261,7 +261,7 @@ class AutoCompleteTagLib {
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out <<  g.select(gsattrs)
-		out << g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
+		out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs', model: [attrs:attrs])
 		
 	}
 
@@ -334,7 +334,7 @@ class AutoCompleteTagLib {
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out <<  g.select(gsattrs)
-		out << g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
+		out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs', model: [attrs:attrs])
 	}
    
    
@@ -386,7 +386,7 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			 required=" required='required' "
 		}
-		out << g.render(template: '/autoComplete/selectAcb',  plugin: 'ajaxdependancyselection', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
+		out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectAcb', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
 	}
 
 
@@ -454,7 +454,7 @@ class AutoCompleteTagLib {
 			template='/autoComplete/selectAc1'
 		}
 		
-		out << g.render(template: template,  plugin: 'ajaxdependancyselection', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
+		out << g.render(contextPath: pluginContextPath, template: template, model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
 		
 	}
 	
@@ -527,7 +527,7 @@ class AutoCompleteTagLib {
 				template='/autoComplete/selectAcS2'
 			}
 		}
-		out << g.render(template: template, plugin: 'ajaxdependancyselection', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
+		out << g.render(contextPath: pluginContextPath, template: template, model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
 	}
 	
 	// No reference Auto complete tag lib
@@ -601,7 +601,7 @@ class AutoCompleteTagLib {
 				template='/autoComplete/selectAcSn2'
 			}
 		}
-		out << g.render(template: template,  plugin: 'ajaxdependancyselection', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
+		out << g.render(contextPath: pluginContextPath, template: template, model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
 	}
 	def autoCompleteHeader = {
 		out << "<style>"
