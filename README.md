@@ -107,10 +107,10 @@ Here are the values explained:
 	appendValue='*'			// Optional set a value to be appended to the list
 	appendName='All Items'		// If you set appendValue then set the display name for it
 	bindid="mycontinent.id"		// Explained above in example domainClasses	
-	domain='your.package.MyContinent'	// Required your primary domainClass full classpath.
+	domain='yourApp.MyContinent'	// Required your primary domainClass full classpath.
 	searchField='continentName'  		// Required - search for field called contintentName
 	collectField='id' 			// Required : if not defaults to searchField value 
-	domain2='your.package.MyCountry'	// Required your secondary depenent domainClass full classpath.
+	domain2='yourApp.MyCountry'	// Required your secondary depenent domainClass full classpath.
 	searchField2='countryName'		//  Required - search for field called contintentName
 	collectField2='id'
 	required="false"		// optional add this if you wish to disable required set by default
@@ -196,8 +196,8 @@ This is a simple auto complete tag lib that allows you to auto complete from a s
 	<g:autoCompletePrimary id="primarySearch1"  	// Required - your objectID referred to by css has no importance
 	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "autocompletePrimaryAction" (part of this plugin)
-	name="NAMEOFcontinentName"			// Required - your objectID referred to by css has no importance
-	domain='ajaxdependancyselectexample.MyContinent'// Required what domainClass to search	
+	name="fieldName"			// Required - your objectID referred to by css has no importance
+	domain='yourApp.MyContinent'// Required what domainClass to search	
 	searchField='continentName'			// Required the table field to search and display
 	collectField='id'				// optional  the table field to use as value - if not set defaults to above
 	setId="secondarySearch2"			// Required - your next autocomplete id to update
@@ -214,24 +214,24 @@ This is a simple auto complete tag lib that allows you to auto complete from a s
 
 
 
-	<g:autoCompleteSecondary
-	id="secondarySearch2" 
-	name="NAMEOFcountryName" 
-	domain='ajaxdependancyselectexample.MyCountry' 
-	primarybind='mycontinent.id' 
-	hidden='hidden3' 
-	hidden2='hidden4' 
+	<g:autoCompleteSecondary	
+	id="secondarySearch2"		// Required - must be setId of previous autoCompletePrimary or Secondary	
+	name="NAMEOFcountryName" 	// Required - your feild name
+	domain='yourApp.MyCountry' 	// Required the next domain you are about to query
+	primarybind='mycontinent.id' 		// Required the no relation reference from class 2
+	hidden='hidden3' 			// Required the hidden field to collect from
+	hidden2='hidden4' 		// Required the hidden field to set
 	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "autocompleteSecondaryAction" (part of this plugin)
-	searchField='countryName' 
-	collectField='id'
-	setId="secondarySearch3" 
+	searchField='countryName' 	// Required - the table field to search and display
+	collectField='id'		// optional - not setting will default to searchField value
+	setId="secondarySearch3" 	// Required - The next autoComplete Id to set
 	value=''/>
 			
 
 ###g:selectPrimaryNR
 
-###### no reference mapping
+###### No reference mapping
 	class PrimaryDomain {
  		String name
  		static hasMany = [ secondarydomain: SecondaryDomain ]
@@ -256,26 +256,31 @@ Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
 Example call:
 
 	<g:selectPrimaryNR 
-	id="selectZip" 
-	name="selectZip"
-	domain='Postcode' 
+	id="selectZip" 			// Required - your objectID referred to by css has no importance
+	name="selectZip"		// Required - your feild name
+	domain='yourPackage.Postcode' 	// Required - the domainClass to query
 	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "ajaxSelectSecondaryNR" (part of this plugin)
-	searchField='postcode' 
-	collectField='id'
-	bindid="myarea"
-	domain2='Area' 
-	searchField2='area' 
-	collectField2='id'
-	noSelection="['null': 'Please choose zipcode']" setId="PickupIDbinder" /> 
+	searchField='postcode' 		// Required the table field to search and display
+	collectField='id'		// optional not setting will default to searchField value
+	bindid="myarea"			// Required - refer to No reference note above
+	domain2='Area' 			// Required the secondary domain to query
+	searchField2='area' 		// Required the secondary table field to search
+	collectField2='id'		// optional if not set will default to value of searchField2
+	noSelection="['null': 'Please choose zipcode']"  // No selection text
+	appendValue='*'			// Optional set a value to be appended to the list
+	appendName='All Items'		// If you set appendValue then set the display name for it
+	setId="PickupIDbinder" 		// Required - The next autoComplete Id to set
+	/> 
 	
 	Pick up area: 
 	<g:select 
 	name="selectPickup" 
-	id="PickupIDbinder" 
+	id="PickupIDbinder"		// ID matches the setId of above call 
 	optionKey="id" 
 	optionValue="name" 
-	from="[]" noSelection="['null': 'Please choose zipcode']" />
+	from="[]" 			// from is [] and filled from above completed value
+	noSelection="['null': 'Please choose zipcode']" />
 
 
 
@@ -284,37 +289,45 @@ Example call:
 
 
 	<g:selectSecondaryNR 
-	id="MyCity11" 
-	name="MyCity11"
-	domain='ajaxdependancyselectexample.MyCity'
-	bindid="myborough"
-	searchField='cityName'
-	collectField='id'
-	domain2='ajaxdependancyselectexample.MyBorough'
-	searchField2='actualName'
-	collectField2='id'
-	noSelection="['': 'Please choose City']"
-	setId="MyBorough11"
-	appendValue='*'
-	appendName='All Items'
-	value=''/>
+	id="MyCity11" 		// Required - must be setId of previous selectPrimary or Secondary
+	name="MyCity11"		// Required - your feild name
+	domain='yourApp.MyCity'	// Required - the domainClass to query
+	bindid="myborough"	// Required - refer to Fully dependent domainClasses notes above
+	searchField='cityName'	// Required the table field to search and display
+	collectField='id'	// optional not setting will default to searchField value
+	domain2='yourApp.MyBorough'	// Required the secondary domain to query	
+	searchField2='actualName'	// Required the secondary table field to search
+	collectField2='id'		// optional if not set will default to value of searchField2
+	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
+	action = "something" 		// Optional - default "ajaxSelectSecondaryNR" (part of this plugin)
+	noSelection="['': 'Please choose City']"	// No selection text	
+	setId="MyBorough11"		// Required - The next autoComplete Id to set or last call to normal select
+	appendValue='*'			// Optional set a value to be appended to the list
+	appendName='All Items'		// If you set appendValue then set the display name for it
+	value=''
+	/>
+
 
 
 
 ###g:autoCompleteSecondaryNR
-
-	<g:autoCompleteSecondaryNR id="secondarySearch4" 
-	name="NAMEOFcityName" 
-	domain='ajaxdependancyselectexample.MyCity' 
-	domain2='ajaxdependancyselectexample.MyBorough' 
-	primarybind='myborough' 
-	hidden='hidden5' 
-	hidden2='hidden6' 
-	searchField='actualName' 
-	collectField='id' 
+	<input type=hidden id="hidden5" name="cityId" value=""/>
+	<g:autoCompleteSecondaryNR 
+	id="secondarySearch4" 		// Required - must be setId of previous autoCompletePrimary or Secondary
+	name="NAMEOFcityName" 		// Required - your feild name
+	domain='yourApp.MyCity' 	// Required - the domainClass to query
+	domain2='yourApp.MyBorough' 	// Required the secondary domain to query
+	primarybind='myborough' 	// Required - refer to No reference note above
+	hidden='hidden5' 		// Required the hidden field to collect from
+	hidden2='hidden6' 		// Required the hidden field to set
+	searchField='actualName' 	// Required the table field to search and display
+	collectField='id' 		// optional not setting will default to searchField value
+	
 	value=''/>
+	<input type=hidden id="hidden6" name="BoroughID" value=""/>
 			
-			
+
+
 
 ### g:selectController 
 ####### Controller action discovery, refer to above notes on jquery requirements
@@ -362,7 +375,7 @@ The from on this is set to [] which gets filled in by g:selectController setId r
 
 
 ##### Examples below
-#########################################
+
 
 
 
@@ -389,6 +402,7 @@ Here are two domain classes with a no reference set up and require g:selectSecon
 
 
 ### Examples of primary to secondary then to seoncdaryNR
+This non working gsp has some examples: https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/noRefAutoComplete.gsp
 
 Here is the GSP making a nested call where an element has a no reference relationship, the gsp page in the example called norefselectionext.gsp goes back out of a NR relationship and calls Streets domain after borough to then load up a further relationsip
 
@@ -445,7 +459,7 @@ Here is the GSP making a nested call where an element has a no reference relatio
         
 ### Examples Auto Complete Secondary to secondaryNR
 
-
+This non working gsp has some examples: https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/noRefAutoComplete.gsp
 
 		<g:autoCompletePrimary id="primarySearch1"  
 	name="NAMEOFcontinentName"
