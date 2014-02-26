@@ -3,3 +3,5 @@ target
 plugin.xml
 *.zip
 *.log
+target-eclipse
+web-app

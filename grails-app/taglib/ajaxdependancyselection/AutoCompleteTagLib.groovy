@@ -3,9 +3,8 @@ package ajaxdependancyselection
 
 class AutoCompleteTagLib {
 	def autoCompleteService
-	
 	def selectController = {attrs ->
-		def clazz = ""
+		def clazz=""
 		def name = ""
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
@@ -51,52 +50,19 @@ class AutoCompleteTagLib {
 		}
 		
 		def primarylist=autoCompleteService.returnControllerList()
-		def gsattrs=[ 'id': "${attrs.id}", value: "${attrs.value}", name: name, optionKey: "${attrs.searchField}", optionValue: "${attrs.collectField}" ]
+		def gsattrs=[ 'id': '${attrs.id}', value: "${attrs.value}", name: name, optionKey: "${attrs.searchField}", optionValue: "${attrs.collectField}" ]
 		gsattrs['from'] = primarylist
 		if (requireField) {
 			gsattrs['required'] = 'required'
 		}
 		gsattrs['noSelection'] =attrs.noSelection
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value)',onSuccess:'updateControllerAction(data)')}"
-		out<<  g.select(gsattrs)
-		out << "<script type='text/javascript'>\n"
-		out << "function updateControllerAction(data) { \n"
-		out << "var e=data;\n"
-		out << "if (e) { \n"
-		out << "  var rselect = document.getElementById('" + attrs.setId+"')\n"
-		//out << "var rselect = \$('#" + attrs.setId+"').get(0);"
-		out << "  var l = rselect.length\n"
-		out << "  while (l > 0) {\n"
-		out << "   l--\n"
-		out << "   rselect.remove(l)\n"
-		out <<"   }\n"
-		out << "var opt = document.createElement('option');\n"
-		out << "opt.value='"+attrs.appendValue+"'\n"
-		out << "opt.text='"+attrs.appendName+"'\n "
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}"
-		out << "  for (var i=0; i < e.length; i++) {\n"
-		out << "    var s = e[i]\n"
-		out << "    var opt = document.createElement('option');\n"
-		out << "    opt.text = s.name\n"
-		out << "    opt.value = s.id\n"
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}\n}\n}\n}\n"
-		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
-		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
-		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"updateControllerAction(data)")}\n"
-		out << "</script>\n"
-		}
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value)',onSuccess:''+attrs.id+'Update(data)')}"
+		out << g.select(gsattrs)
+		out << g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
+	}
 
 	def selectPrimary = {attrs ->
-		def clazz = ""
-		def name = ""
+		def clazz,name = ""
 		if (!attrs.id) {
 			throwTagError("Tag [selectPrimary] is missing required attribute [id]")
 		}
@@ -163,46 +129,14 @@ class AutoCompleteTagLib {
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out<<  g.select(gsattrs)
-		out << "\n<script type='text/javascript'>\n"
-		out << "function ${attrs.id}Update(data) { \n"
-		out << "var e=data;\n"
-		out << "if (e) { \n"
-		out << "  var rselect = document.getElementById('" + attrs.setId+"')\n"
-		out << "  var l = rselect.length\n"
-		out << "  while (l > 0) {\n"
-		out << "   l--\n"
-		out << "   rselect.remove(l)\n"
-		out <<"   }\n"
-		out << "var opt = document.createElement('option');\n"
-		out << "opt.value='"+attrs.appendValue+"'\n"
-		out << "opt.text='"+attrs.appendName+"'\n "
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}"
-		out << "  for (var i=0; i < e.length; i++) {\n"
-		out << "    var s = e[i]\n"
-		out << "    var opt = document.createElement('option');\n"
-		out << "    opt.text = s.name\n"
-		out << "    opt.value = s.id\n"
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}}}}\n"
-		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
-		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
-		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"'${attrs.id}Update(data)'")}\n"
-		out << "</script>\n"
+		out << g.select(gsattrs)
+		out << g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
 	}
 	
 	// Added taglib for primary No reference look ups
 	// When a user has a primary item that secondary is a no reference
 	def selectPrimaryNR = {attrs ->
-		def clazz = ""
-		def name = ""
+		def clazz,name = ""
 		if (!attrs.id) {
 			throwTagError("Tag [selectPrimary] is missing required attribute [id]")
 		}
@@ -260,46 +194,15 @@ class AutoCompleteTagLib {
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&bindid='+ attrs.bindid+'&domain='+attrs.domain+'&domain2='+attrs.domain2+'&setId='+attrs.setId+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out<<  g.select(gsattrs)
-		out << "\n<script type='text/javascript'>\n"
-		out << "function ${attrs.id}Update(data) { \n"
-		out << "var e=data;\n"
-		out << "if (e) { \n"
-		out << "  var rselect = document.getElementById('" + attrs.setId+"')\n"
-		out << "  var l = rselect.length\n"
-		out << "  while (l > 0) {\n"
-		out << "   l--\n"
-		out << "   rselect.remove(l)\n"
-		out <<"   }\n"
-		out << "var opt = document.createElement('option');\n"
-		out << "opt.value='"+attrs.appendValue+"'\n"
-		out << "opt.text='"+attrs.appendName+"'\n "
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}"
-		out << "  for (var i=0; i < e.length; i++) {\n"
-		out << "    var s = e[i]\n"
-		out << "    var opt = document.createElement('option');\n"
-		out << "    opt.text = s.name\n"
-		out << "    opt.value = s.id\n"
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}}}}\n"
-		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
-		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
-		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"'${attrs.id}Update(data)'")}\n"
-		out << "</script>\n"
+		out<< g.select(gsattrs)
+		out<< g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
+		
 	}
 	
 	//  Reveted back changes - this was not working 
 	// selectSecondary is used by both gsp calls to g:selectPrimary and g:selectSecondary 
 	def selectSecondary = {attrs ->
-		def clazz = ""
-		def name = ""
+		def clazz,name = ""
 		if (!attrs.id) {
 			throwTagError("Tag [selectScondary] is missing required attribute [id]")
 		}
@@ -357,46 +260,15 @@ class AutoCompleteTagLib {
 		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
-		out<<  g.select(gsattrs)
-		out << "\n<script type='text/javascript'>\n"
-		out << "function ${attrs.id}Update(data) { \n"
-		out << "var e=data;\n"
-		out << "if (e) { \n"
-		out << "  var rselect = document.getElementById('" + attrs.setId+"')\n"
-		out << "  var l = rselect.length\n"
-		out << "  while (l > 0) {\n"
-		out << "   l--\n"
-		out << "   rselect.remove(l)\n"
-		out <<"   }\n"
-		out << "var opt = document.createElement('option');\n"
-		out << "opt.value='"+attrs.appendValue+"'\n"
-		out << "opt.text='"+attrs.appendName+"'\n "
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}"
-		out << "  for (var i=0; i < e.length; i++) {\n"
-		out << "    var s = e[i]\n"
-		out << "    var opt = document.createElement('option');\n"
-		out << "    opt.text = s.name\n"
-		out << "    opt.value = s.id\n"
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}}}}\n"
-		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
-		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
-		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"'${attrs.id}Update(data)'")}\n"
-		out << "</script>\n"
+		out <<  g.select(gsattrs)
+		out << g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
+		
 	}
 
 	
 	// No Reference Selection
 	def selectSecondaryNR = {attrs ->
-		def clazz = ""
-		def name = ""
+		def clazz,name = ""
 		if (!attrs.id) {
 			throwTagError("Tag [selectSecondaryNR] is missing required attribute [id]")
 		}
@@ -461,46 +333,13 @@ class AutoCompleteTagLib {
 		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
-		out<<  g.select(gsattrs)
-		out << "\n<script type='text/javascript'>\n"
-		out << "function ${attrs.id}Update(data) { \n"
-		out << "var e=data;\n"
-		out << "if (e) { \n"
-		out << "  var rselect = document.getElementById('" + attrs.setId+"')\n"
-		out << "  var l = rselect.length\n"
-		out << "  while (l > 0) {\n"
-		out << "   l--\n"
-		out << "   rselect.remove(l)\n"
-		out <<"   }\n"
-		out << "var opt = document.createElement('option');\n"
-		out << "opt.value='"+attrs.appendValue+"'\n"
-		out << "opt.text='"+attrs.appendName+"'\n "
-		out << "    try {\n"
-		out << "  	    	rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "	  rselect.add(opt)\n"
-		out << "}"
-		out << "  for (var i=0; i < e.length; i++) {\n"
-		out << "    var s = e[i]\n"
-		out << "    var opt = document.createElement('option');\n"
-		out << "    opt.text = s.name\n"
-		out << "    opt.value = s.id\n"
-		out << "    try {\n"
-		out << "              rselect.add(opt, null)\n"
-		out << "    } catch(ex) {\n"
-		out << "      rselect.add(opt)\n"
-		out << "}}}}\n"
-		out << "var zselect = document.getElementById('"+attrs.id+"')\n"
-		out << "var zopt = zselect.options[zselect.selectedIndex]\n"
-		out << "${remoteFunction(controller:"${attrs.controller}", action:"${attrs.action}", params:"'id=' + zopt.value", onComplete:"'${attrs.id}Update(data)'")}\n"
-		out << "</script>\n"
+		out <<  g.select(gsattrs)
+		out << g.render(template: '/autoComplete/selectJs',  plugin: 'ajaxdependancyselection', model: [attrs:attrs])
 	}
    
    
 	def autocomplete = {attrs ->
-		def clazz = ""
-		def name = ""
-		def styles = ""
+		def clazz,name,cid,styles = ""
 		if (attrs.id == null) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
@@ -547,32 +386,14 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			 required=" required='required' "
 		}
-		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />"
-		out << "<script type='text/javascript'>"
-		out << " \$(document).ready(function() {"
-		out << "\$('#" + attrs.id+"').autocomplete({ "
-		out << " source: '"
-		out << createLink(link)
-		out << "?"
-		out << "domain="+ attrs.domain
-		out << "&searchField="+attrs.searchField
-		out << "&max="+attrs.max
-		out << "&order="+attrs.order
-		out << "&collectField="+attrs.collectField
-		out << "', dataType: 'json'"
-		out << "});});"
-		out << "</script>"
+		out << g.render(template: '/autoComplete/selectAcb',  plugin: 'ajaxdependancyselection', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
 	}
 
 
 	
 	
 	def autoCompletePrimary = {attrs ->
-		def clazz = ""
-		def name = ""
-		def cid=""
-		def styles = ""
+		def clazz,name,cid,styles = ""
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
@@ -625,43 +446,21 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			 required=" required='required' "
 		}
-		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />"
-		out << "<script type='text/javascript'>"
-		out << " \$(document).ready(function() {"
-		out << "\$('#" + attrs.id+"').autocomplete({ "
-		out << " source: '"
-		out << createLink(link)
-		out << "?"
-		out << "domain="+ attrs.domain
-		out << "&searchField="+attrs.searchField
-		out << "&max="+attrs.max
-		out << "&order="+attrs.order
-		out << "&collectField="+attrs.collectField
-		out << "',"
-		if ((attrs.setId)||(attrs.hidden)) {
-			out << "select: function(event, ui) {"
-			if(attrs.hidden) {
-				out << "    \$('#" + attrs.hidden+"').val(ui.item.id);"
-			}
-			if (attrs.setId) {
-				out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
-			}	
-			out <<"},"
+		def template
+		
+		if (attrs.hidden) {
+			template='/autoComplete/selectAc'
+		}else{
+			template='/autoComplete/selectAc1'
 		}
-		out << " dataType: 'json'"
-		out << "});"
-
-		out << "});"
-		out << "</script>"
+		
+		out << g.render(template: template,  plugin: 'ajaxdependancyselection', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
+		
 	}
 	
 
 	def autoCompleteSecondary = {attrs ->
-		def clazz = ""
-		def name = ""
-		def cid=""
-		def styles = ""
+		def clazz,name,cid,styles = ""
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
@@ -717,46 +516,23 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			 required=" required='required' "
 		}
-		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />"
-		out << "<script type='text/javascript'>"
-		out << " \$(document).ready(function() {"
-		out << "\$('#" + attrs.id+"').autocomplete({ "
-		out << " source: "
-		out << " function(request, response) { "
-		out << " \$.getJSON(' "
-		out << createLink(link)
-		out << "?"
-		out << "term=' + request.term + '"
-		out << "&domain="+ attrs.domain
-		out << "&primarybind="+ attrs.primarybind
-		out << "&searchField="+attrs.searchField
-		out << "&max="+attrs.max
-		out << "&order="+attrs.order
-		out << "&collectField="+attrs.collectField
-		out << "', { primaryid: \$('#" + attrs.hidden+"').val() }, "
-		out << " response);  }, "
+		
+		def template
 		if ((attrs.setId)||(attrs.hidden2)) {
-			out << "select: function(event, ui) {"
-			if(attrs.hidden2) {
-				out << "    \$('#" + attrs.hidden2+"').val(ui.item.id);"
+			if (attrs.hidden && attrs.setId) {
+				template='/autoComplete/selectAcS'
+			}else if(attrs.hidden2) {
+				template='/autoComplete/selectAcS1'
+			}else if (attrs.setId) {
+				template='/autoComplete/selectAcS2'
 			}
-			if (attrs.setId) {
-				out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
-			}
-			out <<"},"
 		}
-		out << " dataType: 'json'"
-		out << "});});"
-		out << "</script>"
+		out << g.render(template: template, plugin: 'ajaxdependancyselection', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
 	}
 	
 	// No reference Auto complete tag lib
 	def autoCompleteSecondaryNR = {attrs ->
-		def clazz = ""
-		def name = ""
-		def cid=""
-		def styles = ""
+		def clazz,name,cid,styles = ""
 		if (!attrs.id) {
 			throwTagError("Tag [autoComplete] is missing required attribute [id]")
 		}
@@ -815,39 +591,17 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			 required=" required='required' "
 		}
-		def link = ['action': attrs.action , 'controller': attrs.controller ]
-		out << " <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />"
-		out << "<script type='text/javascript'>"
-		out << " \$(document).ready(function() {"
-		out << "\$('#" + attrs.id+"').autocomplete({ "
-		out << " source: "
-		out << " function(request, response) { "
-		out << " \$.getJSON(' "
-		out << createLink(link)
-		out << "?"
-		out << "term=' + request.term + '"
-		out << "&domain="+ attrs.domain
-		out << "&domain2="+ attrs.domain2
-		out << "&primarybind="+ attrs.primarybind
-		out << "&searchField="+attrs.searchField
-		out << "&max="+attrs.max
-		out << "&order="+attrs.order
-		out << "&collectField="+attrs.collectField
-		out << "', { primaryid: \$('#" + attrs.hidden+"').val() }, "
-		out << " response);  }, "
+		def template
 		if ((attrs.setId)||(attrs.hidden2)) {
-			out << "select: function(event, ui) {"
-			if(attrs.hidden2) {
-				out << "    \$('#" + attrs.hidden2+"').val(ui.item.id);"
+			if (attrs.hidden2 && attrs.setId) {
+				template='/autoComplete/selectAcSn'
+			}else if(attrs.hidden2) {
+				template='/autoComplete/selectAcSn1'
+			}else if (attrs.setId) {
+				template='/autoComplete/selectAcSn2'
 			}
-			if (attrs.setId) {
-				out << "  \$('#" + attrs.setId+"').attr('primaryid',ui.item.id);"
-			}
-			out <<"},"
 		}
-		out << " dataType: 'json'"
-		out << "});});"
-		out << "</script>"
+		out << g.render(template: template,  plugin: 'ajaxdependancyselection', model: [attrs:attrs,clazz:clazz, styles:styles,name:name,required:required  ])
 	}
 	def autoCompleteHeader = {
 		out << "<style>"

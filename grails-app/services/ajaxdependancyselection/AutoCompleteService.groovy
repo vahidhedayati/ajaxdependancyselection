@@ -1,10 +1,16 @@
 package ajaxdependancyselection
 
-
 import grails.converters.JSON
-import org.codehaus.groovy.grails.commons.DefaultGrailsControllerClass
 import grails.web.Action
+
 import java.lang.reflect.Method
+
+import org.codehaus.groovy.grails.commons.DefaultGrailsControllerClass
+
+
+
+
+
 
 class AutoCompleteService {
 	static transactional = false
@@ -209,26 +215,25 @@ class AutoCompleteService {
 	}
 	def returnControllerActions(params) {
 		String s = params.id
-		String domclass1= (s.substring(0,1).toUpperCase())
-		String domclass2=s.substring(1,s.length())
-		String domclass=domclass1+domclass2
-		def fullPath=grailsApplication.metadata['app.name']
-		def currentController=fullPath+"."+domclass
-		Class clazz = grailsApplication?.getDomainClass(currentController)?.clazz
-		List<String> list=new ArrayList<String>();
-		grailsApplication.controllerClasses.each { DefaultGrailsControllerClass controller ->
-			Class controllerClass = controller.clazz
-			if (controllerClass.name.startsWith(currentController.toString())) {
-				String logicalControllerName = controller.logicalPropertyName
-				controllerClass.methods.each { Method method ->
-					if (method.getAnnotation(Action)) {
-						list.add(method.name)
+		if (s) {
+			String domclass1= (s.substring(0,1).toUpperCase())
+			String domclass2=s.substring(1,s.length())
+			String domclass=domclass1+domclass2+"Controller"
+			List<String> list=new ArrayList<String>();
+			grailsApplication.controllerClasses.each { DefaultGrailsControllerClass controller ->
+				Class controllerClass = controller.clazz
+				if (controllerClass.name.endsWith(domclass.toString())) {
+					String logicalControllerName = controller.logicalPropertyName
+					controllerClass.methods.each { Method method ->
+						if (method.getAnnotation(Action)) {
+							list.add(method.name)
+						}
 					}
 				}
 			}
-		}
-		def results = list.collect {	['id':it,'name':it] }.unique()
-		return results as JSON
+			def results = list.collect {	['id':it,'name':it] }.unique()
+			return results as JSON
+		}	
 	}
 	
 	
