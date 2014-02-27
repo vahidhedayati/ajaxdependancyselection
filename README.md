@@ -67,7 +67,8 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 	g:selectSecondaryNR
 	g:autoCompleteSecondaryNR
 	g:selectController
-
+	g:autoCompleteHeader
+	g:selectPrimary -  custom controller/action sample
 
 ### g:selectPrimary 
 ###### (relationship: fully dependent ) in conjunction with g:selectSecondary
@@ -372,8 +373,71 @@ The from on this is set to [] which gets filled in by g:selectController setId r
 
 
 
+## g:autoCompleteHeader
+####### Loads in the ajaxLoader if your site is not already doing it
+	<g:autoCompleteHeader />
 
 
+## g:selectPrimary - Custom
+####### Customising your own calls:
+
+This is covered in the sample project labelled as custom example. Create your own controller which is set to do a custom verification:
+
+	def selectCountries() {
+		if (params.id) {
+			println params
+			String continentName = params.searchField
+			Long continentId = params.id as Long
+			MyContinent continent = MyContinent.get(continentId)
+
+			/* Either this method or below method which is much shorter
+			def primarySelectList = []
+			MyCountry.findAllByMycontinentAndCountryNameLike(continent, "F%").each {
+				def primaryMap = [:]
+				primaryMap.put('id', it.id)
+				primaryMap.put('name', it.countryName)
+				primarySelectList.add(primaryMap)
+			}
+			render primarySelectList as JSON
+			*/
+			
+			// Shorter method
+			def countries=MyCountry.findAllByMycontinentAndCountryNameLike(continent, "F%")
+			def results = countries.collect {[	'id': it.id, 'name': it.countryName ]}.unique()
+			render results as JSON
+		}
+	}
+
+
+Create a call for this: 
+
+	<g:selectPrimary id="MyContinent2" name="MyContinent2"
+	domain="ajaxdependancyselectexample.MyContinent"
+	searchField="continentName"
+	collectField="id"
+
+	controller="MyContinent"
+	action="selectCountries"
+
+	domain2="ajaxdependancyselectexample.MyCountry"
+	bindid="mycontinent.id"
+	searchField2="countryName"
+	appendValue=""
+	appendName="values updated"
+	collectField2="id"
+	noSelection="['': 'Please choose Continent']" 
+	setId="MyCountry121"
+	value=""/>
+    
+    
+    
+	 <g:select name="MyCountry" id="MyCountry121"  from="[]" required="required" noSelection="['': 'Please choose Continent']" />
+	 
+I will be updating this so that less input is required when custom action controller is defined.
+
+
+	 
+    
 ##### Examples below
 
 
