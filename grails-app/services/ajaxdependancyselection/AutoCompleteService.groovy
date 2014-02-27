@@ -111,6 +111,7 @@ class AutoCompleteService {
 		}
 		return primarySelectList as JSON
 	}
+	
 	// No reference auto complete service
 	def autocompleteSecondaryNR (params) {
 		def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz

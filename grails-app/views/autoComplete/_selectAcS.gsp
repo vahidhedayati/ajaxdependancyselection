@@ -2,7 +2,7 @@
 
 <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />
 
-<script type='text/javascript'>
+<g:javascript>
 $(document).ready(function() {
 	$('#${attrs.id}').autocomplete({ 
 		source:	function(request, response) { 
@@ -17,4 +17,4 @@ $(document).ready(function() {
 		,
 		dataType: 'json'});
 	});
-</script>
+</g:javascript>

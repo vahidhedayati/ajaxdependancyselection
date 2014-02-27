@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.25
+ajaxdependancyselection 0.26
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.25" 
+	compile ":ajaxdependancyselection:0.26" 
 
 Or via grails command line:
 
@@ -60,6 +60,7 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 
 	g:selectPrimary
 	g:selectSecondary
+	g:selectAutoComplete
 	g:autocomplete
 	g:autoCompletePrimary
 	g:autoCompleteSecondary
@@ -173,6 +174,38 @@ Back to g:selectSecondary example:
         />
 
 
+
+
+
+##g:selectAutoComplete
+
+This is a new feature from 0.26+, it allows you to set up a select box from which auto complete values are generated depending on what user selects.
+
+
+
+	<g:selectAutoComplete 
+	id="MyContinent2"		// The id of your select Box 
+	id2="MyCountry2" 		// The id + name of your autoComplete Box
+	name="MyContinent2"		// The name of this select Field
+    domain="yourApp.MyContinent"	//The name of your primary domainClass to list in select box 
+    searchField="continentName"		// The table Field to query/display
+    collectField="id"				// The field to collect in option box
+ 	primarybind="mycontinent.id"		// The binding field Name between SecondaryTables belongsTo and its .id
+    domain2="yourApp.MyCountry"		// The secondary domain to query and produce auto completeFrom
+    searchField2="countryName"		// The table field of this domain to display/query 
+    collectField2="id"				// The id of this domain to collect
+    
+    appendValue=""					//Optional append a value to list given
+    appendName="values updated"		// To go with the appendValue its description
+    noSelection="['': 'Please choose Continent']" 	// No selection default value
+    setId="MyCountry121"			// The Id to set it auto generates all this in code
+    hidden='hidden3'				// hiddenField to update when doing selection
+    hidden2='hidden4'				// hidden Field to update after autoComplete ended
+    setId2="Something"				// Optional not messed with this - but be able to extend so autoComplete box can update some other call
+    value=""/>
+    
+    
+    
 
 ###g:autocomplete
 This is a simple auto complete tag lib that allows you to auto complete from a single table, refer to above notes on jquery & jquery-ui requirements
