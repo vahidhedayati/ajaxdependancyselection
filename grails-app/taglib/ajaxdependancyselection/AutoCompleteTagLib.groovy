@@ -128,19 +128,21 @@ class AutoCompleteTagLib {
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
+		
 		List primarylist
 		if (attrs.filter) {
 			attrs.filteraction="loadFilterWord"
 			attrs.filteraction2="returnPrimarySearch"
+			def filter=''
 			if (!attrs.hidden) {
 				attrs.hidden="hidden${attrs.id}"
 			}
-			if (attrs.filter.equals('on')) {
+			if (attrs.filter.equals('_ON')) {
 				out << g.render(contextPath: pluginContextPath, template: '/autoComplete/filterField', model: [attrs:attrs])
 			}else if (attrs.filter){
-				attrs.filterWord=attrs.filter
+				filter=attrs.filter
 			}
-			primarylist=autoCompleteService.returnPrimarySearch('','',attrs.domain, attrs)
+			primarylist=autoCompleteService.returnPrimarySearch('',filter,attrs.domain, attrs)
 		}else{
 			primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
 		}	
@@ -293,15 +295,41 @@ class AutoCompleteTagLib {
 		}
 		if (!attrs.appendValue)  { attrs.appendValue='' }
 		if (!attrs.appendName) { attrs.appendName='Values Updated' }
+		
+		
+		List secondarylist=[]
+		if (attrs.filter) {
+			attrs.filteraction="loadFilterWord2"
+			attrs.filteraction2="secondarySearch"
+			if (!attrs.hidden) {
+				attrs.hidden="hidden${attrs.id}"
+			}
+			if (!attrs.filterbind) {
+				throwTagError("Tag [selectScondary] is missing required attribute [filterbind]")
+			}
+			if (attrs.filter.equals('_ON')) {
+				out << g.render(contextPath: pluginContextPath, template: '/autoComplete/filterField', model: [attrs:attrs])
+			}else{
+				attrs.filterWord=attrs.filter
+			}
+			secondarylist=autoCompleteService?.secondarySearch(attrs)
+			out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs1', model: [attrs:attrs])
+			
+		}else{
+			out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs', model: [attrs:attrs])
+		
+		}
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
-		gsattrs['from'] = []
+		gsattrs['from'] = secondarylist
 		if (requireField) {
 			gsattrs['required'] = 'required'
 		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out <<  g.select(gsattrs)
-		out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs', model: [attrs:attrs])
+		
+		
+		out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs1', model: [attrs:attrs])
 		
 	}
 

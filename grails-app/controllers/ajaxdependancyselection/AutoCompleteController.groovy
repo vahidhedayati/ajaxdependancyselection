@@ -32,12 +32,13 @@ class AutoCompleteController {
 	def loadFilterWord() {
 		render (template: '/autoComplete/filterWord',  model: [params:params])
 	}
-	/*def completeFilterWord() {
-		if (params.term) {
-			session.filterWord=params.term
-		}
-	}*/
+	def loadFilterWord2() {
+		render (template: '/autoComplete/filterWord2',  model: [params:params])
+	}
 	def returnPrimarySearch(){
 		render autoCompleteService.returnPrimarySearch('json',params.term,params.domain,params)
+	}
+	def secondarySearch() {
+		render autoCompleteService.secondarySearch(params)
 	}
 }

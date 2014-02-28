@@ -158,11 +158,37 @@ class AutoCompleteService {
 	}
 	
 	def selectSecondary(params) {	
-		if (params.domain2) {
+		if (params.domain2 && params.id) {
 			def domainClass = grailsApplication?.getDomainClass(params?.domain2)?.clazz
-			def query = {
-				eq params.bindid, params.id.toLong()
+			def query = {	
+				eq  (params.bindid, params.id.toLong())
 				projections { 
+					property(params.collectField)
+					property(params.searchField)
+				}
+				order(params.searchField)
+			}
+			def results =domainClass.createCriteria().list(query)
+			def primarySelectList = []
+			results.each {
+				def primaryMap = [:]
+				primaryMap.put('id', it[0])
+				primaryMap.put('name', it[1])
+				primarySelectList.add(primaryMap)
+			}
+			return primarySelectList as JSON
+		}
+	}
+	// This is now set up for secondary filtering method 
+	def secondarySearch(params) {
+		if (params.domain2 && params.prevValue) {
+			def domainClass = grailsApplication?.getDomainClass(params?.domain)?.clazz
+			def query = {
+				eq  (params.filterbind, params.prevValue.toLong())
+				if (params.term) {
+					and { ilike  params.searchField ,"%${params.term}%"}
+				}
+				projections {
 					property(params.collectField)
 					property(params.searchField)
 				}
@@ -210,10 +236,9 @@ class AutoCompleteService {
 	def returnPrimarySearch(String json, String filter, String className, params) {
 		if (!className.equals('')) {
 			def clazz = grailsApplication.getDomainClass(className).clazz
-			if (!filter.equals('')) { params.filterWord=filter } 
-			if (params.filterWord) {
+			if (filter) {
 				def query = {
-					or { ilike  params.searchField ,params.filterWord+ '%'}
+					or { ilike  params.searchField ,filter+ '%'}
 					if (json.equals('json')) {
 						projections {
 							property(params.collectField)

@@ -117,6 +117,16 @@ Here are the values explained:
 	collectField2='id'
 	required="false"		// optional add this if you wish to disable required set by default
 	value="${params.MyContinent}"	// your value if you are posting form back
+	
+	
+	//Optional Filtering methods 0.27+ To enable filtering add the following
+	filter='_ON'				// If you provide _ON it will provide a tick box when use selects and inputs terms 
+								// it will then match return results to match their filter - reducing overall select items
+								// Please note if you set this to "F" then it will not show the tick box and default all return results starting with F
+    hidden="hiddenNew"<br>		//The hidden field name to store user search output - unsure what to be used for
+	 
+    
+	
         />
          
 
@@ -156,7 +166,7 @@ Back to g:selectSecondary example:
 
 
 
-        <g:selectSecondary 
+    <g:selectSecondary 
 	id="MyCountry" 			// Required - must be setId of previous selectPrimary or selectSecondary
 	controller = "something" 	// Optional - default "autoComplete" (part of this plugin)
 	action = "something" 		// Optional - default "ajaxSelectSecondary" (part of this plugin)
@@ -168,9 +178,26 @@ Back to g:selectSecondary example:
 	appendValue='*'			// Optional set a value to be appended to the list
 	appendName='All Countries'	// If you set appendValue then set the display name for it
 	noSelection="['': 'Please choose Continent']"	//default no selection value
-        setId="MyCity"			//Required - your next select id to update
-        value="${params.MyCountry}"	// Default value of select box
-        required="false"		// optional add this if you wish to disable required set by default
+    setId="MyCity"			//Required - your next select id to update
+    value="${params.MyCountry}"	// Default value of select box
+    required="false"		// optional add this if you wish to disable required set by default
+    
+    
+    
+  	//Optional Additional input in order to get filtering to work on selectSecondary  
+  	// This information will not work on this current class and will make things appear rather confusing
+  	// Please refer to Various or example.gsp within the example site this has a working version of all of this
+  	domain='ajaxdependancyselectexample.MyCity'  //Where this is current domainClass
+    searchField='cityName'		//Where this is current SearchField for this domainClass
+    collectField='id'			// where this is current return value for this domainClass
+    filter='_ON'				//Needed to activate tick box
+    filterbind='mycountry.id'	// The actual bindid of this table and your previous selection
+    hidden="hidden6"			//This hidden field to set value
+    prevId="MyCountry11"		//The previousID of your g:selectPrimary or g:selectSecondary - This must exist for all this to work 
+    
+  
+    
+    
         />
 
 
