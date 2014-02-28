@@ -207,7 +207,58 @@ class AutoCompleteService {
 			return primarySelectList as JSON
 		}
 	}
-	
+	def returnPrimarySearch(String json, String filter, String className, params) {
+		if (!className.equals('')) {
+			def clazz = grailsApplication.getDomainClass(className).clazz
+			if (!filter.equals('')) { params.filterWord=filter } 
+			if (params.filterWord) {
+				def query = {
+					or { ilike  params.searchField ,params.filterWord+ '%'}
+					if (json.equals('json')) {
+						projections {
+							property(params.collectField)
+							property(params.searchField)
+						}
+					}
+					order(params.searchField)
+				}
+				def result=clazz?.createCriteria()?.list(query)
+				if (!result) {
+					if (json.equals('json')) {
+						def mylist=clazz.list()					
+						def newlist=mylist?.collect {[	'id': it."${params.collectField}", 'name': it."${params.searchField}" ]}.unique()
+						return newlist as JSON
+		
+					}else{	 
+						clazz.list()
+					}		
+				}else{
+					if (json.equals('json')) {
+						def primarySelectList = []
+						result.each {
+							def primaryMap = [:]
+							primaryMap.put('id', it[0])
+							primaryMap.put('name', it[1])
+							primarySelectList.add(primaryMap)
+						}
+						return primarySelectList as JSON
+					}else{
+						result
+					}	
+				}	
+				//return results
+			}else{
+			 	if (json.equals('json')) {
+					def mylist=clazz.list()
+					def newlist=mylist?.collect {[	'id': it."${params.collectField}", 'name': it."${params.searchField}" ]}.unique()
+					return newlist as JSON
+				}else{	 
+					clazz.list()
+				}	
+			}
+			
+		}
+	}
 	List returnPrimaryList(String className) {
 		if (!className.equals('')) {
 			Class clazz = grailsApplication.getDomainClass(className).clazz
@@ -236,6 +287,8 @@ class AutoCompleteService {
 			return results as JSON
 		}	
 	}
-	
+	/*private HttpSession getSession() {
+		return RequestContextHolder.currentRequestAttributes().getSession()
+	}*/
 	
 }

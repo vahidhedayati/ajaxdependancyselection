@@ -86,6 +86,7 @@ class AutoCompleteTagLib {
 		
 		}
 		
+		
 		if (!attrs.controller) {
 			attrs.controller= "autoComplete"
 		}
@@ -127,8 +128,22 @@ class AutoCompleteTagLib {
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
-		
-		List primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
+		List primarylist
+		if (attrs.filter) {
+			attrs.filteraction="loadFilterWord"
+			attrs.filteraction2="returnPrimarySearch"
+			if (!attrs.hidden) {
+				attrs.hidden="hidden${attrs.id}"
+			}
+			if (attrs.filter.equals('on')) {
+				out << g.render(contextPath: pluginContextPath, template: '/autoComplete/filterField', model: [attrs:attrs])
+			}else if (attrs.filter){
+				attrs.filterWord=attrs.filter
+			}
+			primarylist=autoCompleteService.returnPrimarySearch('','',attrs.domain, attrs)
+		}else{
+			primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
+		}	
 		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = primarylist
