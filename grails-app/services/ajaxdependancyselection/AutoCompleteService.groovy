@@ -223,7 +223,6 @@ class AutoCompleteService {
 	def selectSecondaryNR(params) {
 		def primarySelectList = []
 		if ((params.domain2) && (params.domain)) {
-			println "--"+params
 			def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
 			def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 			def domaininq=domainClass.get(params.id.toLong())
