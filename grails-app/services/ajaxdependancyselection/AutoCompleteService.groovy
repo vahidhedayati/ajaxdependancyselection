@@ -259,8 +259,13 @@ class AutoCompleteService {
 	
 	
 	// used for returning primary results in filter mode
-	def returnPrimarySearch(String json, String filter, String filterType, String className, params) {
+	//def returnPrimarySearch(String json, String filter, String filterType,String filterDisplay, String className, params) {
+	def returnPrimarySearch(String json, String filter, String className, params) {
+	//def returnPrimarySearch(String json, String filter, String filterType, String className, params) {
+		
 		if (!className.equals('')) {
+			def filterType=params.filterType ?: 'A'
+			println "---------"+filterType
 			def clazz = grailsApplication.getDomainClass(className).clazz
 			if (filter) {
 				def query = {
@@ -284,18 +289,16 @@ class AutoCompleteService {
 				}
 				def result=clazz?.createCriteria()?.list(query)
 				if (!result) {
-					// This was returning all results
-					// if no matches found - removed it left just incase there was a demand for it
-					/*
-					if (json.equals('json')) {
-						def mylist=clazz.list()					
-						def newlist=mylist?.collect {[	'id': it."${params.collectField}", 'name': it."${params.searchField}" ]}.unique()
-						return newlist as JSON
-		
-					}else{	 
-						clazz.list()
-					}
-						*/	
+					if (params.filterDisplay.toString().toLowerCase().equals('all')) {
+						if (json.equals('json')) {
+							def mylist=clazz.list()					
+							def newlist=mylist?.collect {[	'id': it."${params.collectField}", 'name': it."${params.searchField}" ]}.unique()
+							return newlist as JSON
+			
+						}else{	 
+							clazz.list()
+						}
+					}		
 				}else{
 					if (json.equals('json')) {
 						def primarySelectList = []
@@ -312,15 +315,15 @@ class AutoCompleteService {
 				}	
 				//return results
 			}else{
-				// This was returning all results
-				// if no matches found - removed it left just incase there was a demand for it
-			 	/*if (json.equals('json')) {
-					def mylist=clazz.list()
-					def newlist=mylist?.collect {[	'id': it."${params.collectField}", 'name': it."${params.searchField}" ]}.unique()
-					return newlist as JSON
-				}else{	 
-				//	clazz.list()
-				}*/	
+				if (params.filterDisplay.toString().toLowerCase().equals('all')) {
+					if (json.equals('json')) {
+						def mylist=clazz.list()
+						def newlist=mylist?.collect {[	'id': it."${params.collectField}", 'name': it."${params.searchField}" ]}.unique()
+						return newlist as JSON
+					}else{	 
+						clazz.list()
+					}	
+				}
 			}
 			
 		}

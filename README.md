@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.28
+ajaxdependancyselection 0.29
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.28" 
+	compile ":ajaxdependancyselection:0.29" 
 
 Or via grails command line:
 
@@ -39,6 +39,7 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 	
 
 ## version info:
+	0.289 - filterDisplay and filterType intro - user override of action controllers for filtering js and controller/actions added
 	0.28 - tidy up - and further work on specific filtering for selectSecondary
 	0.27 - filtering of selectPrimary
 	0.26 - added selectAutoComplete
@@ -131,10 +132,25 @@ Here are the values explained:
 								// Please note if you set this to "F" then it will not show the tick box and default all return results starting with F
     hidden="hiddenNew"<br>		//The hidden field name to store user search output - unsure what to be used for
 	 
-    filterType="E"   			// Two declarations = filterEnds With E or StartsWith or default not set = wild card
-    // E = Char A =  chinA  S = Char C = Chine  no filterType = Char H = cHina or any other matching chars
+    filterDisplay="none"		//  Optional default = display All. This set to anything besides all (default value) will ensure nothing is returned with filtering
+        						// by default if nothing put in filter box or ticked etc it will display all records, 
+        						// enable this option and assign some value to stop it from showing records unless matching search
+        
+     filterType ="A" 			// Optional default = Wildcard. Type of filter no definition for wild card S = start of string E ending of string
+     // so E = Char A =  chinA  S = Char C = Chine  no filterType = Char H = cHina or any other matching chars
     
+     
     filter2="B" 				// This will ensure next secondary is now filtering by B - no need to define filtering in next secondary
+    							// You need to set this for your next secondary call.
+    							// so in selectPrimary if you want your next secondary to filter for B then set this
+    							// you should be able to set filterType2=E for ending records matching B
+    							//
+    							// filter="_ON" required by all selectPrimary/Secondary that needs user defined filtering
+    							// filter="SOMETHING" required only by selectPrimary
+    							// filter2="something" required by selectPrimary for next Secondary call
+    							// -- or by selectSecondary for its next secondary call - refer to examples page on sample project
+
+    
 	// END FILTERING ----------------------------------------------------------------------------------------------------
         />
          

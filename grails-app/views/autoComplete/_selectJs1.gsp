@@ -30,5 +30,5 @@
   	}
   	var zselect = document.getElementById('${attrs.id}')
   	var zopt = zselect.options[zselect.selectedIndex]
-	<g:remoteFunction  controller="${attrs.controller}"  action="${attrs.filteraction2}" onComplete="'${attrs.id}Update(data)'"  params= "\'term=${attrs?.term}&p=pp&domain=${attrs.domain}&primarybind=${attrs.primarybind}&searchField=${attrs.searchField}&collectField=${attrs.collectField}&filter2=${attrs.filter2}&filterbind=${attrs?.filterbind}&prevValue=\'+ zopt.value"/>        
+	<g:remoteFunction  controller="${attrs.controller}"  action="${attrs.filteraction2}" onComplete="'${attrs.id}Update(data)'"  params= "\'term=${attrs?.term}&p=pp&domain=${attrs.domain}&filter=${attrs.filter}&filterType=${attrs.filterType}&filterDisplay=${attrs.filterDisplay}&primarybind=${attrs.primarybind}&searchField=${attrs.searchField}&collectField=${attrs.collectField}&filter2=${attrs.filter2}&filterbind=${attrs?.filterbind}&prevValue=\'+ zopt.value"/>        
 </g:javascript>

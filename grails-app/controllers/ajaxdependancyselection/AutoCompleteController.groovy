@@ -46,7 +46,7 @@ class AutoCompleteController {
 	}
 	
 	def returnPrimarySearch(){
-		render autoCompleteService.returnPrimarySearch('json',params.term,params.filterType,params.domain,params)
+		render autoCompleteService.returnPrimarySearch('json',params.term,params.domain,params)
 	}
 	
 	def secondarySearch() {
