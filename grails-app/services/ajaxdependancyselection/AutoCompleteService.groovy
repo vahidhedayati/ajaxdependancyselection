@@ -221,12 +221,13 @@ class AutoCompleteService {
 	
 	// No reference selection method i.e. belongsTo=UpperClass 
 	def selectSecondaryNR(params) {
+		def primarySelectList = []
 		if ((params.domain2) && (params.domain)) {
-			//println "--"+params
+			println "--"+params
 			def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
 			def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 			def domaininq=domainClass.get(params.id.toLong())
-			def primarySelectList = []
+			
 			domaininq."${params.bindid}".each { dq ->
 				def query = {
 					eq (params.searchField , dq.toString().trim())
@@ -246,7 +247,7 @@ class AutoCompleteService {
 					}
 				}
 			}
-			if (primaryList) {
+			if (primarySelectList) {
 				return primarySelectList as JSON
 			}
 		}

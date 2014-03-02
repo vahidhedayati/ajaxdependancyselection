@@ -62,7 +62,7 @@ class AutoCompleteTagLib {
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
-			out << g.render(contextPath: pluginContextPath,template: '/autoComplete/selectJs',  model: [attrs:attrs])
+			out << g.render(contextPath: pluginContextPath,template: '/autoComplete/selectBJs',  model: [attrs:attrs])
 		}	
 	}
 
@@ -259,7 +259,7 @@ class AutoCompleteTagLib {
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
-			out<< g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs',  model: [attrs:attrs])
+			out<< g.render(contextPath: pluginContextPath, template: '/autoComplete/selectBJs',  model: [attrs:attrs])
 		}	
 		
 	}
@@ -450,7 +450,7 @@ class AutoCompleteTagLib {
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
-			out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs', model: [attrs:attrs])
+			out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectBJs', model: [attrs:attrs])
 		}	
 	}
       
