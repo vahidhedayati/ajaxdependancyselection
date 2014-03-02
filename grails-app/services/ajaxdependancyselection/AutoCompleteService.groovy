@@ -222,7 +222,7 @@ class AutoCompleteService {
 	// No reference selection method i.e. belongsTo=UpperClass 
 	def selectSecondaryNR(params) {
 		if ((params.domain2) && (params.domain)) {
-			println "--"+params
+			//println "--"+params
 			def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
 			def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 			def domaininq=domainClass.get(params.id.toLong())
