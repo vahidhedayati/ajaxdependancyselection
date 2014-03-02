@@ -3,7 +3,7 @@ package ajaxdependancyselection
 
 class AutoCompleteTagLib {
 	def autoCompleteService
-	
+	def basicjs='/autoComplete/selectBJs'
 	def selectController = {attrs ->
 		def clazz,name=""
 		if (!attrs.id) {
@@ -62,13 +62,14 @@ class AutoCompleteTagLib {
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
-			out << g.render(contextPath: pluginContextPath,template: '/autoComplete/selectBJs',  model: [attrs:attrs])
+			out << g.render(contextPath: pluginContextPath,template: basicjs,  model: [attrs:attrs])
 		}	
 	}
 
 	
 	def selectPrimary = {attrs ->
 		def clazz,name = ""
+		
 		if (!attrs.id) {
 			throwTagError("Tag [selectPrimary] is missing required attribute [id]")
 		}
@@ -136,6 +137,7 @@ class AutoCompleteTagLib {
 		
 		List primarylist
 		if (attrs.filter) {
+			basicjs='/autoComplete/selectBJs'
 			if (!attrs.filterController) {
 				attrs.filterController=attrs.controller
 			}
@@ -177,7 +179,7 @@ class AutoCompleteTagLib {
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
-			out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs', model: [attrs:attrs])
+			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
 		}	
 	}
 	
@@ -259,7 +261,7 @@ class AutoCompleteTagLib {
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
-			out<< g.render(contextPath: pluginContextPath, template: '/autoComplete/selectBJs',  model: [attrs:attrs])
+			out<< g.render(contextPath: pluginContextPath, template: basicjs,  model: [attrs:attrs])
 		}	
 		
 	}
@@ -450,7 +452,7 @@ class AutoCompleteTagLib {
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
-			out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectBJs', model: [attrs:attrs])
+			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
 		}	
 	}
       
