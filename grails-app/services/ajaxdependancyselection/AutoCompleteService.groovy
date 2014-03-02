@@ -164,16 +164,11 @@ class AutoCompleteService {
 			def domainClass = grailsApplication?.getDomainClass(params?.domain2)?.clazz
 			def query = {
 				eq  (params.bindid, params.id.toLong())
-				if (params.filter2) {
+				if ((params.filter2)&&(!params.filter2.toString().equals('null'))) {
 					def filter=params.filter2
 					def filterType=params.filterType2
-					def myfilter='%'+filter+'%'
-					if (filterType.equals('S')) {
-						myfilter=filter+'%'
-					} else if (filterType.equals('E')) {
-						myfilter='%'+filter
-					}
-					and { ilike  params.searchField ,"%${params.filter2}%"}
+					def myfilter=parseFilter(filter,filterType)
+					and { ilike  params.searchField ,myfilter}
 				}
 				projections {
 					property(params.collectField)
@@ -199,15 +194,10 @@ class AutoCompleteService {
 			def domainClass = grailsApplication?.getDomainClass(params?.domain)?.clazz
 			def query = {
 				eq  (params.filterbind, params.prevValue.toLong())
-				if (params.term) {
+				if ((params.term)&&(!params.term.toString().equals('null'))) {
 					def filter="${params.term}"
 					def filterType="${params.filterType}"
-					def myfilter='%'+filter+'%'
-					if (filterType.equals('S')) {
-						myfilter=filter+'%'
-					} else if (filterType.equals('E')) {
-						myfilter='%'+filter
-					}
+					def myfilter=parseFilter(filter,filterType)
 					and { ilike  params.searchField ,myfilter}
 				}
 				projections {
@@ -232,6 +222,7 @@ class AutoCompleteService {
 	// No reference selection method i.e. belongsTo=UpperClass 
 	def selectSecondaryNR(params) {
 		if ((params.domain2) && (params.domain)) {
+			println "--"+params
 			def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
 			def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 			def domaininq=domainClass.get(params.id.toLong())
@@ -245,40 +236,36 @@ class AutoCompleteService {
 					}
 					order(params.searchField)
 				}
-				def results =domainClass2.createCriteria().list(query)
-				results.each {
-					def primaryMap = [:]
-					primaryMap.put('id', it[0])
-					primaryMap.put('name', it[1])
-					primarySelectList.add(primaryMap)
+				def results =domainClass2?.createCriteria().list(query)
+				if (results) {
+					results.each {
+						def primaryMap = [:]
+						primaryMap.put('id', it[0])
+						primaryMap.put('name', it[1])
+						primarySelectList.add(primaryMap)
+					}
 				}
 			}
-			return primarySelectList as JSON
+			if (primaryList) {
+				return primarySelectList as JSON
+			}
 		}
 	}
 	
 	
-	// used for returning primary results in filter mode
-	//def returnPrimarySearch(String json, String filter, String filterType,String filterDisplay, String className, params) {
 	def returnPrimarySearch(String json, String filter, String className, params) {
-	//def returnPrimarySearch(String json, String filter, String filterType, String className, params) {
-		
 		if (!className.equals('')) {
 			def filterType=params.filterType ?: 'A'
-			println "---------"+filterType
 			def clazz = grailsApplication.getDomainClass(className).clazz
 			if (filter) {
 				def query = {
-					if ((params.filterType)&&(!params.filterType==null)) { 
-						filterType=params.filterType
+					if (!filter.toString().equals('null')) { 
+						if ((params.filterType)&&(!params.filterType==null)) { 
+							filterType=params.filterType
+						}
+						def myfilter=parseFilter(filter,filterType)
+						and { ilike  params.searchField ,myfilter}
 					}
-					def myfilter='%'+filter+'%'
-					if (filterType.equals('S')) {
-						myfilter=filter +'%'
-					} else if (filterType.equals('E')) {
-						myfilter='%'+filter
-					}
-					and { ilike  params.searchField ,myfilter}
 					if (json.equals('json')) {
 						projections {
 							property(params.collectField)
@@ -337,6 +324,15 @@ class AutoCompleteService {
 		}
 	}
 	
+	def parseFilter(def filter,def filterType) { 
+		def myfilter='%'+filter+'%'
+		if (filterType.equals('S')) {
+			myfilter=filter+'%'
+		} else if (filterType.equals('E')) {
+			myfilter='%'+filter
+		}
+		return myfilter
+	}
 	
 	def returnControllerActions(params) {
 		String s = params.id

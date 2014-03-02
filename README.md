@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.29
+ajaxdependancyselection 0.30
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.29" 
+	compile ":ajaxdependancyselection:0.30" 
 
 Or via grails command line:
 
@@ -39,7 +39,8 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 	
 
 ## version info:
-	0.289 - filterDisplay and filterType intro - user override of action controllers for filtering js and controller/actions added
+	0.30 - issues with filtering and end box with no filter not displaying values - tidyup
+	0.29 - filterDisplay and filterType intro - user override of action controllers for filtering js and controller/actions added
 	0.28 - tidy up - and further work on specific filtering for selectSecondary
 	0.27 - filtering of selectPrimary
 	0.26 - added selectAutoComplete
@@ -53,6 +54,8 @@ Using this plugin with the grails framework  you are able to achieve this withou
 
 https://github.com/vahidhedayati/ajaxdependancyselectexample
 
+##### For further documentation and examples visit https://github.com/vahidhedayati/ajaxdependancyselection/wiki
+###### I have included the text and html samples from all of the examples in the example site.
 
 Use Europe/United Kingdom/London or Oxford for a full completed example within the above example project when loading it up.
 
