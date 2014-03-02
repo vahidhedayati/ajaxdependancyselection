@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.27
+ajaxdependancyselection 0.28
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.27" 
+	compile ":ajaxdependancyselection:0.28" 
 
 Or via grails command line:
 
@@ -39,6 +39,9 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 	
 
 ## version info:
+	0.28 - tidy up - and further work on specific filtering for selectSecondary
+	0.27 - filtering of selectPrimary
+	0.26 - added selectAutoComplete
 	0.23 - removed null from values updated (default additional selection field added when values update), this now means user has to still choose this value 
 	0.22 - added required by default set to required for all taglib calls. 
 	0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
@@ -69,7 +72,9 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 	g:autoCompleteSecondaryNR
 	g:selectController
 	g:autoCompleteHeader
+	
 	g:selectPrimary -  custom controller/action sample
+	g:selectPrimary/Secondary Filtering
 
 ### g:selectPrimary 
 ###### (relationship: fully dependent ) in conjunction with g:selectSecondary
@@ -119,14 +124,18 @@ Here are the values explained:
 	value="${params.MyContinent}"	// your value if you are posting form back
 	
 	
+	// FILTERING  selectPrimary -----------------------------------------------------------------------------------------
 	//Optional Filtering methods 0.27+ To enable filtering add the following
 	filter='_ON'				// If you provide _ON it will provide a tick box when use selects and inputs terms 
 								// it will then match return results to match their filter - reducing overall select items
 								// Please note if you set this to "F" then it will not show the tick box and default all return results starting with F
     hidden="hiddenNew"<br>		//The hidden field name to store user search output - unsure what to be used for
 	 
+    filterType="E"   			// Two declarations = filterEnds With E or StartsWith or default not set = wild card
+    // E = Char A =  chinA  S = Char C = Chine  no filterType = Char H = cHina or any other matching chars
     
-	
+    filter2="B" 				// This will ensure next secondary is now filtering by B - no need to define filtering in next secondary
+	// END FILTERING ----------------------------------------------------------------------------------------------------
         />
          
 
@@ -195,7 +204,15 @@ Back to g:selectSecondary example:
     hidden="hidden6"			//This hidden field to set value
     prevId="MyCountry11"		//The previousID of your g:selectPrimary or g:selectSecondary - This must exist for all this to work 
     
-  
+    
+    filterType="E"   			// Two declarations = filterEnds With E or StartsWith or default not set = wild card
+    // E = Char A =  chinA  S = Char C = Chine  no filterType = Char H = cHina or any other matching chars
+	// END FILTERING ----------------------------------------------------------------------------------------------------
+    
+    // OR
+    
+    filter2="B" 				// This will now set the input to as per Filter show all Ending with B
+  	prevId="MyCountry11"
     
     
         />

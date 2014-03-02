@@ -30,13 +30,19 @@ class AutoCompleteController {
 		render autoCompleteService.autocompleteSecondaryNR(params)
 	}
 	def loadFilterWord() {
+		
 		render (template: '/autoComplete/filterWord',  model: [params:params])
 	}
 	def loadFilterWord2() {
-		render (template: '/autoComplete/filterWord2',  model: [params:params])
+		if (params.template) {
+			render (template: params.template,  model: [params:params])
+		}else{
+			render (template: '/autoComplete/filterWord2',  model: [params:params])
+		}
 	}
 	def returnPrimarySearch(){
-		render autoCompleteService.returnPrimarySearch('json',params.term,params.domain,params)
+		render autoCompleteService.returnPrimarySearch('json',params.term,params.filterType,params.domain,params)
+	//	render autoCompleteService.returnPrimarySearch('json',params.term,params.domain,params)
 	}
 	def secondarySearch() {
 		render autoCompleteService.secondarySearch(params)
