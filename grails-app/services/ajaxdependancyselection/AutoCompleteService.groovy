@@ -203,35 +203,37 @@ class AutoCompleteService {
 	
 	// No reference selection method i.e. belongsTo=UpperClass 
 	def selectSecondaryNR(params) {
-		if ((params.domain2) && (params.domain)) {
+		if ((params.domain2) && (params.domain) &&( params.id)) {
 			def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
 			def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
-			def domaininq=domainClass.get(params.id.toLong())
-			def primarySelectList = []
-			domaininq."${params.bindid}".each { dq ->
-				def query = {
-					if ((params.filter2)&&(!params.filter2.toString().equals('null'))) {
-						def filter=params.filter2
-						def filterType=params.filterType2
-						def myfilter=parseFilter(filter,filterType)
-						and { ilike  params.searchField ,myfilter}
+			def domaininq=domainClass?.get(params.id.toLong())
+			if (domaininq) {
+				def primarySelectList = []
+				domaininq."${params.bindid}".each { dq ->
+					def query = {
+						if ((params.filter2)&&(!params.filter2.toString().equals('null'))) {
+							def filter=params.filter2
+							def filterType=params.filterType2
+							def myfilter=parseFilter(filter,filterType)
+							and { ilike  params.searchField ,myfilter}
+						}
+						eq (params.searchField , dq.toString().trim())
+						projections {
+							property(params.collectField)
+							property(params.searchField)
+						}
+						order(params.searchField)
 					}
-					eq (params.searchField , dq.toString().trim())
-					projections {
-						property(params.collectField)
-						property(params.searchField)
+					def results =domainClass2.createCriteria().list(query)
+					results.each {
+						def primaryMap = [:]
+						primaryMap.put('id', it[0])
+						primaryMap.put('name', it[1])
+						primarySelectList.add(primaryMap)
 					}
-					order(params.searchField)
 				}
-				def results =domainClass2.createCriteria().list(query)
-				results.each {
-					def primaryMap = [:]
-					primaryMap.put('id', it[0])
-					primaryMap.put('name', it[1])
-					primarySelectList.add(primaryMap)
-				}
+				return primarySelectList as JSON
 			}
-			return primarySelectList as JSON
 		}
 	}
 	

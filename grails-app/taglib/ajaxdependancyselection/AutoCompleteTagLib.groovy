@@ -3,7 +3,7 @@ package ajaxdependancyselection
 
 class AutoCompleteTagLib {
 	def autoCompleteService
-	def basicjs='/autoComplete/selectJs'
+	def basicjs='/autoComplete/selectBJs'
 	def selectController = {attrs ->
 		def clazz,name=""
 		if (!attrs.id) {
@@ -59,7 +59,7 @@ class AutoCompleteTagLib {
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value)',onSuccess:''+attrs.id+'Update(data)')}"
 		out << g.select(gsattrs)
 		attrs.filteraction2=attrs.action
-		def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectJS
+		def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectBasicJS
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
@@ -163,18 +163,27 @@ class AutoCompleteTagLib {
 			}
 			
 			primarylist=autoCompleteService.returnPrimarySearch('',filter,attrs.domain, attrs)
-			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			
+			def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectBasicJsFilter
+			if (userTemplate) {
+				out << g.render(template:userTemplate, model: [attrs:attrs])
+			}else{
+				basicjs='/autoComplete/selectJs'
+				out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			}
+			
 		}else{
 			primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
-			attrs.filteraction2=attrs.action
+			
+			def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectBasicJS
+			if (userTemplate) {
+				out << g.render(template:userTemplate, model: [attrs:attrs])
+			}else{
+				out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			}
 		}	
 		
-		def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectSelectPrimaryJs
-		if (userTemplate) {
-			out << g.render(template:userTemplate, model: [attrs:attrs])
-		}else{
-			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
-		}
+		
 		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = primarylist
@@ -247,9 +256,7 @@ class AutoCompleteTagLib {
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
-		
-		//List primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
-		
+
 		List primarylist
 		if (attrs.filter) {
 			if (!attrs.filterController) {
@@ -277,17 +284,25 @@ class AutoCompleteTagLib {
 			
 			primarylist=autoCompleteService.returnPrimarySearch('',filter,attrs.domain, attrs)
 		
+			def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectBasicJsFilter
+			if (userTemplate) {
+				out << g.render(template:userTemplate, model: [attrs:attrs])
+			}else{
+				basicjs='/autoComplete/selectJs'
+				out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			}
 		}else{
 			primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
-			attrs.filteraction2=attrs.action
+			
+			def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectBasicJS
+			if (userTemplate) {
+				out << g.render(template:userTemplate, model: [attrs:attrs])
+			}else{
+				out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			}
+		
 		}
 		
-		def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectSelectPrimaryNrJs
-		if (userTemplate) {
-			out << g.render(template:userTemplate, model: [attrs:attrs])
-		}else{
-			out<< g.render(contextPath: pluginContextPath, template: basicjs,  model: [attrs:attrs])
-		}
 		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = primarylist
@@ -396,17 +411,25 @@ class AutoCompleteTagLib {
 						out << g.render(contextPath: pluginContextPath, template: '/autoComplete/filterField', model: [attrs:attrs])
 					}
 			}
+			
+			def selectSecondaryJs=grailsApplication?.config?.ajaxdependancyselection.selectSecondaryJsFilter
+			if (selectSecondaryJs) {
+				out << g.render(template:selectSecondaryJs, model: [attrs:attrs])
+			}else{
+				basicjs='/autoComplete/selectJs1'
+				out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			}
 		}else{
-			attrs.filteraction2=attrs.action
+
+			def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectSecondaryJs
+			if (userTemplate) {
+				out << g.render(template:userTemplate, model: [attrs:attrs])
+			}else{
+				basicjs='/autoComplete/selectBJs1'
+				out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			}
 		}
 		
-		def selectSecondaryJs=grailsApplication?.config?.ajaxdependancyselection.selectSecondaryJs
-		if (selectSecondaryJs) {
-			out << g.render(template:selectSecondaryJs, model: [attrs:attrs])
-		}else{
-			out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJs1', model: [attrs:attrs])
-		}
-	
 		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = secondarylist
@@ -512,12 +535,24 @@ class AutoCompleteTagLib {
 						out << g.render(contextPath: pluginContextPath, template: '/autoComplete/filterField', model: [attrs:attrs])
 					}
 			}
+			
+			def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectSecondaryNrJSFilter
+			if (userTemplate) {
+				out << g.render(template:userTemplate, model: [attrs:attrs])
+			}else{
+				basicjs='/autoComplete/selectJsNr1Filter'
+				out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			}
 		}else{
-			attrs.filteraction2=attrs.action
+		
+			def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectSecondaryNrJS
+			if (userTemplate) {
+				out << g.render(template:userTemplate, model: [attrs:attrs])
+			}else{
+				basicjs='/autoComplete/selectJsNr1'
+				out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
+			}	
 		}
-		
-		
-		
 		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
@@ -528,12 +563,7 @@ class AutoCompleteTagLib {
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bdomain='+attrs.bdomain+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out <<  g.select(gsattrs)
 		
-		def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectSecondaryNrJS
-		if (userTemplate) {
-			out << g.render(template:userTemplate, model: [attrs:attrs])
-		}else{
-			out << g.render(contextPath: pluginContextPath, template: '/autoComplete/selectJsNr1', model: [attrs:attrs])
-		}	
+		
 	}
       
 	
