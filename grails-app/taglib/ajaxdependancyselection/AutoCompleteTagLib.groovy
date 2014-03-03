@@ -179,24 +179,13 @@ class AutoCompleteTagLib {
 			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
 		}
 		
-		
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = primarylist
 		if (requireField) {
 			gsattrs['required'] = 'required'
 		}
 		gsattrs['noSelection'] =attrs.noSelection
-		def changeAddon=""
-		if (attrs.domain3) {
-			if (!attrs.action3) {
-				attrs.action3=attrs.action
-			}
-			if (!attrs.controller3) {
-				attrs.controller3=attrs.controller
-			}
-			changeAddon="'&collectField3='+attrs.collectField3+'&searchField3='+attrs.searchField3+'&domain3='+attrs.domain3+'&controller3='+attrs.controller3+'&action3='+attrs.action3"
-		}
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		def link = ['action': attrs.action , 'controller': attrs.controller ]
 		out << g.select(gsattrs)
 		
