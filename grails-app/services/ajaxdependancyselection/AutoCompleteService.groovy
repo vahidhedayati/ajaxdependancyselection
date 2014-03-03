@@ -25,14 +25,13 @@ class AutoCompleteService {
 				order(params.searchField, params.order)
 			}
 		}
-		results = results.collect {     [label:it."${params.collectField}"] }.unique()
-		if (results) {
-			return results as JSON
-		}
+		results = results?.collect {     [label:it."${params.collectField}"] }?.unique()
+		return results as JSON
 	}
 	
 	
 	def autocompletePrimaryAction (params) {
+		def primarySelectList=[]
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
 		def query = {
 			or{
@@ -61,13 +60,14 @@ class AutoCompleteService {
 			results = domainClass?.createCriteria().list(query1)
 		}
 		if (results) {
-			def primarySelectList=resultSet1(results)
-			return primarySelectList as JSON
+			primarySelectList=resultSet1(results)
 		}
+		return primarySelectList as JSON
 	}
 	
 	
 	def autocompleteSecondaryAction (params) {
+		def primarySelectList=[]
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
 		def query = {
 			eq (params.primarybind, params.primaryid.toLong())
@@ -99,14 +99,15 @@ class AutoCompleteService {
 			results = domainClass?.createCriteria().list(query1)
 		}
 		if (results) {
-			def primarySelectList=resultSet1(results)
-			return primarySelectList as JSON
+			primarySelectList=resultSet1(results)
 		}
+		return primarySelectList as JSON
 	}
 	
 	
 	// No reference auto complete service
 	def autocompleteSecondaryNR (params) {
+		def primarySelectList=[]
 		def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
 		def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 		def domaininq=domainClass.get(params.primaryid.toLong())	
@@ -135,22 +136,23 @@ class AutoCompleteService {
 				results = domainClass2?.createCriteria().list(query1)
 			}
 			if (results) {
-				def primarySelectList=resultSet1(results)
-				return primarySelectList as JSON
+				primarySelectList=resultSet1(results)	
 			}
 		}
+		return primarySelectList as JSON
 	}
 	
 	
 	def returnControllerList() {
-		def clazz=grailsApplication.controllerClasses.logicalPropertyName
-		def results = clazz.collect {[	'id': it, 'name': it ]}.unique()
+		def clazz=grailsApplication?.controllerClasses?.logicalPropertyName
+		def results = clazz?.collect {[	'id': it, 'name': it ]}?.unique()
 		return results
 	}
 	
 	
 	
 	def selectSecondary(params) {
+		def primarySelectList=[]
 		if (params.domain2 && params.id) {
 			def domainClass = grailsApplication?.getDomainClass(params?.domain2)?.clazz
 			def query = {
@@ -169,14 +171,15 @@ class AutoCompleteService {
 			}
 			def results =domainClass?.createCriteria().list(query)
 			if (results) {
-				def primarySelectList=resultSet2(results)
-				return primarySelectList as JSON
+				primarySelectList=resultSet2(results)
 			}
 		}
+		return primarySelectList as JSON
 	}
 	
 	// This is now set up for secondary filtering method 
 	def secondarySearch(params) {
+		def primarySelectList=[]
 		if (params.domain && params.prevValue) {
 			def domainClass = grailsApplication?.getDomainClass(params?.domain)?.clazz
 			def query = {
@@ -195,10 +198,10 @@ class AutoCompleteService {
 			}
 			def results =domainClass?.createCriteria().list(query)
 			if (results) {
-				def primarySelectList=resultSet2(results)
-				return primarySelectList as JSON
+				primarySelectList=resultSet2(results)
 			}
 		}
+		return primarySelectList as JSON
 	}
 	
 	// No reference selection method i.e. belongsTo=UpperClass 
@@ -224,7 +227,7 @@ class AutoCompleteService {
 						}
 						order(params.searchField)
 					}
-					def results =domainClass2.createCriteria().list(query)
+					def results =domainClass2?.createCriteria().list(query)
 					results.each {
 						def primaryMap = [:]
 						primaryMap.put('id', it[0])
@@ -315,7 +318,7 @@ class AutoCompleteService {
 					}
 				}
 			}
-			def results = list.collect {	['id':it,'name':it] }.unique()
+			def results = list?.collect {	['id':it,'name':it] }?.unique()
 			return results as JSON
 		}
 	}
@@ -349,7 +352,7 @@ class AutoCompleteService {
 	
 	List returnPrimaryList(String className) {
 		if (!className.equals('')) {
-			Class clazz = grailsApplication.getDomainClass(className).clazz
+			Class clazz = grailsApplication?.getDomainClass(className).clazz
 			clazz.list()
 		}
 	}
