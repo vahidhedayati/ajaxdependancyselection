@@ -11,7 +11,7 @@ function ${params.id}resetValue(displayType) {
 			 gotprevId=document.getElementById('${params?.prevId}').value;
 		}
 		if ((displayType.toLowerCase()=='all')||(displayType.toLowerCase()=='null')) {	
-			$.getJSON('${createLink(controller:"${params?.acontroller}", action: "${params?.filteraction2}")}?id=${params.id}&prevValue='+gotprevId+'&value=${params?.triggerWord}&bindid='+gotprevId+'&collectField=${params?.collectField}&filterDisplay=${params.filterDisplay}&searchField=${params?.searchField}&domain=${params?.domain}&domain2=${params?.domain2}&filterbind=${params.filterbind}&filter=${params.filter}&filter2=${params.filter2}',function(data){
+			$.getJSON('${createLink(controller:"${params?.acontroller}", action: "${params?.filteraction2}")}?id=${params.id}&prevValue='+gotprevId+'&value=${params?.triggerWord}&bindid='+gotprevId+'&collectField=${params?.collectField}&filterDisplay=${params.filterDisplay}&searchField=${params?.searchField}&domain=${params?.domain}&domain2=${params?.domain2}&bdomain=${params?.bdomain}&filterbind=${params.filterbind}&filter=${params.filter}&filter2=${params.filter2}',function(data){
 				var e=data;
 				if (e) { 
 				    var rselect = document.getElementById('${params.id}')

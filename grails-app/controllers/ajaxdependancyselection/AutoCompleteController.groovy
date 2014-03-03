@@ -52,4 +52,5 @@ class AutoCompleteController {
 	def secondarySearch() {
 		render autoCompleteService.secondarySearch(params)
 	}
+
 }

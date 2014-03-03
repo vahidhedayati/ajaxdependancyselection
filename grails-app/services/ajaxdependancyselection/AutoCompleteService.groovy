@@ -13,20 +13,22 @@ class AutoCompleteService {
 	
 	def autocomplete (params) {
 		def domainClass = grailsApplication.getDomainClass(params.domain).clazz
-		def results = domainClass.createCriteria().list {
+		def results = domainClass?.createCriteria().list {
 			ilike params.searchField, params.term + '%'
 			maxResults(Integer.parseInt(params.max,10))
 			order(params.searchField, params.order)
 		}
 		if (results.size()< 5){
-			results = domainClass.createCriteria().list {
+			results = domainClass?.createCriteria().list {
 				ilike params.searchField, "%${params.term}%"
 				maxResults(Integer.parseInt(params.max,10))
 				order(params.searchField, params.order)
 			}
 		}
 		results = results.collect {     [label:it."${params.collectField}"] }.unique()
-		return results as JSON
+		if (results) {
+			return results as JSON
+		}
 	}
 	
 	
@@ -54,18 +56,14 @@ class AutoCompleteService {
 			maxResults(Integer.parseInt(params.max,10))
 			order(params.searchField, params.order)
 		}
-		def results =domainClass.createCriteria().list(query)
+		def results =domainClass?.createCriteria().list(query)
 		if (results.size()< 5){
-			results = domainClass.createCriteria().list(query1)
+			results = domainClass?.createCriteria().list(query1)
 		}
-		def primarySelectList = []
-		results.each {
-			def primaryMap = [:]
-			primaryMap.put('id', it[0])
-			primaryMap.put('label', it[1])
-			primarySelectList.add(primaryMap)
+		if (results) {
+			def primarySelectList=resultSet1(results)
+			return primarySelectList as JSON
 		}
-		return primarySelectList as JSON
 	}
 	
 	
@@ -96,18 +94,14 @@ class AutoCompleteService {
 			maxResults(Integer.parseInt(params.max,10))
 			order(params.searchField, params.order)
 		}
-		def results =domainClass.createCriteria().list(query)
+		def results =domainClass?.createCriteria().list(query)
 		if (results.size()< 5){
-			results = domainClass.createCriteria().list(query1)
+			results = domainClass?.createCriteria().list(query1)
 		}
-		def primarySelectList = []
-		results.each {
-			def primaryMap = [:]
-			primaryMap.put('id', it[0])
-			primaryMap.put('label', it[1])
-			primarySelectList.add(primaryMap)
+		if (results) {
+			def primarySelectList=resultSet1(results)
+			return primarySelectList as JSON
 		}
-		return primarySelectList as JSON
 	}
 	
 	
@@ -116,7 +110,7 @@ class AutoCompleteService {
 		def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
 		def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 		def domaininq=domainClass.get(params.primaryid.toLong())	
-		def primarySelectList = []
+		//def primarySelectList = []
 		domaininq."${params.primarybind}".each { dq ->
 			def query = {
 				eq (params.searchField , dq.toString().trim())
@@ -136,18 +130,15 @@ class AutoCompleteService {
 				}
 				order(params.searchField)
 			}
-			def results =domainClass2.createCriteria().list(query)
+			def results =domainClass2?.createCriteria().list(query)
 			if (results.size()< 5){
-				results = domainClass2.createCriteria().list(query1)
+				results = domainClass2?.createCriteria().list(query1)
 			}
-			results.each {
-				def primaryMap = [:]
-				primaryMap.put('id', it[0])
-				primaryMap.put('label', it[1])
-				primarySelectList.add(primaryMap)
+			if (results) {
+				def primarySelectList=resultSet1(results)
+				return primarySelectList as JSON
 			}
 		}
-		return primarySelectList as JSON
 	}
 	
 	
@@ -176,15 +167,11 @@ class AutoCompleteService {
 				}
 				order(params.searchField)
 			}
-			def results =domainClass.createCriteria().list(query)
-			def primarySelectList = []
-			results.each {
-				def primaryMap = [:]
-				primaryMap.put('id', it[0])
-				primaryMap.put('name', it[1])
-				primarySelectList.add(primaryMap)
+			def results =domainClass?.createCriteria().list(query)
+			if (results) {
+				def primarySelectList=resultSet2(results)
+				return primarySelectList as JSON
 			}
-			return primarySelectList as JSON
 		}
 	}
 	
@@ -206,29 +193,29 @@ class AutoCompleteService {
 				}
 				order(params.searchField)
 			}
-			def results =domainClass.createCriteria().list(query)
-			def primarySelectList = []
-			results.each {
-				def primaryMap = [:]
-				primaryMap.put('id', it[0])
-				primaryMap.put('name', it[1])
-				primarySelectList.add(primaryMap)
+			def results =domainClass?.createCriteria().list(query)
+			if (results) {
+				def primarySelectList=resultSet2(results)
+				return primarySelectList as JSON
 			}
-			return primarySelectList as JSON
 		}
 	}
 	
-	
 	// No reference selection method i.e. belongsTo=UpperClass 
 	def selectSecondaryNR(params) {
-		def primarySelectList = []
 		if ((params.domain2) && (params.domain)) {
 			def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
 			def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
 			def domaininq=domainClass.get(params.id.toLong())
-			
+			def primarySelectList = []
 			domaininq."${params.bindid}".each { dq ->
 				def query = {
+					if ((params.filter2)&&(!params.filter2.toString().equals('null'))) {
+						def filter=params.filter2
+						def filterType=params.filterType2
+						def myfilter=parseFilter(filter,filterType)
+						and { ilike  params.searchField ,myfilter}
+					}
 					eq (params.searchField , dq.toString().trim())
 					projections {
 						property(params.collectField)
@@ -236,21 +223,18 @@ class AutoCompleteService {
 					}
 					order(params.searchField)
 				}
-				def results =domainClass2?.createCriteria().list(query)
-				if (results) {
-					results.each {
-						def primaryMap = [:]
-						primaryMap.put('id', it[0])
-						primaryMap.put('name', it[1])
-						primarySelectList.add(primaryMap)
-					}
+				def results =domainClass2.createCriteria().list(query)
+				results.each {
+					def primaryMap = [:]
+					primaryMap.put('id', it[0])
+					primaryMap.put('name', it[1])
+					primarySelectList.add(primaryMap)
 				}
 			}
-			if (primarySelectList) {
-				return primarySelectList as JSON
-			}
+			return primarySelectList as JSON
 		}
 	}
+	
 	
 	
 	def returnPrimarySearch(String json, String filter, String className, params) {
@@ -274,8 +258,8 @@ class AutoCompleteService {
 					}
 					order(params.searchField)
 				}
-				def result=clazz?.createCriteria()?.list(query)
-				if (!result) {
+				def results=clazz?.createCriteria()?.list(query)
+				if (!results) {
 					if (params.filterDisplay.toString().toLowerCase().equals('all')) {
 						if (json.equals('json')) {
 							def mylist=clazz.list()					
@@ -287,17 +271,13 @@ class AutoCompleteService {
 						}
 					}		
 				}else{
-					if (json.equals('json')) {
-						def primarySelectList = []
-						result.each {
-							def primaryMap = [:]
-							primaryMap.put('id', it[0])
-							primaryMap.put('name', it[1])
-							primarySelectList.add(primaryMap)
+					if (json.equals('json')) {						
+						if (results) {
+							def primarySelectList=resultSet2(results)
+							return primarySelectList as JSON
 						}
-						return primarySelectList as JSON
 					}else{
-						result
+						results
 					}	
 				}	
 				//return results
@@ -312,26 +292,7 @@ class AutoCompleteService {
 					}	
 				}
 			}
-			
 		}
-	}
-	
-	
-	List returnPrimaryList(String className) {
-		if (!className.equals('')) {
-			Class clazz = grailsApplication.getDomainClass(className).clazz
-			clazz.list()
-		}
-	}
-	
-	def parseFilter(def filter,def filterType) { 
-		def myfilter='%'+filter+'%'
-		if (filterType.equals('S')) {
-			myfilter=filter+'%'
-		} else if (filterType.equals('E')) {
-			myfilter='%'+filter
-		}
-		return myfilter
 	}
 	
 	def returnControllerActions(params) {
@@ -354,7 +315,53 @@ class AutoCompleteService {
 			}
 			def results = list.collect {	['id':it,'name':it] }.unique()
 			return results as JSON
-		}	
+		}
 	}
+	
+	
+	def resultSet1(def results) {
+		def primarySelectList=[]
+		if (results) {
+			results.each {
+				def primaryMap = [:]
+				primaryMap.put('id', it[0])
+				primaryMap.put('label', it[1])
+				primarySelectList.add(primaryMap)
+			}
+		}		
+		return primarySelectList
+	}	
+		
+	def resultSet2(def results) {
+		def primarySelectList=[]
+		if (results) {
+			results.each {
+				def primaryMap = [:]
+				primaryMap.put('id', it[0])
+				primaryMap.put('name', it[1])
+				primarySelectList.add(primaryMap)
+			}
+		}
+		return primarySelectList
+	}
+	
+	List returnPrimaryList(String className) {
+		if (!className.equals('')) {
+			Class clazz = grailsApplication.getDomainClass(className).clazz
+			clazz.list()
+		}
+	}
+	
+	def parseFilter(def filter,def filterType) { 
+		def myfilter='%'+filter+'%'
+		if (filterType.equals('S')) {
+			myfilter=filter+'%'
+		} else if (filterType.equals('E')) {
+			myfilter='%'+filter
+		}
+		return myfilter
+	}
+	
+	
 	
 }
