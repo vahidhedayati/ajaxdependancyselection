@@ -30,7 +30,12 @@
   	}
   	var zselect = document.getElementById('${attrs.id}')
   	var zopt = zselect.options[zselect.selectedIndex]
-<g:remoteFunction  controller="${attrs.filterController}"  action="${attrs.filteraction2}" onComplete="'${attrs.id}Update(data)'"  params= "\'term=${attrs?.term}&filter=${attrs.filter}&filterType=${attrs.filterType}&filterDisplay=${attrs.filterDisplay}&domain=${attrs.domain}&primarybind=${attrs.primarybind}&searchField=${attrs.searchField}&collectField=${attrs.collectField}&filter2=${attrs.filter2}&filterbind=${attrs?.filterbind}&id=\'+ zopt.value"/>        
+	<g:if test="${attrs?.filterController}">
+		<g:remoteFunction  controller="${attrs.filterController}"  action="${attrs.filteraction2}" onComplete="'${attrs.id}Update(data)'"  params= "\'term=${attrs?.term}&filter=${attrs.filter}&filterType=${attrs.filterType}&filterDisplay=${attrs.filterDisplay}&domain=${attrs.domain}&primarybind=${attrs.primarybind}&searchField=${attrs.searchField}&collectField=${attrs.collectField}&filter2=${attrs.filter2}&filterbind=${attrs?.filterbind}&id=\'+ zopt.value"/>
+	</g:if>
+	<g:else>
+		<g:remoteFunction  controller="${attrs.controller}"  action="${attrs.action}" onComplete="'${attrs.id}Update(data)'"  params= "\'term=${attrs?.term}&filter=${attrs.filter}&filterType=${attrs.filterType}&filterDisplay=${attrs.filterDisplay}&domain=${attrs.domain}&primarybind=${attrs.primarybind}&searchField=${attrs.searchField}&collectField=${attrs.collectField}&filter2=${attrs.filter2}&filterbind=${attrs?.filterbind}&id=\'+ zopt.value"/>        
+	</g:else>	        
 
   		        
 </g:javascript>

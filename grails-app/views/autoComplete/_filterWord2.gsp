@@ -2,7 +2,7 @@
  <label>Filter by:</label>
  <input type="text" name="triggerWord" value="${params.triggerWord }"  onClick="this.value='';${params.id}resetValue('${params.filterDisplay}')" onChange="${params.id}AppendValue(this)" >
  </div>  
-<script>
+<script type='text/javascript'>
 function ${params.id}resetValue(displayType) {
 	
 	var exists="${params.prevId ?: ''}"

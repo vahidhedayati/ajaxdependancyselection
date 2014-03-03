@@ -1,7 +1,5 @@
 <%@page defaultCodec="none" %>
-
 <input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />
-
 <g:javascript>
 $(document).ready(function() {
 	$('#${attrs.id}').autocomplete({ 
@@ -10,11 +8,17 @@ $(document).ready(function() {
 			{ primaryid: $('#${attrs.hidden}').val() },
 			response);  
 		},
+		<g:if test="${attrs.hidden2&&attrs.setId}">
 		select: function(event, ui) {
-			$('#${attrs.hidden2}').val(ui.item.id);
-			$('#${attrs.setId}').attr('primaryid',ui.item.id);
+			<g:if test="${attrs.hidden2}">
+				$('#${attrs.hidden2}').val(ui.item.id);
+			</g:if>
+			<g:if test="${attrs.setId}">
+				$('#${attrs.setId}').attr('primaryid',ui.item.id);
+			</g:if>	
 		}
-		,
-		dataType: 'json'});
+		</g:if>
+		,dataType: 'json'
 	});
+});	
 </g:javascript>
