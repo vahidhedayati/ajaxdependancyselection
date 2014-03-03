@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.30
+ajaxdependancyselection 0.31
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.30" 
+	compile ":ajaxdependancyselection:0.31" 
 
 Or via grails command line:
 
@@ -39,6 +39,7 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 	
 
 ## version info:
+	0.31 - tidyup of javascript calls within taglib, fixed secondaryNR filter2 issues - filtering now working across all select functions
 	0.30 - issues with filtering and end box with no filter not displaying values - tidyup
 	0.29 - filterDisplay and filterType intro - user override of action controllers for filtering js and controller/actions added
 	0.28 - tidy up - and further work on specific filtering for selectSecondary
