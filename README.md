@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.33
+ajaxdependancyselection 0.34
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.33" 
+	compile ":ajaxdependancyselection:0.34" 
 
 Or via grails command line:
 
@@ -39,6 +39,7 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 	
 
 ## version info:
+	0.34 - Now supporting multiple dependency calls, in a given g:select you can now declare upto 5 depended object bound to a primary or secondary selection.
 	0.33 - too minor to mention
 	0.32 - further tidyup of duplicate javascripts, cleaner calls made within taglib and reduction of duplicate gsp pages, issue with return results in controller displayed undefined when no results found - fixed.
 	0.31 - tidyup of javascript calls within taglib, fixed secondaryNR filter2 issues - filtering now working across all select functions
@@ -82,6 +83,12 @@ Use Europe/United Kingdom/London or Oxford for a full completed example within t
 	
 	g:selectPrimary -  custom controller/action sample
 	g:selectPrimary/Secondary Filtering
+	g:selectPrimary/Secondary support for domain3 domain4 domain5 domain6 domain7 and domain8 which can all be added: 
+								-- to any selectPrimary or Secondary call, each domain is a bound object
+								-- This means if a Country has many cities and many mayors upon country update relevant cities and mayors are loaded
+								-- extend this now across upto domain8 for each object initiall called
+								Please read below on the how to and refer to the example site for a very basic demo.
+								
 
 ### g:selectPrimary 
 ###### (relationship: fully dependent ) in conjunction with g:selectSecondary
@@ -534,10 +541,236 @@ Create a call for this:
 	 
 I will be updating this so that less input is required when custom action controller is defined.
 
+## g:selectPrimary/Secondary Filtering
+####### Filtering can be hard coded per select call or can be left for the user to filter output of a selectbox. this can be either useful if you only want to show specific results from selection for specific user or possibly when you wish user to speed up selection process and let them control the output of the selectbox.
 
+Most basic example is a hard coded version: /ajaxdependancyselectionexample/myContinent/norefselectSecondaryFilteringFixed.gsp and or https://github.com/vahidhedayati/ajaxdependancyselection/wiki/Nested-Selection-from-fully-fixed-search-all-that-way-including-a-secondaryNR
+
+This is where you start with your <g:selectPrimary  filter="something" filter2="another"
+This will now filter results for primary matching against something and the next secondary call to filter against another
+
+On your next <g:selectSeconday you simply call filter2="somethingelse"
+
+This will now pass this filter to next object being completed and all the way to last standard call which will end in standard <g:select box but will still be filtered.
+
+
+The other way is to enable filtering and let user control the filter, to do this simply switch filter="_ON" in each <g:selectPrimary/Secondary call
+
+In primary it is just as simple as switching it on, within secondary calls it gets a little more complex.
+
+####### Primary & PrimaryNR in full:
+	
+To enable user driver filtering - add this
+	
+		filter="_ON"
+		hidden="hiddenFieldForPrimary"
+
+To enable hard coded filtering add this:
+
+		filter="SOMETHING"
+		
+With either a fixed filter above or dynamic user controlled followed by:
+		
+		filter2="B"					Only needed if you want to define you next select filter physically
+		
+		
+Optional stuff:		 
+		
+		filterDisplay="none"		put this in so with filtering no results are shown if user
+								 	does not match or as it starts and only show matching results in select to what user inputs
+     	
+     	filterType ="A" 			Values are : S E A - Start of Record End of Record or by default if not defined Any part of record i.e. wild card search.
+     	
+ 
+
+
+Override optional stuff:
+
+     	filterController="YourController" 	if you wish to point the filtering actions to another location at the moment default autoComplete controller from plugin
+     	filteraction="your action"			if you wish to define your own action for the above controller call
+     	filteraction="loadFilterWord"		Default is loadFilterWord this loads up the user input box for end user filtering
+     	filteraction2="returnPrimarySearch"	The action that returns the primary list the default value is as defined
+
+Config.groovy overrides:
+
+     		ajaxdependancyselection.filterField='/autoComplete/filterField'
+     		ajaxdependancyselection.selectBasicJS='/autoComplete/selectJs'
+     		 				
+    	
+   
+####### Secondary & Secondary NR in full:
+ 	
+    
+
+To enable user driver filtering - add this
+	
+		filter="_ON"
+		hidden="hiddenFieldForPrimary"
+
+To enable hard coded filtering for the next field add this:
+
+		filter2="SOMETHING"			Only needed if you want to define you next select filter physically					
+		
+		
+Optional stuff:		 
+		
+		filterDisplay="none"		put this in so with filtering no results are shown if user
+								 	does not match or as it starts and only show matching results in select to what user inputs
+     	
+     	filterType ="A" 			Values are : S E A - Start of Record End of Record or by default if not defined Any part of record i.e. wild card search.
+     	
+ 
+
+
+Override optional stuff:
+
+     	filterController="YourController" 	if you wish to point the filtering actions to another location at the moment default autoComplete controller from plugin
+     	filteraction="your action"			if you wish to define your own action for the above controller call 						
+     	filteraction="loadFilterWord2"		Default is loadFilterWord this loads up the user input box for end user filtering
+     	filteraction2="secondarySearch"		The action that returns the secondary search whilst filter results
+
+Config.groovy overrides:
+
+     		ajaxdependancyselection.filterField='/autoComplete/filterField'
+     		ajaxdependancyselection.selectSecondaryJsFilter='/autoComplete/selectJs1'  {Secondary default}
+     		ajaxdependancyselection.selectSecondaryJsFilter='/autoComplete/selectJsNr1'  {SecondaryNR default}
+
+
+For other examples of filtering, check out :
+https://github.com/vahidhedayati/ajaxdependancyselection/wiki/Select-Box-Filtering-results-userdefined-or-fixed-filtering or the filtering example page within the example project site.
+
+
+
+
+
+## g:selectPrimary/Secondary Multi domainClass loading:
+
+####### Feature since 0.34 
+
+This allows you to load up domain3, domain4, domain5, domain6, domain7, domain8 per Primary or Secondary Call. 
+Each of them can then have the same nesting meaning some wild dependencies can be created and complex selecting provided.
+
+The how to:
+
+		<g:selectPrimary id="MyDepartments" name="MyDepartments"
+        domain='ajaxdependancyselectexample.Departments'
+        searchField='name'
+        collectField='id'
+        noSelection="['': 'Please choose Department']" 
+        
+        domain2='ajaxdependancyselectexample.Employee'
+        bindid="department.id"
+        searchField2='name'
+        collectField2='id'
+        setId="employeeID"
+      
+
+		domain3='ajaxdependancyselectexample.Documents'
+        bindid3="department.id"
+        searchField3='name'
+        collectField3='id'
+        setId3="documentsId"
+        filter3="L"
+        
+        value=''/>
+
+	<g:select name="employee" id="employeeID" optionKey="id" optionValue="name" from="[]" required="required" noSelection="['': 'Please choose department']" />
+	<g:select name="document" id="documentsId" optionKey="id" optionValue="name" from="[]" required="required" noSelection="['': 'Please choose department	']" />
+
+
+So in a Primary block or Secondary Block simply create a new element that kind of follows the domain2 object 
+but in short everything ends with the correct numbering sequence.
+
+
+
+Take a look at the multidomain example in the wiki or within the example project where it covers:
+##### Example1: Simple multi domain dependency call one object two dependencies with filtering on one of the calls
+##### Example2: Simple multi domain dependency call one object two dependencies with no filtering
+##### Example3: Multi domain dependency call to domain3 and domain4
+##### Example4: Multi domain dependency call to domain3 and domain4 with domain4 then having its own multi depenency relatiobship
+
+This last example shown here:
+
+		
+Please note only the first computer from each initial department selected has any further values.
+
+	<form method=post action=example5>
+	
+	<g:selectPrimary id="MyDepartments141" name="MyDepartments141"
+        domain='ajaxdependancyselectexample.Departments'
+        searchField='name'
+        collectField='id'
+        noSelection="['': 'Please choose Department']" 
+        
+        domain2='ajaxdependancyselectexample.Employee'
+        bindid="department.id"
+        searchField2='name'
+        collectField2='id'
+        setId="employeeID141"
+      
+
+		domain3='ajaxdependancyselectexample.Documents'
+        bindid3="department.id"
+        searchField3='name'
+        collectField3='id'
+        setId3="documentsId141"
+        
+        domain4='ajaxdependancyselectexample.Computers'
+        bindid4="department.id"
+        searchField4='pcName'
+        collectField4='id'
+        setId4="computersId141"
+
+        
+        
+        value=''/>
+
+	<g:select name="employee" id="employeeID141" optionKey="id" optionValue="name" from="[]" required="required" noSelection="['': 'Please choose department']" />
+	<g:select name="document" id="documentsId141" optionKey="id" optionValue="name" from="[]" required="required" noSelection="['': 'Please choose department	']" />
+
+
+
+
+
+
+	<g:selectSecondary id="computersId141" name="computersId141"
+
+	domain2='ajaxdependancyselectexample.Os'
+    bindid="computers.id"
+    searchField2='osName'
+    collectField2='id'
+    setId="Os13"
+    
+    domain3='ajaxdependancyselectexample.Users'
+    bindid3="computers.id"
+    searchField3='userName'
+    collectField3='id'
+    setId3="userId13"
+    
+  
+
+    
+    appendValue=''
+    appendName='Updated'
+    
+    
+    noSelection="['': 'Please choose Department']" 
+    
+    value="${params.computersId141}"/>
+
+
+	<g:select name="Os" id="Os13" optionKey="id" optionValue="pcName" from="[]" required="required" noSelection="['': 'Please choose Computer	']" />
+	<g:select name="users" id="userId13" optionKey="id" optionValue="userName" from="[]" required="required" noSelection="['': 'Please choose computer']" />
+
+	<input type=submit value=go>  
+    </form>
+		
+
+### END OF MAIN DOCUMENTATION
+### --------------------------
 	 
     
-##### Examples below
+##### Further Examples below
 
 
 

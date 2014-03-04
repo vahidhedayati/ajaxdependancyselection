@@ -352,8 +352,8 @@ class AutoCompleteService {
 	
 	List returnPrimaryList(String className) {
 		if (!className.equals('')) {
-			Class clazz = grailsApplication?.getDomainClass(className).clazz
-			clazz.list()
+			Class clazz = grailsApplication?.getDomainClass(className)?.clazz
+			clazz?.list()
 		}
 	}
 	

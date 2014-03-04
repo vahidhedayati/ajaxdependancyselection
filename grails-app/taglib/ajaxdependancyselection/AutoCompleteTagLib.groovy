@@ -4,6 +4,7 @@ package ajaxdependancyselection
 class AutoCompleteTagLib {
 	def autoCompleteService
 	def basicjs='/autoComplete/selectJs'
+	
 	def selectController = {attrs ->
 		def clazz,name=""
 		if (!attrs.id) {
@@ -91,7 +92,6 @@ class AutoCompleteTagLib {
 			if (!attrs.searchField) {
 				throwTagError("Tag [selectPrimary] is missing required attribute [searchField]")
 			}
-		
 		}
 		
 		if (!attrs.controller) {
@@ -138,7 +138,6 @@ class AutoCompleteTagLib {
 		
 		List primarylist
 		if (attrs.filter) {
-			
 			if (!attrs.filterController) {
 				attrs.filterController=attrs.controller
 			}
@@ -185,10 +184,9 @@ class AutoCompleteTagLib {
 			gsattrs['required'] = 'required'
 		}
 		gsattrs['noSelection'] =attrs.noSelection
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
-		def link = ['action': attrs.action , 'controller': attrs.controller ]
+		def changeAddon=returnAddon(attrs)
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out << g.select(gsattrs)
-		
 	}
 	
 	
@@ -301,12 +299,9 @@ class AutoCompleteTagLib {
 		}
 		
 		gsattrs['noSelection'] =attrs.noSelection
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&bindid='+ attrs.bindid+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&domain='+attrs.domain+'&domain2='+attrs.domain2+'&setId='+attrs.setId+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
-		def link = ['action': attrs.action , 'controller': attrs.controller ]
+		def changeAddon=returnAddon(attrs)
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&bindid='+ attrs.bindid+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&domain='+attrs.domain+'&domain2='+attrs.domain2+'&setId='+attrs.setId+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out<< g.select(gsattrs)
-		
-		
-		
 	}
 	
 	
@@ -413,7 +408,8 @@ class AutoCompleteTagLib {
 			gsattrs['required'] = 'required'
 		}
 		gsattrs['noSelection'] =attrs.noSelection
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		def changeAddon=returnAddon(attrs)
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out <<  g.select(gsattrs)
 		
 	}
@@ -528,7 +524,8 @@ class AutoCompleteTagLib {
 			gsattrs['required'] = 'required'
 		}
 		gsattrs['noSelection'] =attrs.noSelection
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bdomain='+attrs.bdomain+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		def changeAddon=returnAddon(attrs)
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bdomain='+attrs.bdomain+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out <<  g.select(gsattrs)
 		
 		
@@ -909,7 +906,64 @@ class AutoCompleteTagLib {
 		}	
 	}
 	
-	
+	def returnAddon(attrs) {
+		def changeAddon=""
+		if (attrs.domain3) {
+			if (!attrs.bindid3) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [bindid3]")
+			}
+			if (!attrs.setId3) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [setId3]")
+			}
+			changeAddon="&collectField3=${attrs.collectField3}&searchField3=${attrs.searchField3}&domain3=${attrs.domain3}&controller3=${attrs.controller3}&action3=${attrs.action3}&setId3=${attrs.setId3}&bindid3=${attrs.bindid3}"
+		}
+		if (attrs.domain4) {
+			if (!attrs.bindid4) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [bindid4]")
+			}
+			if (!attrs.setId4) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [setId4]")
+			}
+			changeAddon+="&collectField4=${attrs.collectField4}&searchField4=${attrs.searchField4}&domain4=${attrs.domain4}&controller4=${attrs.controller4}&action4=${attrs.action4}&setId4=${attrs.setId4}&bindid4=${attrs.bindid4}"
+		}
+		if (attrs.domain5) {
+			if (!attrs.bindid5) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [bindid5]")
+			}
+			if (!attrs.setId5) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [setId5]")
+			}
+			changeAddon+="&collectField5=${attrs.collectField5}&searchField5=${attrs.searchField5}&domain5=${attrs.domain5}&controller5=${attrs.controller5}&action5=${attrs.action5}&setId5=${attrs.setId5}&bindid5=${attrs.bindid5}"
+		}
+		if (attrs.domain6) {
+			if (!attrs.bindid6) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [bindid6]")
+			}
+			if (!attrs.setId6) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [setId6]")
+			}
+			changeAddon+="&collectField6=${attrs.collectField6}&searchField6=${attrs.searchField6}&domain6=${attrs.domain6}&controller6=${attrs.controller6}&action6=${attrs.action6}&setId6=${attrs.setId6}&bindid6=${attrs.bindid6}"
+		}
+		if (attrs.domain7) {
+			if (!attrs.bindid7) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [bindid7]")
+			}
+			if (!attrs.setId7) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [setId7]")
+			}
+			changeAddon+="&collectField7=${attrs.collectField7}&searchField7=${attrs.searchField7}&domain7=${attrs.domain7}&controller7=${attrs.controller7}&action7=${attrs.action7}&setId7=${attrs.setId7}&bindid7=${attrs.bindid7}"
+		}
+		if (attrs.domain8) {
+			if (!attrs.bindid8) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [bindid8]")
+			}
+			if (!attrs.setId8) {
+				throwTagError("Tag [selectPrimary] is missing required attribute [setId8]")
+			}
+			changeAddon+="&collectField8=${attrs.collectField8}&searchField8=${attrs.searchField8}&domain8=${attrs.domain8}&controller8=${attrs.controller8}&action8=${attrs.action8}&setId8=${attrs.setId8}&bindid8=${attrs.bindid8}"
+		}
+		return changeAddon
+	}
 	def autoCompleteHeader = {
 		out << "<style>"
 		out <<  ".ui-autocomplete-loading"
