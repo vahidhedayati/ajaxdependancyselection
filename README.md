@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.34
+ajaxdependancyselection 0.35
 =======================
 
 
@@ -39,6 +39,8 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 	
 
 ## version info:
+
+	0.35 - Made values updated default values optional - if appendValue is given in g:select then it will set appendName to default value 	
 	0.34 - Now supporting multiple dependency calls, in a given g:select you can now declare upto 5 depended object bound to a primary or secondary selection.
 	0.33 - too minor to mention
 	0.32 - further tidyup of duplicate javascripts, cleaner calls made within taglib and reduction of duplicate gsp pages, issue with return results in controller displayed undefined when no results found - fixed.

@@ -38,13 +38,13 @@ class AutoCompleteTagLib {
 		}
 		if (!attrs.noSelection) {
 			throwTagError("Tag [autoComplete] is missing required attribute [noSelection]")
-		}
-		if (!attrs.appendValue) {
-			attrs.appendValue=''
 		}	
-		if (!attrs.appendName) {
+		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
+		/*if (!attrs.appendValue) {
+			attrs.appendValue=''
+		}*/
 		Boolean requireField=true
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
@@ -123,12 +123,12 @@ class AutoCompleteTagLib {
 		if (!attrs.searchField2) {
 			attrs.searchField2=attrs.searchField
 		}	
-		if (!attrs.appendValue)  {
-			attrs.appendValue=''
-		}	
-		if (!attrs.appendName) {
+		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
+		/*if (!attrs.appendValue) {
+			attrs.appendValue=''
+		}*/
 		
 		Boolean requireField=true
 		
@@ -237,13 +237,12 @@ class AutoCompleteTagLib {
 		} else {
 			name = "${attrs.id}"
 		}
-		if (!attrs.appendValue)  {
-			attrs.appendValue=''
-		}
-		if (!attrs.appendName) {
+		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
-		
+		/*if (!attrs.appendValue) {
+			attrs.appendValue=''
+		}*/
 		Boolean requireField=true
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
@@ -362,8 +361,12 @@ class AutoCompleteTagLib {
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
-		if (!attrs.appendValue)  { attrs.appendValue='' }
-		if (!attrs.appendName) { attrs.appendName='Values Updated' }
+		if ((attrs.appendValue)&&(!attrs.appendName)) {
+			attrs.appendName='Values Updated'
+		}
+		/*if (!attrs.appendValue) {
+			attrs.appendValue=''
+		}*/
 		
 		List secondarylist=[]
 		if (attrs.filter) {
@@ -469,12 +472,12 @@ class AutoCompleteTagLib {
 		} else {
 			name = "${attrs.id}"
 		}
-		if (!attrs.appendValue)  {
-			attrs.appendValue=''
-		}	
-		if (!attrs.appendName) {
+		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
+		/*if (!attrs.appendValue) {
+			attrs.appendValue=''
+		}*/
 		Boolean requireField=true
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()

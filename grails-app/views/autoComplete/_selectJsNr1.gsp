@@ -12,13 +12,16 @@
      			rselect.remove(l)
   			}
   			var opt = document.createElement('option');
-  			opt.value="${attrs.appendValue}"
-  			opt.text="${attrs.appendName}" 
-      		try {
-    	   		rselect.add(opt, null)
-      		} catch(ex) {
-  	  			rselect.add(opt)
-  			}
+  			<g:if test="${attrs.appendName}">
+  				opt.value="${attrs.appendValue}"
+  				opt.text="${attrs.appendName}"
+  			 
+      			try {
+    	   			rselect.add(opt, null)
+      			} catch(ex) {
+  	  				rselect.add(opt)
+  				}
+  			</g:if>	
     		for (var i=0; i < e.length; i++) {
       			var s = e[i]
       			var opt = document.createElement('option');
