@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.34" 
+	compile ":ajaxdependancyselection:0.36" 
 
 Or via grails command line:
 
@@ -149,7 +149,7 @@ This you would use g:selectPrimary the bindid is primarydomain.id the field high
         setId="MyCity1"
         value=''/>
 ```        
-[Entire input with explaination ](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectPrimary---entire-input-values)
+[Entire input with explaination](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectPrimary---entire-input-values)
 
 
 
@@ -203,7 +203,7 @@ Back to g:selectSecondary example:
     setId="MyCity11"
     value="${params.MyCountry11}"/>
 ```
-[g:selectSecondary entire input and explaination:](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectSecondary-entire-input)
+[g:selectSecondary entire input and explaination](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectSecondary-entire-input)
 
 
 
@@ -504,7 +504,8 @@ Each of them can then have the same nesting meaning some wild dependencies can b
 
 The how to:
 
-		<g:selectPrimary id="MyDepartments" name="MyDepartments"
+```gsp
+	<g:selectPrimary id="MyDepartments" name="MyDepartments"
         domain='ajaxdependancyselectexample.Departments'
         searchField='name'
         collectField='id'
@@ -517,7 +518,7 @@ The how to:
         setId="employeeID"
       
 
-		domain3='ajaxdependancyselectexample.Documents'
+	domain3='ajaxdependancyselectexample.Documents'
         bindid3="department.id"
         searchField3='name'
         collectField3='id'
@@ -526,12 +527,17 @@ The how to:
         
         value=''/>
 
-	<g:select name="employee" id="employeeID" optionKey="id" optionValue="name" from="[]" required="required" noSelection="['': 'Please choose department']" />
-	<g:select name="document" id="documentsId" optionKey="id" optionValue="name" from="[]" required="required" noSelection="['': 'Please choose department	']" />
+	<g:select name="employee" id="employeeID" optionKey="id" optionValue="name" from="[]" 
+	required="required" noSelection="['': 'Please choose department']" />
+	
+	<g:select name="document" id="documentsId" optionKey="id" optionValue="name" from="[]" 
+	required="required" noSelection="['': 'Please choose department	']" />
+```
 
 
-So in a Primary block or Secondary Block simply create a new element that kind of follows the domain2 object 
-but in short everything ends with the correct numbering sequence.
+
+The Primary block or Secondary Block simply create a new element that kind of follows the domain2 object 
+but in short everything ends with the correct numbering sequence. As you can see the bindings employeeID and documentsId got updated with relevant values that were depedent upong primary selection.
 
 
 
@@ -546,6 +552,7 @@ This last example shown here:
 		
 Please note only the first computer from each initial department selected has any further values.
 
+```gsp
 	<form method=post action=example5>
 	
 	<g:selectPrimary id="MyDepartments141" name="MyDepartments141"
@@ -617,6 +624,8 @@ Please note only the first computer from each initial department selected has an
 	<input type=submit value=go>  
     </form>
 		
+```
+
 
 ### END OF MAIN DOCUMENTATION
 ### --------------------------
