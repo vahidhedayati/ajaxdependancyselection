@@ -51,7 +51,7 @@ class AutoCompleteTagLib {
 		}
 		
 		def primarylist=autoCompleteService.returnControllerList()
-		def gsattrs=[ 'id': '${attrs.id}', value: "${attrs.value}", name: name, optionKey: "${attrs.searchField}", optionValue: "${attrs.collectField}" ]
+		def gsattrs=[ 'id': "${attrs.id}", value: "${attrs.value}", name: name, optionKey: "${attrs.searchField}", optionValue: "${attrs.collectField}" ]
 		gsattrs['from'] = primarylist
 		if (requireField) {
 			gsattrs['required'] = 'required'
