@@ -36,24 +36,42 @@ your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationR
 
 The jquery-ui should only be required for autocomplete calls, jquery will be needed by all the other functionality of this plugin, so please ensure you have enabled jquery in your gsp and is installed.
 
-	
 
 ## version info:
+	
+```
+0.36 -	minor bug in selectController '' used instead of "" for attrs.id so id was being shown as attrs.id
+ 
+0.35 - 	Made values updated default values optional - if appendValue is given in g:select then it will set appendName to default value
+ 	
+0.34 - 	Now supporting multiple dependency calls, in a given g:select you can now declare upto 5 depended object bound to a
+ 		primary or secondary selection.
+ 		
+0.33 - 	Too minor to mention
+0.32 - 	Further tidyup of duplicate javascripts, cleaner calls made within taglib and reduction of duplicate gsp pages, issue
+		with return results in controller displayed undefined when no results found - fixed.
+		
+0.31 - 	Tidyup of javascript calls within taglib, fixed secondaryNR filter2 issues - filtering now working across all select functions
 
-	0.35 - Made values updated default values optional - if appendValue is given in g:select then it will set appendName to default value 	
-	0.34 - Now supporting multiple dependency calls, in a given g:select you can now declare upto 5 depended object bound to a primary or secondary selection.
-	0.33 - too minor to mention
-	0.32 - further tidyup of duplicate javascripts, cleaner calls made within taglib and reduction of duplicate gsp pages, issue with return results in controller displayed undefined when no results found - fixed.
-	0.31 - tidyup of javascript calls within taglib, fixed secondaryNR filter2 issues - filtering now working across all select functions
-	0.30 - issues with filtering and end box with no filter not displaying values - tidyup
-	0.29 - filterDisplay and filterType intro - user override of action controllers for filtering js and controller/actions added
-	0.28 - tidy up - and further work on specific filtering for selectSecondary
-	0.27 - filtering of selectPrimary
-	0.26 - added selectAutoComplete
-	0.23 - removed null from values updated (default additional selection field added when values update), this now means user has to still choose this value 
-	0.22 - added required by default set to required for all taglib calls. 
-	0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by selectPrimary. 0.20 should be fine
+0.30 - 	Issues with filtering and end box with no filter not displaying values - tidyup
 
+0.29 - 	FilterDisplay and filterType intro - user override of action controllers for filtering js and controller/actions added
+
+0.28 - 	Tidy up - and further work on specific filtering for selectSecondary
+
+0.27 - 	Filtering of selectPrimary
+
+0.26 - 	Added selectAutoComplete
+
+0.23 - 	Removed null from values updated (default additional selection field added when values update), this now means user has to 
+		still choose this value
+		 
+0.22 - Added required by default set to required for all taglib calls. 
+
+0.19 - Broken build - there were issues with the tidyup I did with selectSecondary, totally forgot it was being used by 
+			selectPrimary. 0.20 should be fine
+
+```
 
 ## Example site:
 Using this plugin with the grails framework  you are able to achieve this without all of the complications. Refer to this sample project which makes use of all of the examples below with some objects already pre-added to the sample projecet. Found here in this sample project:
