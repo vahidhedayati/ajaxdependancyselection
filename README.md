@@ -242,7 +242,7 @@ hidden='hidden3'
 value=''/>
 ```
 
-	[autoCompletePrimay explained](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/autoCompletePrimary---full-detail)
+[autoCompletePrimay explained](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/autoCompletePrimary---full-detail)
 
 
 ###g:autoCompleteSecondary
@@ -639,7 +639,7 @@ Please note only the first computer from each initial department selected has an
 ### Example no reference domain classes:
 
 Here are two domain classes with a no reference set up and require g:selectSecondaryNR feature: 
-
+```groovy
 		class MyCity {
 
 			String cityName
@@ -655,7 +655,7 @@ Here are two domain classes with a no reference set up and require g:selectSecon
 		}
 
 
-
+```
 
 
 ### Examples of primary to secondary then to seoncdaryNR
@@ -673,15 +673,14 @@ This non working gsp has some examples: https://github.com/vahidhedayati/ajaxdep
 [autocomplete-primary-to-secondary-to-secondaryNR-nested-call](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/autocomplete-primary-to-secondary-to-secondaryNR-nested-call)
 			
 			
-## Thanks to:
+## Thanks for contributions from 
 
 
 
-##### Alidad 
-Plugin expands on this idea: https://github.com/alidadasb/CountryCityAutoComplete
+Alidad plugin inspired by this project: https://github.com/alidadasb/CountryCityAutoComplete
 
-##### Burt for cleaning it all up 
+Burt Beckwith for helping clean up the code.
 
 
-##### domurtag for identifying and helping improve plugin
+Domurtag for identifying and helping improve plugin documentation and features.
 
