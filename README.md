@@ -169,7 +169,7 @@ So in the case of Country city, the above is fine to call to a city select area 
         
 ```        
 
-If however this was a multi nested dependency situation you could proceed to selectSecondary where this will update either a final call just like per above or call selectSeondary over and over again until nesting is completed with final select as above. again ensure you are making proper calls your optionKey and Value needs to match your own table naming convention or in simple terms  
+If however this was a multi nested dependency situation you could proceed to selectSecondary where this will update either a final call just like per above or call selectSecondary over and over again until nesting is completed with final select as above. again ensure you are making proper calls your optionKey and Value needs to match your own table naming convention or in simple terms  
 
 	<option value=YourDefindOptionKey>YourDefinedOptionValue</option>
 
@@ -185,7 +185,7 @@ is what is represented on the html end
 ###### refer to above notes on jquery requirements
 
 
-This is a tag that can be used over and over again to go through nested situations, you can also use the selectSeondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
+This is a tag that can be used over and over again to go through nested situations, you can also use the selectSecondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
 Back to g:selectSecondary example:
 ```gsp
 <g:selectSecondary id="MyCountry11" name="MyCountry11"
@@ -211,12 +211,25 @@ Back to g:selectSecondary example:
 
 This is a new feature from 0.26+, it allows you to set up a select box from which auto complete values are generated depending on what user selects.
 ```gsp
-<g:autocomplete id="primarySearch" name="myId"
-domain='ajaxdependancyselectexample.MyCountry'
-searchField='countryName'
-collectField='id'
-value=''/>
-<input type=submit value=go> </form>
+<g:selectAutoComplete 
+    id="MyContinent2" 
+    id2="MyCountry2" 
+    name="MyContinent2"
+    domain="ajaxdependancyselectexample.MyContinent"
+    searchField="continentName"
+    collectField="id"
+    primarybind="mycontinent.id"
+    domain2="ajaxdependancyselectexample.MyCountry"
+    searchField2="countryName"
+    collectField2="id"
+    
+    appendValue=""
+    appendName="values updated"
+    noSelection="['': 'Please choose Continent']" 
+    setId="MyCountry121"
+    hidden='hidden3'
+    hidden2='hidden4'
+    value=""/>
 ```
 
 [Explaination/example found here](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/From-Select-to-AutoComplete)
@@ -226,7 +239,14 @@ value=''/>
 
 ###g:autocomplete
 This is a simple auto complete tag lib that allows you to auto complete from a single table, refer to above notes on jquery & jquery-ui requirements
-
+```gsp
+<g:autocomplete id="primarySearch" name="myId"
+domain='ajaxdependancyselectexample.MyCountry'
+searchField='countryName'
+collectField='id'
+value=''/>
+<input type=submit value=go> </form>
+```
 [all g:autocomplete calls](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/autoComplete-full-input)
 
 	
@@ -368,27 +388,28 @@ This is covered in the sample project labelled as custom example. Create your ow
 ```
 Create a call for this: 
 ```gsp
-	<g:selectPrimary id="MyContinent2" name="MyContinent2"
-	domain="ajaxdependancyselectexample.MyContinent"
-	searchField="continentName"
-	collectField="id"
+<g:selectPrimary id="MyContinent2" name="MyContinent2"
+domain="ajaxdependancyselectexample.MyContinent"
+searchField="continentName"
+collectField="id"
 
-	controller="MyContinent"
-	action="selectCountries"
+controller="MyContinent"
+action="selectCountries"
 
-	domain2="ajaxdependancyselectexample.MyCountry"
-	bindid="mycontinent.id"
-	searchField2="countryName"
-	appendValue=""
-	appendName="values updated"
-	collectField2="id"
-	noSelection="['': 'Please choose Continent']" 
-	setId="MyCountry121"
-	value=""/>
+domain2="ajaxdependancyselectexample.MyCountry"
+bindid="mycontinent.id"
+searchField2="countryName"
+appendValue=""
+appendName="values updated"
+collectField2="id"
+noSelection="['': 'Please choose Continent']" 
+setId="MyCountry121"
+value=""/>
     
     
     
-	 <g:select name="MyCountry" id="MyCountry121"  from="[]" required="required" noSelection="['': 'Please choose Continent']" />
+<g:select name="MyCountry" id="MyCountry121"  from="[]" required="required" 
+noSelection="['': 'Please choose Continent']" />
 ```
 
 I will be updating this so that less input is required when custom action controller is defined.
@@ -413,40 +434,61 @@ In primary it is just as simple as switching it on, within secondary calls it ge
 ###### Primary & PrimaryNR in full:
 	
 To enable user driver filtering - add this
-	
-		filter="_ON"
-		hidden="hiddenFieldForPrimary"
-
+```gsp	
+filter="_ON"
+hidden="hiddenFieldForPrimary"
+```
 To enable hard coded filtering add this:
+```gsp
+filter="SOMETHING"
+```
 
-		filter="SOMETHING"
+With either a fixed filter above or dynamic user controlled followed by: Only needed if you want to define you next select filter physically
+```gsp		
+filter2="B"					
+```		
 		
-With either a fixed filter above or dynamic user controlled followed by:
-		
-		filter2="B"					Only needed if you want to define you next select filter physically
-		
-		
-Optional stuff:		 
-		
-		filterDisplay="none"		put this in so with filtering no results are shown if user
-								 	does not match or as it starts and only show matching results in select to what user inputs
-     	
-     	filterType ="A" 			Values are : S E A - Start of Record End of Record or by default if not defined Any part of record i.e. wild card search.
-     	
- 
-
+Optional stuff:	
+put this in so with filtering no results are shown if user does not match or as it starts and only show matching results in select to what user inputs
+```gsp
+filterDisplay="none" 			
+```		
+							 	
+								 	
+Values are : S E A - Start of Record End of Record or by default if not defined Any part of record i.e. wild card search.
+```gsp
+filterType ="A" 			
+```     
 
 Override optional stuff:
 
-     	filterController="YourController" 	if you wish to point the filtering actions to another location at the moment default autoComplete controller from plugin
-     	filteraction="your action"			if you wish to define your own action for the above controller call
-     	filteraction="loadFilterWord"		Default is loadFilterWord this loads up the user input box for end user filtering
-     	filteraction2="returnPrimarySearch"	The action that returns the primary list the default value is as defined
+if you wish to point the filtering actions to another location at the moment default autoComplete controller from plugin
+```gsp
+filterController="YourController" 	
+```   
+
+if you wish to define your own action for the above controller call
+```gsp
+filteraction="your action"
+```   
+
+Default is loadFilterWord this loads up the user input box for end user filtering
+```gsp
+filteraction="loadFilterWord"
+
+```   
+The action that returns the primary list the default value is as defined
+```gsp
+filteraction2="returnPrimarySearch"
+
+```  
+
 
 Config.groovy overrides:
-
-     		ajaxdependancyselection.filterField='/autoComplete/filterField'
-     		ajaxdependancyselection.selectBasicJS='/autoComplete/selectJs'
+```groovy
+ajaxdependancyselection.filterField='/autoComplete/filterField'
+ajaxdependancyselection.selectBasicJS='/autoComplete/selectJs'
+```
      		 				
     	
    
@@ -455,41 +497,58 @@ Config.groovy overrides:
     
 
 To enable user driver filtering - add this
-	
-		filter="_ON"
-		hidden="hiddenFieldForPrimary"
+```gsp	
+filter="_ON"
+hidden="hiddenFieldForPrimary"
+```
 
-To enable hard coded filtering for the next field add this:
-
-		filter2="SOMETHING"			Only needed if you want to define you next select filter physically					
+To enable hard coded filtering for the next field add this: Only needed if you want to define you next select filter physically	
+```gsp
+filter2="SOMETHING"							
+```
 		
 		
-Optional stuff:		 
-		
-		filterDisplay="none"		put this in so with filtering no results are shown if user
-								 	does not match or as it starts and only show matching results in select to what user inputs
-     	
-     	filterType ="A" 			Values are : S E A - Start of Record End of Record or by default if not defined Any part of record i.e. wild card search.
-     	
- 
+Optional stuff: put this in so with filtering no results are shown if user does not match or as it starts and only show matching results in
+```gsp		
+filterDisplay="none"		
+```
+
+select to what user inputs: Values are : S E A - Start of Record End of Record or by default if not defined Any part of record i.e. wild card search.
+```gsp
+filterType ="A" 			
+```     	
 
 
-Override optional stuff:
+### Override optional stuff:
 
-     	filterController="YourController" 	if you wish to point the filtering actions to another location at the moment default autoComplete controller from plugin
-     	filteraction="your action"			if you wish to define your own action for the above controller call 						
-     	filteraction="loadFilterWord2"		Default is loadFilterWord this loads up the user input box for end user filtering
-     	filteraction2="secondarySearch"		The action that returns the secondary search whilst filter results
+If you wish to point the filtering actions to another location at the moment default autoComplete controller from plugin
+```gsp
+filterController="YourController" 	
+```
+
+If you wish to define your own action for the above controller call 	
+```gsp
+filteraction="your action"								
+```
+
+Default is loadFilterWord this loads up the user input box for end user filtering
+```gsp
+filteraction="loadFilterWord2"		
+```
+
+The action that returns the secondary search whilst filter results
+```gsp
+filteraction2="secondarySearch"		
+```
 
 Config.groovy overrides:
+```groovy
+ajaxdependancyselection.filterField='/autoComplete/filterField'
+ajaxdependancyselection.selectSecondaryJsFilter='/autoComplete/selectJs1'  {Secondary default}
+ajaxdependancyselection.selectSecondaryJsFilter='/autoComplete/selectJsNr1'  {SecondaryNR default}
+```
 
-     		ajaxdependancyselection.filterField='/autoComplete/filterField'
-     		ajaxdependancyselection.selectSecondaryJsFilter='/autoComplete/selectJs1'  {Secondary default}
-     		ajaxdependancyselection.selectSecondaryJsFilter='/autoComplete/selectJsNr1'  {SecondaryNR default}
-
-
-For other examples of filtering, check out :
-https://github.com/vahidhedayati/ajaxdependancyselection/wiki/Select-Box-Filtering-results-userdefined-or-fixed-filtering or the filtering example page within the example project site.
+[For other examples of filtering, check out](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/Select-Box-Filtering-results-userdefined-or-fixed-filtering) or the filtering example page within the example project site.
 
 
 
@@ -505,33 +564,33 @@ Each of them can then have the same nesting meaning some wild dependencies can b
 The how to:
 
 ```gsp
-	<g:selectPrimary id="MyDepartments" name="MyDepartments"
-        domain='ajaxdependancyselectexample.Departments'
-        searchField='name'
-        collectField='id'
-        noSelection="['': 'Please choose Department']" 
-        
-        domain2='ajaxdependancyselectexample.Employee'
-        bindid="department.id"
-        searchField2='name'
-        collectField2='id'
-        setId="employeeID"
-      
+<g:selectPrimary id="MyDepartments" name="MyDepartments"
+domain='ajaxdependancyselectexample.Departments'
+searchField='name'
+collectField='id'
+noSelection="['': 'Please choose Department']" 
 
-	domain3='ajaxdependancyselectexample.Documents'
-        bindid3="department.id"
-        searchField3='name'
-        collectField3='id'
-        setId3="documentsId"
-        filter3="L"
-        
-        value=''/>
+domain2='ajaxdependancyselectexample.Employee'
+bindid="department.id"
+searchField2='name'
+collectField2='id'
+setId="employeeID"
 
-	<g:select name="employee" id="employeeID" optionKey="id" optionValue="name" from="[]" 
-	required="required" noSelection="['': 'Please choose department']" />
-	
-	<g:select name="document" id="documentsId" optionKey="id" optionValue="name" from="[]" 
-	required="required" noSelection="['': 'Please choose department	']" />
+
+domain3='ajaxdependancyselectexample.Documents'
+bindid3="department.id"
+searchField3='name'
+collectField3='id'
+setId3="documentsId"
+filter3="L"
+
+value=''/>
+
+<g:select name="employee" id="employeeID" optionKey="id" optionValue="name" from="[]" 
+required="required" noSelection="['': 'Please choose department']" />
+
+<g:select name="document" id="documentsId" optionKey="id" optionValue="name" from="[]" 
+required="required" noSelection="['': 'Please choose department']" />
 ```
 
 
@@ -553,76 +612,70 @@ This last example shown here:
 Please note only the first computer from each initial department selected has any further values.
 
 ```gsp
-	<form method=post action=example5>
-	
-	<g:selectPrimary id="MyDepartments141" name="MyDepartments141"
-        domain='ajaxdependancyselectexample.Departments'
-        searchField='name'
-        collectField='id'
-        noSelection="['': 'Please choose Department']" 
-        
-        domain2='ajaxdependancyselectexample.Employee'
-        bindid="department.id"
-        searchField2='name'
-        collectField2='id'
-        setId="employeeID141"
-      
+<form method=post action=example5>
 
-		domain3='ajaxdependancyselectexample.Documents'
-        bindid3="department.id"
-        searchField3='name'
-        collectField3='id'
-        setId3="documentsId141"
-        
-        domain4='ajaxdependancyselectexample.Computers'
-        bindid4="department.id"
-        searchField4='pcName'
-        collectField4='id'
-        setId4="computersId141"
+<g:selectPrimary id="MyDepartments141" name="MyDepartments141"
+domain='ajaxdependancyselectexample.Departments'
+searchField='name'
+collectField='id'
+noSelection="['': 'Please choose Department']" 
 
-        
-        
-        value=''/>
+domain2='ajaxdependancyselectexample.Employee'
+bindid="department.id"
+searchField2='name'
+collectField2='id'
+setId="employeeID141"
 
-	<g:select name="employee" id="employeeID141" optionKey="id" optionValue="name" from="[]" required="required" noSelection="['': 'Please choose department']" />
-	<g:select name="document" id="documentsId141" optionKey="id" optionValue="name" from="[]" required="required" noSelection="['': 'Please choose department	']" />
+domain3='ajaxdependancyselectexample.Documents'
+bindid3="department.id"
+searchField3='name'
+collectField3='id'
+setId3="documentsId141"
+
+domain4='ajaxdependancyselectexample.Computers'
+bindid4="department.id"
+searchField4='pcName'
+collectField4='id'
+setId4="computersId141"
+value=''/>
+
+<g:select name="employee" id="employeeID141" optionKey="id" optionValue="name" from="[]" 
+required="required" noSelection="['': 'Please choose department']" />
+<g:select name="document" id="documentsId141" optionKey="id" optionValue="name" from="[]" 
+required="required" noSelection="['': 'Please choose department']" />
 
 
 
+<g:selectSecondary id="computersId141" name="computersId141"
+
+domain2='ajaxdependancyselectexample.Os'
+bindid="computers.id"
+searchField2='osName'
+collectField2='id'
+setId="Os13"
+
+domain3='ajaxdependancyselectexample.Users'
+bindid3="computers.id"
+searchField3='userName'
+collectField3='id'
+setId3="userId13"
+
+appendValue=''
+appendName='Updated'
+
+noSelection="['': 'Please choose Department']" 
+
+value="${params.computersId141}"/>
 
 
+<g:select name="Os" id="Os13" optionKey="id" optionValue="pcName" from="[]" 
+required="required" noSelection="['': 'Please choose Computer']" />
 
-	<g:selectSecondary id="computersId141" name="computersId141"
+<g:select name="users" id="userId13" optionKey="id" optionValue="userName" 
+from="[]" required="required" noSelection="['': 'Please choose computer']" />
 
-	domain2='ajaxdependancyselectexample.Os'
-    bindid="computers.id"
-    searchField2='osName'
-    collectField2='id'
-    setId="Os13"
-    
-    domain3='ajaxdependancyselectexample.Users'
-    bindid3="computers.id"
-    searchField3='userName'
-    collectField3='id'
-    setId3="userId13"
-    
-  
-
-    
-    appendValue=''
-    appendName='Updated'
-    
-    
-    noSelection="['': 'Please choose Department']" 
-    
-    value="${params.computersId141}"/>
-
-
-	<g:select name="Os" id="Os13" optionKey="id" optionValue="pcName" from="[]" required="required" noSelection="['': 'Please choose Computer	']" />
-	<g:select name="users" id="userId13" optionKey="id" optionValue="userName" from="[]" required="required" noSelection="['': 'Please choose computer']" />
-
-	<input type=submit value=go>  
-    </form>
+<input type=submit value=go>
+</form>
 		
 ```
 
@@ -640,20 +693,18 @@ Please note only the first computer from each initial department selected has an
 
 Here are two domain classes with a no reference set up and require g:selectSecondaryNR feature: 
 ```groovy
-		class MyCity {
+class MyCity {
+String cityName
+  MyCountry mycountry
+  static hasMany=[myborough: MyBorough]
+  String toString()  { "${cityName}"}
+}
 
-			String cityName
-			MyCountry mycountry
-			static hasMany=[myborough: MyBorough]
-			String toString()  { "${cityName}"}
-		}
-		
-		class MyBorough {
-			String actualName
-			static belongsTo = [MyCity]
-			String toString() { "${actualName}" }
-		}
-
+class MyBorough {
+  String actualName
+  static belongsTo = [MyCity]
+  String toString() { "${actualName}" }
+}
 
 ```
 
@@ -668,19 +719,16 @@ Here is the GSP making a nested call where an element has a no reference relatio
         
 ### Examples Auto Complete Secondary to secondaryNR
 
-This non working gsp has some examples: https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/noRefAutoComplete.gsp
+[This non working gsp has some examples](https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/noRefAutoComplete.gsp)
 
 [autocomplete-primary-to-secondary-to-secondaryNR-nested-call](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/autocomplete-primary-to-secondary-to-secondaryNR-nested-call)
 			
 			
 ## Thanks for contributions from 
 
-
-
-Alidad plugin inspired by this project: https://github.com/alidadasb/CountryCityAutoComplete
+Alidad's [CountryCityAutoComplete project](https://github.com/alidadasb/CountryCityAutoComplete) which inspired this plugin.
 
 Burt Beckwith for helping clean up the code.
-
 
 Domurtag for identifying and helping improve plugin documentation and features.
 
