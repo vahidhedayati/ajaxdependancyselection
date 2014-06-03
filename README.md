@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.35
+ajaxdependancyselection 0.36
 =======================
 
 
