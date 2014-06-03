@@ -309,7 +309,7 @@ Example call:
 
 
 ### g:selectController 
-####### Controller action discovery, refer to above notes on jquery requirements
+###### Controller action discovery, refer to above notes on jquery requirements
 
 
 This will display all your controllers then let you Choose available actions of this controller:
@@ -331,12 +331,12 @@ The from on this is set to [] which gets filled in by g:selectController setId r
 
 
 ## g:autoCompleteHeader
-####### Loads in the ajaxLoader if your site is not already doing it
+###### Loads in the ajaxLoader if your site is not already doing it
 	<g:autoCompleteHeader />
 
 
 ## g:selectPrimary - Custom
-####### Customising your own calls:
+###### Customising your own calls:
 
 This is covered in the sample project labelled as custom example. Create your own controller which is set to do a custom verification:
 ```groovy
@@ -394,7 +394,7 @@ Create a call for this:
 I will be updating this so that less input is required when custom action controller is defined.
 
 ## g:selectPrimary/Secondary Filtering
-####### Filtering can be hard coded per select call or can be left for the user to filter output of a selectbox. this can be either useful if you only want to show specific results from selection for specific user or possibly when you wish user to speed up selection process and let them control the output of the selectbox.
+###### Filtering can be hard coded per select call or can be left for the user to filter output of a selectbox. this can be either useful if you only want to show specific results from selection for specific user or possibly when you wish user to speed up selection process and let them control the output of the selectbox.
 
 Most basic example is a hard coded version: /ajaxdependancyselectionexample/myContinent/norefselectSecondaryFilteringFixed.gsp and or https://github.com/vahidhedayati/ajaxdependancyselection/wiki/Nested-Selection-from-fully-fixed-search-all-that-way-including-a-secondaryNR
 
@@ -410,7 +410,7 @@ The other way is to enable filtering and let user control the filter, to do this
 
 In primary it is just as simple as switching it on, within secondary calls it gets a little more complex.
 
-####### Primary & PrimaryNR in full:
+###### Primary & PrimaryNR in full:
 	
 To enable user driver filtering - add this
 	
@@ -450,7 +450,7 @@ Config.groovy overrides:
      		 				
     	
    
-####### Secondary & Secondary NR in full:
+###### Secondary & Secondary NR in full:
  	
     
 
@@ -497,7 +497,7 @@ https://github.com/vahidhedayati/ajaxdependancyselection/wiki/Select-Box-Filteri
 
 ## g:selectPrimary/Secondary Multi domainClass loading:
 
-####### Feature since 0.34 
+###### Feature since 0.34 
 
 This allows you to load up domain3, domain4, domain5, domain6, domain7, domain8 per Primary or Secondary Call. 
 Each of them can then have the same nesting meaning some wild dependencies can be created and complex selecting provided.
