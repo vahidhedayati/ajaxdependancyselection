@@ -240,6 +240,9 @@ This is a new feature from 0.26+, it allows you to set up a select box from whic
 
     
     
+###g:selectPrimary/Secondary to g:autoCompleteSecondary
+If you want to pass from selections to auto complete then from 0.37+ release you should be able to pass parameter autocomp="1" to any of the g:select methods followed by a call to g:autocompleteSecondary.. [from-selection-to-autocomplete---how-to](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/from-selection-to-autocomplete---how-to)
+    
 
 ###g:autocomplete
 This is a simple auto complete tag lib that allows you to auto complete from a single table, refer to above notes on jquery & jquery-ui requirements
