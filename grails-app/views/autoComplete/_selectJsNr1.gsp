@@ -3,7 +3,18 @@
   		if (e) { 	
   		var zselect = document.getElementById('${attrs.id}')
   		var zopt = zselect.options[zselect.selectedIndex]
-		<g:if test="${attrs.setId }">
+		<g:if test="${attrs.setId && attrs.autocomp}">
+  		
+  			<g:if test="${attrs.hidden}">
+				$('#${attrs.hidden}').val(zselect);
+			</g:if>
+			<g:if test="${attrs.setId}">
+				$('#${attrs.setId}').attr('primaryid',zselect);
+			</g:if>	
+
+  		</g:if>
+  		
+		<g:if test="${attrs.setId && !attrs.autocomp}">
 
     		var rselect = document.getElementById('${attrs.setId}')
     		var l = rselect.length
