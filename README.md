@@ -80,14 +80,13 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ## Example site:
 Using this plugin with the grails framework  you are able to achieve this without all of the complications. Refer to this sample project which makes use of all of the examples below with some objects already pre-added to the sample projecet. Found here in this sample project:
 
-https://github.com/vahidhedayati/ajaxdependancyselectexample
+###### [Example grails project ajaxdependancyselectexample](https://github.com/vahidhedayati/ajaxdependancyselectexample), for  [grails ajaxdependancyselection plugin](http://grails.org/plugin/ajaxdependancyselection).[Issues can be reported here](https://github.com/vahidhedayati/ajaxdependancyselection/issues). For further documentation and examples, check out the [wiki](https://github.com/vahidhedayati/ajaxdependancyselection/wiki)
 
-##### For further documentation and examples visit https://github.com/vahidhedayati/ajaxdependancyselection/wiki
-###### I have included the text and html samples from all of the examples in the example site.
-
-Use Europe/United Kingdom/London or Oxford for a full completed example within the above example project when loading it up.
+I have included the text and html samples from all of the examples in the example site. Use Europe/United Kingdom/London or Oxford for a full completed example within the above example project when loading it up.
 
 
+## General note over naming conventions.
+In the examples provided domainClasses has been defined as countryName cityName and so forth, this was really an example to show it can be any naming convention besides the standard id, name column naming convention. Feel free to name things as you desire i.e. this is not a requirement of the plugin. Feel free to reuse as requred..
 
 
 ## Taglibs provided:
