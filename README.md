@@ -86,7 +86,7 @@ I have included the text and html samples from all of the examples in the exampl
 
 
 ## General note over naming conventions.
-In the examples provided domainClasses has been defined as countryName cityName and so forth, this was really an example to show it can be any naming convention besides the standard id, name column naming convention. Feel free to name things as you desire i.e. this is not a requirement of the plugin. Feel free to reuse as requred..
+In the examples provided domainClasses has been defined as countryName cityName and so forth, this was really an example to show it can be any naming convention besides the standard id, name column naming convention. Feel free to name things as you desire i.e. this is not a requirement of the plugin.
 
 
 ## Taglibs provided:
