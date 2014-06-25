@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.37
+ajaxdependancyselection 0.38
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.37" 
+	compile ":ajaxdependancyselection:0.38" 
 
 Or via grails command line:
 
@@ -40,6 +40,9 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ## version info:
 	
 ```
+
+0.38 - 	appendName appendValue values not being passed from tagLib to services..
+
 0.37 -	selectJs files updated logic added to if autocomp is set in 
 		any g:selectPrimary/Secondary then it will look for autocompleteSecondary 
 		tag to fullfill autocomplete refer to selectauto3.gsp
