@@ -185,7 +185,7 @@ class AutoCompleteTagLib {
 		}
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&appendValue='+attrs.appendValue+'&appendName='+attrs.appendName+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out << g.select(gsattrs)
 	}
 	
@@ -299,7 +299,7 @@ class AutoCompleteTagLib {
 		
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&bindid='+ attrs.bindid+changeAddon+'&appendValue='+attrs.appendValue+'&appendName='+attrs.appendName+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&domain='+attrs.domain+'&domain2='+attrs.domain2+'&setId='+attrs.setId+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&bindid='+ attrs.bindid+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&domain='+attrs.domain+'&domain2='+attrs.domain2+'&setId='+attrs.setId+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out<< g.select(gsattrs)
 	}
 	
@@ -412,7 +412,7 @@ class AutoCompleteTagLib {
 		}
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&appendValue='+attrs.appendValue+'&appendName='+attrs.appendName+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out <<  g.select(gsattrs)
 		
 	}
@@ -528,7 +528,7 @@ class AutoCompleteTagLib {
 		}
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
-		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&appendValue='+attrs.appendValue+'&appendName='+attrs.appendName+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bdomain='+attrs.bdomain+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bdomain='+attrs.bdomain+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		out <<  g.select(gsattrs)
 		
 		
