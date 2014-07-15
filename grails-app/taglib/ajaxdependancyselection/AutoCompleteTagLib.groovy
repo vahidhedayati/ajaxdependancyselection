@@ -103,9 +103,6 @@ class AutoCompleteTagLib {
 		if (!attrs.setId) {
 			attrs.setId = "selectPrimary"
 		}	
-		if (!attrs.value) {
-			attrs.value =""
-		}
 		if (!attrs.collectField) {
 			attrs.collectField = attrs.searchField
 		}
@@ -170,7 +167,8 @@ class AutoCompleteTagLib {
 		}else{
 			primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
 		}
-			
+		
+		
 		def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectBasicJS
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
@@ -185,13 +183,20 @@ class AutoCompleteTagLib {
 		}
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
+		
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
-		if (attrs.secondaryValue) {
+		
+		if (!attrs.secondaryValue) {
+			attrs.secondaryValue=""
+		}
+		if (attrs.value) {
 			out << """
 				<script type='text/javascript'>
 					${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id='+attrs.value+'&value='+attrs.secondaryValue+'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}
 				</script>
 			"""
+		}else{
+			attrs.value =""
 		}
 		out << g.select(gsattrs)
 		
@@ -345,9 +350,9 @@ class AutoCompleteTagLib {
 		if (!attrs.setId) {
 			attrs.setId = "selectSecondary"
 		}
-		if (!attrs.value) {
-			attrs.value =""
-		}
+		//if (!attrs.value) {
+			//attrs.value =""
+		//}
 		if (!attrs.collectField2) {
 			attrs.collectField2 = attrs.searchField2
 		}
@@ -405,6 +410,8 @@ class AutoCompleteTagLib {
 				}
 			}	
 		}
+		
+		
 		def selectSecondaryJs=grailsApplication?.config?.ajaxdependancyselection.selectSecondaryJsFilter
 		if (selectSecondaryJs) {
 			out << g.render(template:selectSecondaryJs, model: [attrs:attrs])
@@ -421,13 +428,17 @@ class AutoCompleteTagLib {
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
-		
-		if (attrs.secondaryValue) {
+		if (!attrs.secondaryValue) {
+			attrs.secondaryValue=""
+		}
+		if (attrs.value) {
 			out << """
 				<script type='text/javascript'>
 					${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id='+attrs.value+'&value='+attrs.secondaryValue+'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}
 				</script>
 			"""
+		}else{
+			attrs.value =""
 		}
 		out <<  g.select(gsattrs)
 		
