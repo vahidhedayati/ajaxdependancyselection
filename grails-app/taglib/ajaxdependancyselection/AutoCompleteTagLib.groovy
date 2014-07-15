@@ -162,10 +162,10 @@ class AutoCompleteTagLib {
 			}else if (attrs.filter){
 				filter=attrs.filter
 			}
-			
 			primarylist=autoCompleteService.returnPrimarySearch('',filter,attrs.domain, attrs)
 		}else{
 			primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
+			
 		}
 		
 		
@@ -181,6 +181,9 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			gsattrs['required'] = 'required'
 		}
+		if (attrs.value) {
+			gsattrs['value'] =attrs.value
+		}
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
 		
@@ -195,8 +198,6 @@ class AutoCompleteTagLib {
 					${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id='+attrs.value+'&value='+attrs.secondaryValue+'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}
 				</script>
 			"""
-		}else{
-			attrs.value =""
 		}
 		out << g.select(gsattrs)
 		
@@ -437,8 +438,6 @@ class AutoCompleteTagLib {
 					${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id='+attrs.value+'&value='+attrs.secondaryValue+'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}
 				</script>
 			"""
-		}else{
-			attrs.value =""
 		}
 		out <<  g.select(gsattrs)
 		
