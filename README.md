@@ -694,6 +694,25 @@ from="[]" required="required" noSelection="['': 'Please choose computer']" />
 ```
 
 
+### 0.40+ Edit an existing page using ajaxdependancyselection.
+This may be rather difficult but if the values are then stored on DB and you wish to further edit the defined stored values you now can from version 0.40+.
+Please refer to https://github.com/vahidhedayati/ajaxdependancyselectexample/blob/master/grails-app/views/myContinent/testedit.gsp. This page has fixed values defined with an additional variable defined within selectPrimary/Secondary:
+
+```gsp
+value='2'
+secondaryValue='2'
+```
+
+Although in the given gsp example page the values are hardcoded, in real life those be the values returned from db
+
+```gsp
+value="${mydomainClass.primaryValue}"
+secondaryValue="${mydomainClass.secondaryValue}"
+```
+So in selectPrimary/selectSecondary you define both the value and secondaryValue and the plugin will assign them to the relevant boxes. please follow the example to get an idea
+
+
+
 ### END OF MAIN DOCUMENTATION
 ### --------------------------
 	 
