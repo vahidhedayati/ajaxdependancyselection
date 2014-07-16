@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.39
+ajaxdependancyselection 0.40
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.39" 
+	compile ":ajaxdependancyselection:0.40" 
 
 Or via grails command line:
 
@@ -40,6 +40,7 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ## version info:
 	
 ```
+0.40 - 	0.39 was incomplete - a few issues with primary/secondary selection - EDIT mode. should now be fixed.
 
 0.39 -	secondaryValue='2' attribute added to selectPrimary/selectSecondary. Related to this question: 
 		http://stackoverflow.com/questions/23220436/ajax-dependency-selection-plugin/24745037

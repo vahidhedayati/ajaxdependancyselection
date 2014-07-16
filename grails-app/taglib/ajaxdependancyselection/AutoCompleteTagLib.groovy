@@ -42,9 +42,6 @@ class AutoCompleteTagLib {
 		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
-		/*if (!attrs.appendValue) {
-			attrs.appendValue=''
-		}*/
 		Boolean requireField=true
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
@@ -123,10 +120,6 @@ class AutoCompleteTagLib {
 		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
-		/*if (!attrs.appendValue) {
-			attrs.appendValue=''
-		}*/
-		
 		Boolean requireField=true
 		
 		if (attrs.require) {
@@ -181,9 +174,11 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			gsattrs['required'] = 'required'
 		}
+		/*
 		if (attrs.value) {
 			gsattrs['value'] =attrs.value
-		}
+		}*/
+		
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
 		
@@ -254,9 +249,8 @@ class AutoCompleteTagLib {
 		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
-		/*if (!attrs.appendValue) {
-			attrs.appendValue=''
-		}*/
+
+
 		Boolean requireField=true
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
@@ -351,9 +345,7 @@ class AutoCompleteTagLib {
 		if (!attrs.setId) {
 			attrs.setId = "selectSecondary"
 		}
-		//if (!attrs.value) {
-			//attrs.value =""
-		//}
+		
 		if (!attrs.collectField2) {
 			attrs.collectField2 = attrs.searchField2
 		}
@@ -378,9 +370,7 @@ class AutoCompleteTagLib {
 		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
-		/*if (!attrs.appendValue) {
-			attrs.appendValue=''
-		}*/
+
 		
 		List secondarylist=[]
 		if (attrs.filter) {
@@ -426,19 +416,28 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			gsattrs['required'] = 'required'
 		}
+		
+		/*if (attrs.value) {			
+			gsattrs['value'] = attrs.value
+		}*/
+		
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
+		
 		if (!attrs.secondaryValue) {
 			attrs.secondaryValue=""
 		}
+		
 		if (attrs.value) {
 			out << """
 				<script type='text/javascript'>
-					${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id='+attrs.value+'&value='+attrs.secondaryValue+'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}
+					${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id='+attrs.value+'&value='+attrs.secondaryValue+'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}
+
 				</script>
 			"""
 		}
+		
 		out <<  g.select(gsattrs)
 		
 	}

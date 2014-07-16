@@ -4,6 +4,11 @@
   		if (e) { 	
   		var zselect = document.getElementById('${attrs.id}')
   		var zopt = zselect.options[zselect.selectedIndex]
+  		var secondary="${attrs.secondaryValue}";
+  		var primary="${attrs.value}";
+  		<g:if test="${attrs.value}">
+  			$('#${attrs.id}').val(primary);
+  		</g:if>
 		<g:if test="${attrs.setId && attrs.autocomp}">
   		
   			<g:if test="${attrs.hidden}">
@@ -43,8 +48,13 @@
     	    		rselect.add(opt, null)
       			} catch(ex) {
   	  				rselect.add(opt)
+  	  				
   				}
+  				if (opt.value == secondary) {
+  					opt.selected = true;
+  	  			}
   			}
+  			
   			</g:if>
   			<g:if test="${attrs.setId3 }">
   				var myDocumentId="${attrs.setId3 }"
