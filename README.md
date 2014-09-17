@@ -42,6 +42,7 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ```
 0.41 - 	multiple added to all select calls so multiple=true or false can be defined (optional)
 		multiple="multiple" multiple="false" multiple="true"
+		fixed issue for require required - both now accepted.
 		
 0.40 - 	0.39 was incomplete - a few issues with primary/secondary selection - EDIT mode. should now be fixed.
 
