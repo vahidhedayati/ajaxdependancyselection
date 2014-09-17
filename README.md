@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.40
+ajaxdependancyselection 0.41
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.40" 
+	compile ":ajaxdependancyselection:0.41" 
 
 Or via grails command line:
 
@@ -40,6 +40,9 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ## version info:
 	
 ```
+0.41 - 	multiple added to all select calls so multiple=true or false can be defined (optional)
+		multiple="multiple" multiple="false" multiple="true"
+		
 0.40 - 	0.39 was incomplete - a few issues with primary/secondary selection - EDIT mode. should now be fixed.
 
 0.39 -	secondaryValue='2' attribute added to selectPrimary/selectSecondary. Related to this question: 
@@ -156,6 +159,8 @@ This you would use g:selectPrimary the bindid is primarydomain.id the field high
         searchField2='cityName'
         collectField2='id'
 
+		 multiple='true'
+		 
         noSelection="['': 'Please choose Country']" 
         setId="MyCity1"
         value=''/>
@@ -209,6 +214,8 @@ Back to g:selectSecondary example:
      appendValue=''
      appendName='Updated'
     
+    
+    multiple='true'
     
     noSelection="['': 'Please choose Continent']" 
     setId="MyCity11"
@@ -271,6 +278,9 @@ name="NAMEOFcontinentName"
 domain='ajaxdependancyselectexample.MyContinent'
 searchField='continentName'
 collectField='id'
+
+multiple='false'
+
 setId="secondarySearch2"
 hidden='hidden3'
 value=''/>
@@ -287,6 +297,7 @@ domain='ajaxdependancyselectexample.MyCountry'
 primarybind='mycontinent.id' 
 hidden='hidden3' 
 hidden2='hidden4' 
+multiple='false'
 searchField='countryName' 
 collectField='id'
 setId="secondarySearch3" 

@@ -1,7 +1,5 @@
 <g:javascript>
 
-
-
  	function ${attrs.id}Update(e) { 
   		if (e) { 	
   		var zselect = document.getElementById('${attrs.id}')

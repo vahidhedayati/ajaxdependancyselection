@@ -47,11 +47,19 @@ class AutoCompleteTagLib {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
 		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
+		}
+		
+		
 		def primarylist=autoCompleteService.returnControllerList()
 		def gsattrs=[ 'id': "${attrs.id}", value: "${attrs.value}", name: name, optionKey: "${attrs.searchField}", optionValue: "${attrs.collectField}" ]
 		gsattrs['from'] = primarylist
 		if (requireField) {
 			gsattrs['required'] = 'required'
+		}
+		if (attrs.multiple) {
+			gsattrs['multiple']= "${attrs.multiple}"
 		}
 		gsattrs['noSelection'] =attrs.noSelection
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value)',onSuccess:''+attrs.id+'Update(data)')}"
@@ -120,10 +128,14 @@ class AutoCompleteTagLib {
 		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
-		Boolean requireField=true
 		
+		Boolean requireField=true
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
+		}
+		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
 		}
 		
 		List primarylist
@@ -174,6 +186,10 @@ class AutoCompleteTagLib {
 		if (requireField) {
 			gsattrs['required'] = 'required'
 		}
+		if (attrs.multiple) {
+			gsattrs['multiple']= "${attrs.multiple}"
+		}
+		
 		/*
 		if (attrs.value) {
 			gsattrs['value'] =attrs.value
@@ -255,6 +271,10 @@ class AutoCompleteTagLib {
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
+		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
+		}
 
 		List primarylist
 		if (attrs.filter) {
@@ -303,6 +323,9 @@ class AutoCompleteTagLib {
 		
 		if (requireField) {
 			gsattrs['required'] = 'required'
+		}
+		if (attrs.multiple) {
+			gsattrs['multiple']= "${attrs.multiple}"
 		}
 		
 		gsattrs['noSelection'] =attrs.noSelection
@@ -367,6 +390,11 @@ class AutoCompleteTagLib {
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
+		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
+		}
+		
 		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
@@ -417,6 +445,9 @@ class AutoCompleteTagLib {
 			gsattrs['required'] = 'required'
 		}
 		
+		if (attrs.multiple) {
+			gsattrs['multiple']= "${attrs.multiple}"
+		}
 		/*if (attrs.value) {			
 			gsattrs['value'] = attrs.value
 		}*/
@@ -508,6 +539,10 @@ class AutoCompleteTagLib {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
 		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
+		}
+		
 		if (attrs.filter) {
 			if (!attrs.filterController) {
 				attrs.filterController=attrs.controller
@@ -548,9 +583,15 @@ class AutoCompleteTagLib {
 	
 		def gsattrs=['optionKey' : "${attrs.collectField}" , 'optionValue': "${attrs.searchField}", 'id': "${attrs.id}", 'value': "${attrs.value}", 'name': "${name}"]
 		gsattrs['from'] = []
+		
 		if (requireField) {
 			gsattrs['required'] = 'required'
 		}
+		
+		if (attrs.multiple) {
+			gsattrs['multiple']= "${attrs.multiple}"
+		}
+		
 		gsattrs['noSelection'] =attrs.noSelection
 		def changeAddon=returnAddon(attrs)
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bdomain='+attrs.bdomain+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&domain='+attrs.domain+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
@@ -605,10 +646,15 @@ class AutoCompleteTagLib {
 		} else {
 			name = " name ='${attrs.id}'"
 		}
-		Boolean requireField=true
+	
 		def  required=""
+		Boolean requireField=true
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
+		}
+		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
 		}
 		if (requireField) {
 			 required=" required='required' "
@@ -678,6 +724,10 @@ class AutoCompleteTagLib {
 		def  required=""
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
+		}
+		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
 		}
 		if (requireField) {
 			 required=" required='required' "
@@ -753,6 +803,10 @@ class AutoCompleteTagLib {
 		def  required=""
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
+		}
+		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
 		}
 		if (requireField) {
 			 required=" required='required' "
@@ -830,6 +884,10 @@ class AutoCompleteTagLib {
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
 		}
+		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
+		}
 		if (requireField) {
 			 required=" required='required' "
 		}
@@ -903,6 +961,10 @@ class AutoCompleteTagLib {
 		def  required=""
 		if (attrs.require) {
 			requireField=attrs.remove('require')?.toBoolean()
+		}
+		
+		if (attrs.required) {
+			requireField=attrs.remove('required')?.toBoolean()
 		}
 		if (requireField) {
 			 required=" required='required' "
