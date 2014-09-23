@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.41
+ajaxdependancyselection 0.42
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.41" 
+	compile ":ajaxdependancyselection:0.42" 
 
 Or via grails command line:
 
@@ -40,6 +40,11 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ## version info:
 	
 ```
+0.42 - 	https://github.com/vahidhedayati/ajaxdependancyselection/issues/7#issuecomment-55927174 as per request - primaryList
+		can now be provided via main call i.e. controller providing the list to the taglib, domain can be set to 
+		an invalid value. Please refer to example6.gsp within ajaxdependancyselectexample project.
+		
+		
 0.41 - 	multiple added to all select calls so multiple=true or false can be defined (optional)
 		multiple="multiple" multiple="false" multiple="true"
 		fixed issue for require required - both now accepted.

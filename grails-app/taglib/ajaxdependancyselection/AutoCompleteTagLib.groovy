@@ -169,7 +169,11 @@ class AutoCompleteTagLib {
 			}
 			primarylist=autoCompleteService.returnPrimarySearch('',filter,attrs.domain, attrs)
 		}else{
-			primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
+			if (attrs.primaryList) {
+				primarylist=attrs.remove('primaryList')?.toList()
+			}else{
+				primarylist=autoCompleteService.returnPrimaryList(attrs.domain)
+			}
 			
 		}
 		
@@ -200,10 +204,11 @@ class AutoCompleteTagLib {
 		
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		
-		if (!attrs.secondaryValue) {
+		/*if (!attrs.secondaryValue) {
 			attrs.secondaryValue=""
 		}
-		if (attrs.value) {
+		*/
+		if (attrs.value && attrs.secondaryValue) {
 			out << """
 				<script type='text/javascript'>
 					${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id='+attrs.value+'&value='+attrs.secondaryValue+'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&prevId='+attrs.prevId+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&domain2='+attrs.domain2+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}
@@ -456,11 +461,11 @@ class AutoCompleteTagLib {
 		def changeAddon=returnAddon(attrs)
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value) +\'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}"
 		
-		if (!attrs.secondaryValue) {
+		/*if (!attrs.secondaryValue) {
 			attrs.secondaryValue=""
 		}
-		
-		if (attrs.value) {
+		*/
+		if (attrs.value && attrs.secondaryValue) {
 			out << """
 				<script type='text/javascript'>
 					${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id='+attrs.value+'&value='+attrs.secondaryValue+'&setId='+attrs.setId+changeAddon+'&filterController='+attrs.filterController+'&filterDisplay='+attrs.filterDisplay+'&bindid='+ attrs.bindid+'&collectField='+attrs.collectField2+'&searchField='+attrs.searchField2+'&filterType='+attrs.filterType+'&filterType2='+attrs.filterType2+'&filter='+attrs.filter+'&filter2='+attrs.filter2+'&domain2='+attrs.domain2+'&prevId='+attrs.prevId+'&controller='+attrs.controller+'\'',onSuccess:''+attrs.id+'Update(data)')}
