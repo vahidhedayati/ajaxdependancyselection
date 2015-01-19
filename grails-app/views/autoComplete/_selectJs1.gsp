@@ -6,9 +6,7 @@
   		var zopt = zselect.options[zselect.selectedIndex]
   		var secondary="${attrs.secondaryValue}";
   		var primary="${attrs.value}";
-  		<g:if test="${attrs.value}">
-  			$('#${attrs.id}').val(primary);
-  		</g:if>
+  		
   		<g:if test="${attrs.setId && attrs.autocomp}">
   		
   			<g:if test="${attrs.hidden}">
@@ -80,6 +78,10 @@
   				${attrs.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain8}","${attrs?.searchField8}","${attrs?.collectField8}","${attrs?.bindid8}","${attrs.filterDisplay8}","${attrs?.filter8}","${attrs?.filterType8}")
   			</g:if>
   			
+  		}else{
+  		<g:if test="${attrs.value}">
+  			$('#${attrs.id}').val(primary);
+  		</g:if>
   		}
   		
   	}

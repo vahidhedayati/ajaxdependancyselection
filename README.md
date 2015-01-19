@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.42
+ajaxdependancyselection 0.42-SNAPSHOT1
 =======================
 
 
@@ -10,11 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.42" 
-
-Or via grails command line:
-
-	grails install-plugin ajaxdependancyselection
+	compile ":ajaxdependancyselection:0.42-SNAPSHOT1" 
 
 
 
