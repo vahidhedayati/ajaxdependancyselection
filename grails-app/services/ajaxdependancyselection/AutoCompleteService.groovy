@@ -3,11 +3,6 @@ package ajaxdependancyselection
 import grails.converters.JSON
 import grails.web.Action
 import org.grails.core.DefaultGrailsControllerClass
-<<<<<<< HEAD
-=======
-
-import java.lang.reflect.Method
->>>>>>> ae1ef359daf20136ef5406de51fa48b29fecc0ef
 
 import java.lang.reflect.Method
 
