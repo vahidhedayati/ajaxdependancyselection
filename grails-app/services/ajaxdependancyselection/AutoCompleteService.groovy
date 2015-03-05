@@ -2,8 +2,9 @@ package ajaxdependancyselection
 
 import grails.converters.JSON
 import grails.web.Action
+import org.grails.core.DefaultGrailsControllerClass
+
 import java.lang.reflect.Method
-import org.codehaus.groovy.grails.commons.DefaultGrailsControllerClass
 
 
 class AutoCompleteService {
