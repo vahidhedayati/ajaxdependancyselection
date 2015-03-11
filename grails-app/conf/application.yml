@@ -2,11 +2,7 @@
 grails:
   profile: web-plugin
   codegen:
-<<<<<<< HEAD
     defaultPackage: ajaxdependancyselection
-=======
-    defaultPackage: grails3ajaxdependancyselection
->>>>>>> ae1ef359daf20136ef5406de51fa48b29fecc0ef
 info:
     app:
         name: '@info.app.name@'

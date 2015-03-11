@@ -1,10 +1,19 @@
-package ajaxdependancyselection
+package grails.plugin.ajaxdependancyselection
+
+import grails.core.GrailsApplication
+import grails.core.support.GrailsApplicationAware
+
+class AutoCompleteTagLib  implements GrailsApplicationAware {
+
+    def autoCompleteService
+
+    static namespace = "ads"
+
+    GrailsApplication grailsApplication
 
 
-class AutoCompleteTagLib {
-	def autoCompleteService
 	def basicjs='/autoComplete/selectJs'
-	
+
 	def selectController = {attrs ->
 		def clazz,name=""
 		if (!attrs.id) {
@@ -65,12 +74,14 @@ class AutoCompleteTagLib {
 		gsattrs['onchange'] = "${remoteFunction(controller:''+attrs.controller+'', action:''+attrs.action+'', params:'\'id=\' + escape(this.value)',onSuccess:''+attrs.id+'Update(data)')}"
 		out << g.select(gsattrs)
 		attrs.filteraction2=attrs.action
+
+
 		def userTemplate=grailsApplication?.config?.ajaxdependancyselection.selectBasicJS
 		if (userTemplate) {
 			out << g.render(template:userTemplate, model: [attrs:attrs])
 		}else{
 			out << g.render(contextPath: pluginContextPath,template: basicjs,  model: [attrs:attrs])
-		}	
+		}
 	}
 
 	
@@ -79,6 +90,7 @@ class AutoCompleteTagLib {
 		
 		if (!attrs.id) {
 			throwTagError("Tag [selectPrimary] is missing required attribute [id]")
+
 		}
 		if (!attrs.domain) {
 			throwTagError("Tag [selectPrimary] is missing required attribute [domain]")
@@ -266,6 +278,8 @@ class AutoCompleteTagLib {
 		if ((attrs.appendValue)&&(!attrs.appendName)) {
 			attrs.appendName='Values Updated'
 		}
+
+
 
 
 		Boolean requireField=true

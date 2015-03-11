@@ -1,10 +1,10 @@
-package ajaxdependancyselection
+package grails.plugin.ajaxdependancyselection
 
 
 class AutoCompleteController {
 
 	def autoCompleteService
-	
+
 	def ajaxSelectControllerAction() { 
 		render autoCompleteService.returnControllerActions(params)
 	}

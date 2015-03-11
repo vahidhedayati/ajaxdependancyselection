@@ -1,13 +1,8 @@
-package ajaxdependancyselection
+package grails.plugin.ajaxdependancyselection
 
 import grails.converters.JSON
 import grails.web.Action
 import org.grails.core.DefaultGrailsControllerClass
-<<<<<<< HEAD
-=======
-
-import java.lang.reflect.Method
->>>>>>> ae1ef359daf20136ef5406de51fa48b29fecc0ef
 
 import java.lang.reflect.Method
 
@@ -305,12 +300,12 @@ class AutoCompleteService {
 		}
 	}
 	
-	def returnControllerActions(params) {
+	def returnControllerActions(params, String domclass2) {
 		String s = params.id
 		if (s) {
 			String domclass1= (s.substring(0,1).toUpperCase())
-			String domclass2=s.substring(1,s.length())
-			String domclass=domclass1+domclass2+"Controller"
+			String dlass2=s.substring(1,s.length())
+			String domclass=domclass1+dlass2+"Controller"
 			List<String> list=new ArrayList<String>();
 			grailsApplication.controllerClasses.each { DefaultGrailsControllerClass controller ->
 				Class controllerClass = controller.clazz

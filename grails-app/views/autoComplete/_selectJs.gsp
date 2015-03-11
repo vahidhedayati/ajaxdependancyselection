@@ -1,7 +1,9 @@
+	<script src="/assets/jquery-2.1.3.js?compile=false" type="text/javascript" ></script>
 <g:javascript>
-	
 
-	function ${attrs.id}Update(e) { 
+
+
+	function ${attrs.id}Update(e) {
   		if (e) { 	
   		var zselect = document.getElementById('${attrs.id}')
   		var zopt = zselect.options[zselect.selectedIndex]
@@ -120,14 +122,4 @@
 		
 		});		
   	}
-  	
-  	var zselect = document.getElementById('${attrs.id}')
-  	var zopt = zselect.options[zselect.selectedIndex]
-  	<g:if test="${attrs?.filterController}">
-		<g:remoteFunction  controller="${attrs.filterController}"  action="${attrs.filteraction2}" onComplete="'${attrs.id}Update(data)'"  params= "\'term=${attrs?.term}${changeAddon}&bindid=${attrs.bindid}&filter=${attrs.filter}&filterType=${attrs.filterType}&filterDisplay=${attrs.filterDisplay}&domain=${attrs.domain}&primarybind=${attrs.primarybind}&searchField=${attrs.searchField}&collectField=${attrs.collectField}&filter2=${attrs.filter2}&filterbind=${attrs?.filterbind}&id=\'+ zopt.value"/>
-	</g:if>
-	<g:else>
-		<g:remoteFunction  controller="${attrs.controller}"  action="${attrs.action}" onComplete="'${attrs.id}Update(data)'"  params= "\'term=${attrs?.term}${changeAddon}&bindid=${attrs.bindid}&filter=${attrs.filter}&filterType=${attrs.filterType}&filterDisplay=${attrs.filterDisplay}&domain=${attrs.domain}&primarybind=${attrs.primarybind}&searchField=${attrs.searchField}&collectField=${attrs.collectField}&filter2=${attrs.filter2}&filterbind=${attrs?.filterbind}&id=\'+ zopt.value"/>        
-	</g:else>
-		        
 </g:javascript>
