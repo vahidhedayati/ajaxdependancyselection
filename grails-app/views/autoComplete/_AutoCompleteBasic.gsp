@@ -1,4 +1,4 @@
-<input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />
+<g:autoField   class = "${clazz}" styles="${styles}" id='${attrs.id}' value = '${attrs.value}' required = "${required}"  name = "${name}" disabled = "${attrs.disabled }"  />
 <g:javascript>
 $(document).ready(function() {
 	$('#${attrs.id}').autocomplete({ 
