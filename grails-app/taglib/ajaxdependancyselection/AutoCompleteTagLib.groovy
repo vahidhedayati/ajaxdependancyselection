@@ -1010,7 +1010,14 @@ class AutoCompleteTagLib {
 		} else {
 			out << """<input title="${title}" """
 			attrs.each { k,v ->
-				out << k << "=\"" << v << "\" "
+				if (k == 'required') {
+					if (v=='required') {
+						out << k << "=\"" << v << "\" "
+					}
+				}else{
+					out << k << "=\"" << v << "\" "
+				}
+				
 			}
 			out << "/>"
 		}
