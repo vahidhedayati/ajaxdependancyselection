@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.42-SNAPSHOT3
+ajaxdependancyselection 0.43
 =======================
 
 
@@ -10,8 +10,22 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.42-SNAPSHOT3" 
+	compile ":ajaxdependancyselection:0.43" 
 
+### 0.43 + Security Configuration:
+
+In order to ensure you only allow this plugin to search desired domainClasses as well as restricted to only search/collect fields that will be used within the plugin calls. Simply add something like this below to your Config.groovy. Covering the full domainClass and its packaging convention the search/collect fields you wish to call from within the plugin calls. This now means anything outside of this scope should fail if anyone attempts to break out of the plugin..
+
+```groovy
+ads {
+	security = "enabled"
+	whitelist = [
+			[dc:'ajaxdependancyselectexample.MyContinent', collect:'id', search:'continentName'],
+			[dc:'ajaxdependancyselectexample.MyCountry', collect:'id', search:'countryName'],
+			[dc:'ajaxdependancyselectexample.MyCity', collect:'id', search:'cityName']
+	]
+}
+```
 
 
 
@@ -36,6 +50,14 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ## version info:
 	
 ```
+0.43 - Security configuration added, you can now define which domainClasses are searchable and what fields can be searched. I can see the initial primary selection still works but this is due to entire list being returned - beyond this nothing else will work if security enabled and locked down. Review instructions on security at the very top of this README.
+
+0.42-SNAPSHOT3 & SNAPSHOT2 : https://github.com/vahidhedayati/ajaxdependancyselection/issues/9
+
+0.42-SNAPSHOT1 :  https://github.com/vahidhedayati/ajaxdependancyselection/issues/8
+
+0.42-SNAPSHOT: https://github.com/vahidhedayati/ajaxdependancyselection/issues/7
+
 0.42 - 	https://github.com/vahidhedayati/ajaxdependancyselection/issues/7#issuecomment-55927174 as per request - primaryList
 		can now be provided via main call i.e. controller providing the list to the taglib, domain can be set to 
 		an invalid value. Please refer to example6.gsp within ajaxdependancyselectexample project.
