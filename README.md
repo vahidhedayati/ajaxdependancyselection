@@ -1,4 +1,4 @@
-ajaxdependancyselection 0.43
+ajaxdependancyselection
 =======================
 
 
@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.43" 
+	compile ":ajaxdependancyselection:0.44" 
 
 ### 0.43 + Security Configuration:
 
@@ -31,10 +31,29 @@ ads {
 
 ## Autocomplete requirements:	
 
+As of 0.44 if you are using grails 2.4+, or earlier and do not have jquery-ui, you can just call:
+
+```gsp
+<g:loadjui/>
+```
+Within your layout/main.gsp or a gsp page that uses autoComplete and requires jquery-ui
+
+You can also add:
+```gsp
+loadjui='enable'
+```
+To any g:autoComplete tags and you should only need to call it once on a given page. So on one of the g:autoComplete calls should suffice.
+
+
+
+### Manually:
+
 	compile ":jquery-ui:1.10.3"
 	
 
-## Autocomplete configuration  
+	
+## Autocomplete configuration  (for pre 2.4)
+
 ###jquery, jquery-ui libraries:
 your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationResources.groovy and ensure you refer to it in your main.gsp or relevant file
 
@@ -47,9 +66,12 @@ your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationR
 The jquery-ui should only be required for autocomplete calls, jquery will be needed by all the other functionality of this plugin, so please ensure you have enabled jquery in your gsp and is installed.
 
 
+
 ## version info:
 	
 ```
+0.44 - a println left in security - as part of upgrade to grails3 (now working) all code has been reviewed and a major tidy up lock down carried out.
+
 0.43 - Security configuration added, you can now define which domainClasses are searchable and what fields can be searched. I can see the initial primary selection still works but this is due to entire list being returned - beyond this nothing else will work if security enabled and locked down. Review instructions on security at the very top of this README.
 
 0.42-SNAPSHOT3 & SNAPSHOT2 : https://github.com/vahidhedayati/ajaxdependancyselection/issues/9
