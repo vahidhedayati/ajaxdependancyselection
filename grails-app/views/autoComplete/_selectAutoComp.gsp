@@ -16,9 +16,9 @@ $(document).ready(function() {
 			<g:if test="${attrs.setId2}">
 				$('#${attrs.setId2}').attr('primaryid',ui.item.id);
 			</g:if>	
-		}
+		},
 		</g:if>
-		,dataType: 'json'		
+		dataType: 'json'
 	});
 });
 </g:javascript>

@@ -9,35 +9,55 @@ A common problem when it comes to making a website is having objects that are in
 
 ## Installation:
 Add plugin Dependency : (Grails 2X)
+```groovy
+	compile ":ajaxdependancyselection:0.44" 
+```
 
-	compile ":ajaxdependancyselection:0.42-SNAPSHOT" 
+Add plugin Dependency : (Grails 3X)
 
-#### Grails 3: https://bintray.com/artifact/download/vahid/maven/ajaxdependancyselection-0.43.jar
+```groovy
+compile "org.grails.plugins:ajaxdependancyselection:1.0"
+```
+
+#### Grails 3: https://bintray.com/artifact/download/vahid/maven/ajaxdependancyselection-1.0.jar
 
 
 
 
 ## Autocomplete requirements:	
-
-	compile ":jquery-ui:1.10.3"
-	
-
-## Autocomplete configuration  
-###jquery, jquery-ui libraries:
-your layouts main.gsp: (add jquery-ui and jquery - or add them into ApplicationResources.groovy and ensure you refer to it in your main.gsp or relevant file
-
-	<g:javascript library="jquery-ui"/>
-	<g:javascript library="jquery"/>
-	…
-	<g:layoutHead/>
+ To use the autocomplete features simply enable this taglib call:
 
 
-The jquery-ui should only be required for autocomplete calls, jquery will be needed by all the other functionality of this plugin, so please ensure you have enabled jquery in your gsp and is installed.
+```gsp
+<ads:loadjui/>
+```
+Within your layout/main.gsp or a gsp page that uses autoComplete and requires jquery-ui
+
+You can also add:
+```gsp
+loadjui='enable'
+```
+To any ads:autoComplete tags and you should only need to call it once on a given page. So on one of the ads:autoComplete calls should suffice.
+
+
+
 
 
 ## version info:
 	
 ```
+
+0.44 - a println left in security - as part of upgrade to grails3 (now working) all code has been reviewed and a major tidy up lock down carried out.
+
+0.43 - Security configuration added, you can now define which domainClasses are searchable and what fields can be searched. I can see the initial primary selection still works but this is due to entire list being returned - beyond this nothing else will work if security enabled and locked down. Review instructions on security at the very top of this README.
+
+0.42-SNAPSHOT3 & SNAPSHOT2 : https://github.com/vahidhedayati/ajaxdependancyselection/issues/9
+
+0.42-SNAPSHOT1 :  https://github.com/vahidhedayati/ajaxdependancyselection/issues/8
+
+0.42-SNAPSHOT: https://github.com/vahidhedayati/ajaxdependancyselection/issues/7
+
+
 0.42 - 	https://github.com/vahidhedayati/ajaxdependancyselection/issues/7#issuecomment-55927174 as per request - primaryList
 		can now be provided via main call i.e. controller providing the list to the taglib, domain can be set to 
 		an invalid value. Please refer to example6.gsp within ajaxdependancyselectexample project.
@@ -56,14 +76,14 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 0.38 - 	appendName appendValue values not being passed from tagLib to services..
 
 0.37 -	selectJs files updated logic added to if autocomp is set in 
-		any g:selectPrimary/Secondary then it will look for autocompleteSecondary 
+		any ads:selectPrimary/Secondary then it will look for autocompleteSecondary 
 		tag to fullfill autocomplete refer to selectauto3.gsp
 		
 0.36 -	minor bug in selectController '' used instead of "" for attrs.id so id was being shown as attrs.id
  
-0.35 - 	Made values updated default values optional - if appendValue is given in g:select then it will set appendName to default value
+0.35 - 	Made values updated default values optional - if appendValue is given in ads:select then it will set appendName to default value
  	
-0.34 - 	Now supporting multiple dependency calls, in a given g:select you can now declare upto 5 depended object bound to a
+0.34 - 	Now supporting multiple dependency calls, in a given ads:select you can now declare upto 5 depended object bound to a
  		primary or secondary selection.
  		
 0.33 - 	Too minor to mention
@@ -107,29 +127,29 @@ In the examples provided domainClasses has been defined as countryName cityName 
 ## Taglibs provided:
 
 
-	g:selectPrimary
-	g:selectSecondary
-	g:selectAutoComplete
-	g:autocomplete
-	g:autoCompletePrimary
-	g:autoCompleteSecondary
-	g:selectPrimaryNR
-	g:selectSecondaryNR
-	g:autoCompleteSecondaryNR
-	g:selectController
-	g:autoCompleteHeader
+	ads:selectPrimary
+	ads:selectSecondary
+	ads:selectAutoComplete
+	ads:autocomplete
+	ads:autoCompletePrimary
+	ads:autoCompleteSecondary
+	ads:selectPrimaryNR
+	ads:selectSecondaryNR
+	ads:autoCompleteSecondaryNR
+	ads:selectController
+	ads:autoCompleteHeader
 	
-	g:selectPrimary -  custom controller/action sample
-	g:selectPrimary/Secondary Filtering
-	g:selectPrimary/Secondary support for domain3 domain4 domain5 domain6 domain7 and domain8 which can all be added: 
+	ads:selectPrimary -  custom controller/action sample
+	ads:selectPrimary/Secondary Filtering
+	ads:selectPrimary/Secondary support for domain3 domain4 domain5 domain6 domain7 and domain8 which can all be added: 
 								-- to any selectPrimary or Secondary call, each domain is a bound object
 								-- This means if a Country has many cities and many mayors upon country update relevant cities and mayors are loaded
 								-- extend this now across upto domain8 for each object initiall called
 								Please read below on the how to and refer to the example site for a very basic demo.
 								
 
-### g:selectPrimary 
-###### (relationship: fully dependent ) in conjunction with g:selectSecondary
+### ads:selectPrimary 
+###### (relationship: fully dependent ) in conjunction with ads:selectSecondary
 ###### refer to above notes on jquery requirements
 
 ###### Fully dependent domainClasses:
@@ -150,7 +170,7 @@ Bindid would be:
 
 	bindid="primarydomain.id"
 
-This you would use g:selectPrimary the bindid is primarydomain.id the field highlighted in bold above as the bindid
+This you would use ads:selectPrimary the bindid is primarydomain.id the field highlighted in bold above as the bindid
 
 ```gsp
    <g:selectPrimary id="MyContinent1" name="MyContinent1"
@@ -169,12 +189,12 @@ This you would use g:selectPrimary the bindid is primarydomain.id the field high
         setId="MyCity1"
         value=''/>
 ```        
-[Entire input with explaination](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectPrimary---entire-input-values)
+[Entire input with explaination](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/ads:selectPrimary---entire-input-values)
 
 
 
 
-Now this can be either passed toa normal select or to a  g:selectSecondary where if if you have further dependency you wish to interogate.
+Now this can be either passed toa normal select or to a  ads:selectSecondary where if if you have further dependency you wish to interogate.
 
 So in the case of Country city, the above is fine to call to a city select area that is a simple call like this:
 ```gsp
@@ -199,14 +219,14 @@ is what is represented on the html end
 
 
 
-### g:selectSecondary 
+### ads:selectSecondary 
 
-###### (relationship: fully dependent ) in conjunction with g:selectPrimary
+###### (relationship: fully dependent ) in conjunction with ads:selectPrimary
 ###### refer to above notes on jquery requirements
 
 
 This is a tag that can be used over and over again to go through nested situations, you can also use the selectSecondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
-Back to g:selectSecondary example:
+Back to ads:selectSecondary example:
 ```gsp
 <g:selectSecondary id="MyCountry11" name="MyCountry11"
     domain2='ajaxdependancyselectexample.MyCity'
@@ -225,11 +245,11 @@ Back to g:selectSecondary example:
     setId="MyCity11"
     value="${params.MyCountry11}"/>
 ```
-[g:selectSecondary entire input and explaination](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectSecondary-entire-input)
+[ads:selectSecondary entire input and explaination](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/ads:selectSecondary-entire-input)
 
 
 
-##g:selectAutoComplete
+##ads:selectAutoComplete
 
 This is a new feature from 0.26+, it allows you to set up a select box from which auto complete values are generated depending on what user selects.
 ```gsp
@@ -258,26 +278,26 @@ This is a new feature from 0.26+, it allows you to set up a select box from whic
 
     
     
-###g:selectPrimary/Secondary to g:autoCompleteSecondary
-If you want to pass from selections to auto complete then from 0.37+ release you should be able to pass parameter autocomp="1" to any of the g:select methods followed by a call to g:autocompleteSecondary.. [from-selection-to-autocomplete---how-to](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/from-selection-to-autocomplete---how-to)
+###ads:selectPrimary/Secondary to ads:autoCompleteSecondary
+If you want to pass from selections to auto complete then from 0.37+ release you should be able to pass parameter autocomp="1" to any of the ads:select methods followed by a call to ads:autocompleteSecondary.. [from-selection-to-autocomplete---how-to](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/from-selection-to-autocomplete---how-to)
     
 
-###g:autocomplete
+###ads:autocomplete
 This is a simple auto complete tag lib that allows you to auto complete from a single table, refer to above notes on jquery & jquery-ui requirements
 ```gsp
-<g:autocomplete id="primarySearch" name="myId"
+<ads:autocomplete id="primarySearch" name="myId"
 domain='ajaxdependancyselectexample.MyCountry'
 searchField='countryName'
 collectField='id'
 value=''/>
 <input type=submit value=go> </form>
 ```
-[all g:autocomplete calls](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/autoComplete-full-input)
+[all ads:autocomplete calls](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/autoComplete-full-input)
 
 	
-###g:autoCompletePrimary
+###ads:autoCompletePrimary
 ```gsp
-<g:autoCompletePrimary id="primarySearch1"  
+<ads:autoCompletePrimary id="primarySearch1"  
 name="NAMEOFcontinentName"
 domain='ajaxdependancyselectexample.MyContinent'
 searchField='continentName'
@@ -293,9 +313,9 @@ value=''/>
 [autoCompletePrimay explained](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/autoCompletePrimary---full-detail)
 
 
-###g:autoCompleteSecondary
+###ads:autoCompleteSecondary
 ```gsp
-<g:autoCompleteSecondary id="secondarySearch2" 
+<ads:autoCompleteSecondary id="secondarySearch2" 
 name="NAMEOFcountryName" 
 domain='ajaxdependancyselectexample.MyCountry' 
 primarybind='mycontinent.id' 
@@ -307,11 +327,11 @@ collectField='id'
 setId="secondarySearch3" 
 value=''/>
 ```
-[autoCompleteSecondary explained](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:autoCompleteSecondary-full-detail)
+[autoCompleteSecondary explained](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/ads:autoCompleteSecondary-full-detail)
 
 			
 
-###g:selectPrimaryNR
+###ads:selectPrimaryNR
 
 ###### No reference mapping
 ```groovy
@@ -331,7 +351,7 @@ Now within your call the bindid would be:
 	bindid="secondarydomain"
 
 
-This you would use g:selectPrimaryNR the bindid is secondarydomain the field highlighted in bold above as the bindid
+This you would use ads:selectPrimaryNR the bindid is secondarydomain the field highlighted in bold above as the bindid
 
 
 Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
@@ -339,25 +359,25 @@ Notice in the PrimaryNR the bindid is the primary hasMany mapping and has no .id
 
 Example call:
 
-[g:selectPrimaryNR-Full-details](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectPrimaryNR-Full-details)
+[ads:selectPrimaryNR-Full-details](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/ads:selectPrimaryNR-Full-details)
 
 
 
-###g:selectSecondaryNR
+###ads:selectSecondaryNR
 
 
-[g:selectSecondaryNR--full-details](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectSecondaryNR--full-details)
+[ads:selectSecondaryNR--full-details](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/ads:selectSecondaryNR--full-details)
 
 
 
 
-###g:autoCompleteSecondaryNR
-[g:autoCompleteSecondaryNR-full-details](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:autoCompleteSecondaryNR-full-details)
+###ads:autoCompleteSecondaryNR
+[ads:autoCompleteSecondaryNR-full-details](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/ads:autoCompleteSecondaryNR-full-details)
 			
 
 
 
-### g:selectController 
+### ads:selectController 
 ###### Controller action discovery, refer to above notes on jquery requirements
 
 
@@ -368,23 +388,23 @@ Line 210 onwards has an example.Typically maybe used for identifying controller 
 Here are the values explained:
 
 
-[g:selectController-full-details](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/g:selectController-full-details)
+[ads:selectController-full-details](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/ads:selectController-full-details)
 
 This now gets passed to a standard select call where it has an id of "ControllerActions":
 
 
 [gccontroller-actions-or-reciever-selection-box](https://github.com/vahidhedayati/ajaxdependancyselection/wiki/gccontroller-actions-or-reciever-selection-box)
 	
-The from on this is set to [] which gets filled in by g:selectController setId return call.
+The from on this is set to [] which gets filled in by ads:selectController setId return call.
 
 
 
-## g:autoCompleteHeader
+## ads:autoCompleteHeader
 ###### Loads in the ajaxLoader if your site is not already doing it
-	<g:autoCompleteHeader />
+	<ads:autoCompleteHeader />
 
 
-## g:selectPrimary - Custom
+## ads:selectPrimary - Custom
 ###### Customising your own calls:
 
 This is covered in the sample project labelled as custom example. Create your own controller which is set to do a custom verification:
@@ -443,7 +463,7 @@ noSelection="['': 'Please choose Continent']" />
 
 I will be updating this so that less input is required when custom action controller is defined.
 
-## g:selectPrimary/Secondary Filtering
+## ads:selectPrimary/Secondary Filtering
 ###### Filtering can be hard coded per select call or can be left for the user to filter output of a selectbox. this can be either useful if you only want to show specific results from selection for specific user or possibly when you wish user to speed up selection process and let them control the output of the selectbox.
 
 Most basic example is a hard coded version: /ajaxdependancyselectionexample/myContinent/norefselectSecondaryFilteringFixed.gsp and or https://github.com/vahidhedayati/ajaxdependancyselection/wiki/Nested-Selection-from-fully-fixed-search-all-that-way-including-a-secondaryNR
@@ -583,7 +603,7 @@ ajaxdependancyselection.selectSecondaryJsFilter='/autoComplete/selectJsNr1'  {Se
 
 
 
-## g:selectPrimary/Secondary Multi domainClass loading:
+## ads:selectPrimary/Secondary Multi domainClass loading:
 
 ###### Feature since 0.34 
 
@@ -739,7 +759,7 @@ So in selectPrimary/selectSecondary you define both the value and secondaryValue
 
 ### Example no reference domain classes:
 
-Here are two domain classes with a no reference set up and require g:selectSecondaryNR feature: 
+Here are two domain classes with a no reference set up and require ads:selectSecondaryNR feature: 
 ```groovy
 class MyCity {
 String cityName
