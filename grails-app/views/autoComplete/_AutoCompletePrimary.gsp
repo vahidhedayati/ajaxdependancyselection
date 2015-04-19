@@ -1,4 +1,4 @@
-<g:autoField type='text' class = "${clazz}" styles="${styles}" id='${attrs.id}' value = '${attrs.value}' required = "${required}"  name = "${name}" disabled = "${attrs.disabled }" />
+<input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />
 
 <g:javascript>
 $(document).ready(function() {
@@ -13,9 +13,9 @@ $(document).ready(function() {
 			<g:if test="${attrs.setId}">
 				$('#${attrs.setId}').attr('primaryid',ui.item.id);
 			</g:if>	
-		}
+		},
 		</g:if>
-		,dataType: 'json'
+		dataType: 'json'
 	});
 });
 </g:javascript>
