@@ -22,6 +22,20 @@ compile "org.grails.plugins:ajaxdependancyselection:1.0"
 #### Grails 3: https://bintray.com/artifact/download/vahid/maven/ajaxdependancyselection-1.0.jar
 
 
+### 0.43 + Security Configuration:
+
+In order to ensure you only allow this plugin to search desired domainClasses as well as restricted to only search/collect fields that will be used within the plugin calls. Simply add something like this below to your Config.groovy. Covering the full domainClass and its packaging convention the search/collect fields you wish to call from within the plugin calls. This now means anything outside of this scope should fail if anyone attempts to break out of the plugin..
+
+```groovy
+ads {
+	security = "enabled"
+	whitelist = [
+			[dc:'ajaxdependancyselectexample.MyContinent', collect:'id', search:'continentName'],
+			[dc:'ajaxdependancyselectexample.MyCountry', collect:'id', search:'countryName'],
+			[dc:'ajaxdependancyselectexample.MyCity', collect:'id', search:'cityName']
+	]
+}
+```
 
 
 ## Autocomplete requirements:	
@@ -173,7 +187,7 @@ Bindid would be:
 This you would use ads:selectPrimary the bindid is primarydomain.id the field highlighted in bold above as the bindid
 
 ```gsp
-   <g:selectPrimary id="MyContinent1" name="MyContinent1"
+   <ads:selectPrimary id="MyContinent1" name="MyContinent1"
         domain='ajaxdependancyselectexample.MyCountry'
         searchField='countryName'
         collectField='id'
@@ -228,7 +242,7 @@ is what is represented on the html end
 This is a tag that can be used over and over again to go through nested situations, you can also use the selectSecondaryNR features to interact from selectPrimary or selectSecondary, this will be final part of document
 Back to ads:selectSecondary example:
 ```gsp
-<g:selectSecondary id="MyCountry11" name="MyCountry11"
+<ads:selectSecondary id="MyCountry11" name="MyCountry11"
     domain2='ajaxdependancyselectexample.MyCity'
     bindid="mycountry.id"
     searchField2='cityName'
@@ -253,7 +267,7 @@ Back to ads:selectSecondary example:
 
 This is a new feature from 0.26+, it allows you to set up a select box from which auto complete values are generated depending on what user selects.
 ```gsp
-<g:selectAutoComplete 
+<ads:selectAutoComplete 
     id="MyContinent2" 
     id2="MyCountry2" 
     name="MyContinent2"
@@ -437,7 +451,7 @@ This is covered in the sample project labelled as custom example. Create your ow
 ```
 Create a call for this: 
 ```gsp
-<g:selectPrimary id="MyContinent2" name="MyContinent2"
+<ads:selectPrimary id="MyContinent2" name="MyContinent2"
 domain="ajaxdependancyselectexample.MyContinent"
 searchField="continentName"
 collectField="id"
@@ -468,15 +482,15 @@ I will be updating this so that less input is required when custom action contro
 
 Most basic example is a hard coded version: /ajaxdependancyselectionexample/myContinent/norefselectSecondaryFilteringFixed.gsp and or https://github.com/vahidhedayati/ajaxdependancyselection/wiki/Nested-Selection-from-fully-fixed-search-all-that-way-including-a-secondaryNR
 
-This is where you start with your <g:selectPrimary  filter="something" filter2="another"
+This is where you start with your <ads:selectPrimary  filter="something" filter2="another"
 This will now filter results for primary matching against something and the next secondary call to filter against another
 
-On your next <g:selectSeconday you simply call filter2="somethingelse"
+On your next <ads:selectSeconday you simply call filter2="somethingelse"
 
 This will now pass this filter to next object being completed and all the way to last standard call which will end in standard <g:select box but will still be filtered.
 
 
-The other way is to enable filtering and let user control the filter, to do this simply switch filter="_ON" in each <g:selectPrimary/Secondary call
+The other way is to enable filtering and let user control the filter, to do this simply switch filter="_ON" in each <ads:selectPrimary/Secondary call
 
 In primary it is just as simple as switching it on, within secondary calls it gets a little more complex.
 
@@ -613,7 +627,7 @@ Each of them can then have the same nesting meaning some wild dependencies can b
 The how to:
 
 ```gsp
-<g:selectPrimary id="MyDepartments" name="MyDepartments"
+<ads:selectPrimary id="MyDepartments" name="MyDepartments"
 domain='ajaxdependancyselectexample.Departments'
 searchField='name'
 collectField='id'
@@ -663,7 +677,7 @@ Please note only the first computer from each initial department selected has an
 ```gsp
 <form method=post action=example5>
 
-<g:selectPrimary id="MyDepartments141" name="MyDepartments141"
+<ads:selectPrimary id="MyDepartments141" name="MyDepartments141"
 domain='ajaxdependancyselectexample.Departments'
 searchField='name'
 collectField='id'
@@ -695,7 +709,7 @@ required="required" noSelection="['': 'Please choose department']" />
 
 
 
-<g:selectSecondary id="computersId141" name="computersId141"
+<ads:selectSecondary id="computersId141" name="computersId141"
 
 domain2='ajaxdependancyselectexample.Os'
 bindid="computers.id"
