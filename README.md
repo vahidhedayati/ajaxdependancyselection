@@ -19,6 +19,7 @@ Dependency (Grails 3.X) :
 ```
 
 [codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/)
+
 ### 0.43 + Security Configuration:
 
 In order to ensure you only allow this plugin to search desired domainClasses as well as restricted to only search/collect fields that will be used within the plugin calls. Simply add something like this below to your Config.groovy. Covering the full domainClass and its packaging convention the search/collect fields you wish to call from within the plugin calls. This now means anything outside of this scope should fail if anyone attempts to break out of the plugin..
