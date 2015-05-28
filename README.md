@@ -56,13 +56,14 @@ loadjui='enable'
 To any ads:autoComplete tags and you should only need to call it once on a given page. So on one of the ads:autoComplete calls should suffice.
 
 
+##### [Alternative :boselecta](https://github.com/vahidhedayati/grails-boselecta-plugin)
 
 
 
 ## version info:
 	
 ```
-
+0.45/1.0 - Fixed jquey-ui image issues, fixed controller action selection. hardcoded jquery removed from  _selectJs.gsp
 0.44 - a println left in security - as part of upgrade to grails3 (now working) all code has been reviewed and a major tidy up lock down carried out.
 
 0.43 - Security configuration added, you can now define which domainClasses are searchable and what fields can be searched. I can see the initial primary selection still works but this is due to entire list being returned - beyond this nothing else will work if security enabled and locked down. Review instructions on security at the very top of this README.
@@ -129,9 +130,12 @@ To any ads:autoComplete tags and you should only need to call it once on a given
 ```
 
 ## Example site:
+
 Using this plugin with the grails framework  you are able to achieve this without all of the complications. Refer to this sample project which makes use of all of the examples below with some objects already pre-added to the sample projecet. Found here in this sample project:
 
-###### [Example grails project ajaxdependancyselectexample](https://github.com/vahidhedayati/ajaxdependancyselectexample), for  [grails ajaxdependancyselection plugin](http://grails.org/plugin/ajaxdependancyselection).[Issues can be reported here](https://github.com/vahidhedayati/ajaxdependancyselection/issues). For further documentation and examples, check out the [wiki](https://github.com/vahidhedayati/ajaxdependancyselection/wiki)
+###### [Example grails project grails 2.4.2](https://github.com/vahidhedayati/ajaxdependancyselectexample),
+ [Example grails project grails 2.5](https://github.com/vahidhedayati/testads5),[Example grails project grails 2.4.4](https://github.com/vahidhedayati/testad)[Example grails project grails 3.0.1](https://github.com/vahidhedayati/testads)
+ for  [grails ajaxdependancyselection plugin](http://grails.org/plugin/ajaxdependancyselection).[Issues can be reported here](https://github.com/vahidhedayati/ajaxdependancyselection/issues). For further documentation and examples, check out the [wiki](https://github.com/vahidhedayati/ajaxdependancyselection/wiki)
 
 I have included the text and html samples from all of the examples in the example site. Use Europe/United Kingdom/London or Oxford for a full completed example within the above example project when loading it up.
 
