@@ -10,8 +10,15 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.44" 
+	compile ":ajaxdependancyselection:0.45" 
+[codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/tree/grails2)
 
+Dependency (Grails 3.X) :
+```
+    compile "org.grails.plugins:ajaxdependancyselection:1.0"
+```
+
+[codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/)
 ### 0.43 + Security Configuration:
 
 In order to ensure you only allow this plugin to search desired domainClasses as well as restricted to only search/collect fields that will be used within the plugin calls. Simply add something like this below to your Config.groovy. Covering the full domainClass and its packaging convention the search/collect fields you wish to call from within the plugin calls. This now means anything outside of this scope should fail if anyone attempts to break out of the plugin..
