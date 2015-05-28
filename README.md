@@ -56,9 +56,9 @@ loadjui='enable'
 To any ads:autoComplete tags and you should only need to call it once on a given page. So on one of the ads:autoComplete calls should suffice.
 
 
-##### Websocket Auto complete
+##### Websocket multi-select + auto complete(html5) 
 
-[boselecta](https://github.com/vahidhedayati/grails-boselecta-plugin)
+[boselecta](https://github.com/vahidhedayati/grails-boselecta-plugin), no jquery and no jquery-ui used. Secure information flow. downside - client needs to have websocket supported browser.
 
 
 
