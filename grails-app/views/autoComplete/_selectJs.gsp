@@ -1,4 +1,3 @@
-	<script src="/assets/jquery-2.1.3.js?compile=false" type="text/javascript" ></script>
 <g:javascript>
 
 

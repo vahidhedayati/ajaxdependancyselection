@@ -334,7 +334,7 @@ class AutoCompleteService {
         ArrayList mList = []
         grailsApplication.controllerClasses.each { DefaultGrailsControllerClass controller ->
             Class controllerClass = controller.clazz
-            if (controllerClass.name.endsWith(domclass.toString())) {
+            if (controllerClass.name.endsWith(domclass)) {
                 String logicalControllerName = controller.logicalPropertyName
                 controllerClass.methods.each { Method method ->
                     if (method.getAnnotation(Action)) {
@@ -343,7 +343,7 @@ class AutoCompleteService {
                 }
             }
         }
-        def results = list?.collect {['id':it,'name':it] }?.unique()
+        def results = mList.collect {['id':it,'name':it] }?.unique()
         return results as JSON
     }
 
