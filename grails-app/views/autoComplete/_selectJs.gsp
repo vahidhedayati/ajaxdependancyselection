@@ -1,8 +1,4 @@
-	<script src="/assets/jquery-2.1.3.js?compile=false" type="text/javascript" ></script>
 <g:javascript>
-
-
-
 	function ${attrs.id}Update(e) {
   		if (e) { 	
   		var zselect = document.getElementById('${attrs.id}')
