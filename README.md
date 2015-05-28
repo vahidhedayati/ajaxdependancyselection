@@ -56,7 +56,9 @@ loadjui='enable'
 To any ads:autoComplete tags and you should only need to call it once on a given page. So on one of the ads:autoComplete calls should suffice.
 
 
-##### [Alternative :boselecta](https://github.com/vahidhedayati/grails-boselecta-plugin)
+##### Websocket Auto complete
+
+[boselecta](https://github.com/vahidhedayati/grails-boselecta-plugin)
 
 
 
@@ -133,8 +135,14 @@ To any ads:autoComplete tags and you should only need to call it once on a given
 
 Using this plugin with the grails framework  you are able to achieve this without all of the complications. Refer to this sample project which makes use of all of the examples below with some objects already pre-added to the sample projecet. Found here in this sample project:
 
-###### [Example grails project grails 2.4.2](https://github.com/vahidhedayati/ajaxdependancyselectexample),
- [Example grails project grails 2.5](https://github.com/vahidhedayati/testads5),[Example grails project grails 2.4.4](https://github.com/vahidhedayati/testad)[Example grails project grails 3.0.1](https://github.com/vahidhedayati/testads)
+[Example grails project grails 2.4.2](https://github.com/vahidhedayati/ajaxdependancyselectexample)
+
+[Example grails project grails 2.5](https://github.com/vahidhedayati/testads5)
+
+[Example grails project grails 2.4.4](https://github.com/vahidhedayati/testad)
+
+[Example grails project grails 3.0.1](https://github.com/vahidhedayati/testads)
+
  for  [grails ajaxdependancyselection plugin](http://grails.org/plugin/ajaxdependancyselection).[Issues can be reported here](https://github.com/vahidhedayati/ajaxdependancyselection/issues). For further documentation and examples, check out the [wiki](https://github.com/vahidhedayati/ajaxdependancyselection/wiki)
 
 I have included the text and html samples from all of the examples in the example site. Use Europe/United Kingdom/London or Oxford for a full completed example within the above example project when loading it up.
