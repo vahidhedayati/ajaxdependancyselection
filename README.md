@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.45" 
+	compile ":ajaxdependancyselection:0.45-SNAPSHOT" 
 [codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/tree/grails2)
 
 Dependency (Grails 3.X) :
@@ -78,6 +78,10 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ## version info:
 	
 ```
+
+0.45-SNAPSHOT/1.0: fixed issue with autocomplete functions - after generic name value had name= removed from element.
+0.45/1.0 - Fixed jquey-ui image issues, fixed controller action selection. hardcoded jquery removed from  _selectJs.gsp
+
 0.44 - a println left in security - as part of upgrade to grails3 (now working) all code has been reviewed and a major tidy up lock down carried out.
 
 0.43 - Security configuration added, you can now define which domainClasses are searchable and what fields can be searched. I can see the initial primary selection still works but this is due to entire list being returned - beyond this nothing else will work if security enabled and locked down. Review instructions on security at the very top of this README.
