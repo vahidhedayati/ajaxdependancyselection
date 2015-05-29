@@ -435,7 +435,6 @@ class AutoCompleteTagLib   {
         Map a = genericAttrs("autoComplete", attrs)
         String clazz = a.clazz
         String name = a.name
-		println "-- $name"
         boolean requireField = a.requireField
 		if (requireField) {
 			 required = " required='required' "
