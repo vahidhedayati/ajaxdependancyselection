@@ -1,5 +1,5 @@
 <%@page defaultCodec="none" %>
-<input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} ${name} />
+<input type='text' ${clazz} id='${attrs.id}' value = '${attrs.value}' ${required} ${styles} name="${name}" />
 <g:javascript>
 $(document).ready(function() {
 	$('#${attrs.id}').autocomplete({ 
