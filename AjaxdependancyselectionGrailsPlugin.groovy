@@ -1,5 +1,5 @@
 class AjaxdependancyselectionGrailsPlugin {
-	def version = "0.45-SNAPSHOT"
+	def version = "0.45-SNAPSHOT2"
 	def grailsVersion = "2.0 > *"
  
 	def title = "Ajax Dependancy Selection Plugin"

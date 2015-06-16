@@ -27,16 +27,16 @@ class AutoCompleteController {
 		render autoCompleteService.autocomplete(domain, searchField, collectField, term, max, order)
 	}
 	
-	def autocompletePrimaryAction(String domain, String searchField, String collectField, String term, String max, String order) {
-	   	render autoCompleteService.autocompletePrimaryAction(domain, searchField, collectField, term, max, order)
+	def autocompletePrimaryAction(String domain,String showSearchField, String searchField, String collectField, String term, String max, String order) {
+			render autoCompleteService.autocompletePrimaryAction(showSearchField,domain, searchField, collectField, term, max, order)
 	}
 	
-	def autocompleteSecondaryAction(String domain, String searchField, String collectField, String term, String max, String order, String primarybind) {
-	   	render autoCompleteService.autocompleteSecondaryAction(domain, searchField, collectField, term, max, order, primarybind, params.primaryid as Long)
+	def autocompleteSecondaryAction(String domain, String showSearchField, String searchField, String collectField, String term, String max, String order, String primarybind) {
+		   render autoCompleteService.autocompleteSecondaryAction(showSearchField,domain, searchField, collectField, term, max, order, primarybind, params.primaryid as Long)
 	}
 	
-	def autocompleteSecondaryNR(String domain2, String searchField, String collectField, String domain,  String bindid) {
-        render autoCompleteService.autocompleteSecondaryNR(domain2, searchField, collectField, domain, params.id as Long,  bindid,  params.filter2, params.filterType2)
+	def autocompleteSecondaryNR(String domain2, String showSearchField,String searchField, String collectField, String domain,  String bindid) {
+		render autoCompleteService.autocompleteSecondaryNR(showSearchField,domain2, searchField, collectField, domain, params.id as Long,  bindid,  params.filter2, params.filterType2)
 	}
 	
 	def returnPrimarySearch(String term, String className, String domain, String searchField, String collectField){

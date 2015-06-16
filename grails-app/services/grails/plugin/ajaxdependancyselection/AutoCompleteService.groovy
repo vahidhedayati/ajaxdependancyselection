@@ -35,7 +35,7 @@ class AutoCompleteService {
         }
     }
 
-    def autocompletePrimaryAction(String domain, String searchField, String collectField,
+    def autocompletePrimaryAction(String showSearchField=null,String domain, String searchField, String collectField,
                                   String term, String max, String orderBy) {
 
         ArrayList primarySelectList = []
@@ -69,14 +69,14 @@ class AutoCompleteService {
                 results = domainClass?.createCriteria()?.list(query1)
             }
             if (results) {
-                primarySelectList = resultSet1(results)
+                primarySelectList = resultSet1(results, showSearchField)
             }
         }
         return primarySelectList as JSON
     }
 
 
-    def autocompleteSecondaryAction(String domain, String searchField, String collectField, String term,
+    def autocompleteSecondaryAction(String showSearchField=null,String domain, String searchField, String collectField, String term,
                                     String max, String orderBy, String primarybind, Long primaryid) {
 
         ArrayList primarySelectList = []
@@ -85,7 +85,7 @@ class AutoCompleteService {
             def domainClass = grailsApplication.getDomainClass(domain).clazz
             def query = {
                 eq (primarybind, primaryid)
-                and{
+                and {
                     ilike searchField, term + '%'
                 }
                 projections {
@@ -113,7 +113,7 @@ class AutoCompleteService {
                 results = domainClass?.createCriteria()?.list(query1)
             }
             if (results) {
-                primarySelectList = resultSet1(results)
+                primarySelectList = resultSet1(results, showSearchField)
             }
         }
         return primarySelectList as JSON
@@ -121,7 +121,7 @@ class AutoCompleteService {
 
 
     // No reference auto complete service
-    def autocompleteSecondaryNR (String term, String domain, String domain2, String searchField,
+    def autocompleteSecondaryNR (String showSearchField=null,String term, String domain, String domain2, String searchField,
                                  String collectField, String primarybind, Long primaryid) {
 
         ArrayList primarySelectList = []
@@ -155,7 +155,7 @@ class AutoCompleteService {
                     results = domainClass2?.createCriteria()?.list(query1)
                 }
                 if (results) {
-                    primarySelectList = resultSet1(results)
+                    primarySelectList = resultSet1(results, showSearchField)
                 }
             }
         }
@@ -348,13 +348,18 @@ class AutoCompleteService {
     }
 
 
-    private ArrayList resultSet1(def results) {
+	private ArrayList resultSet1(def results, String showSearchField=null) {
         ArrayList primarySelectList = []
         if (results) {
             results.each {
                 def primaryMap = [:]
                 primaryMap.put('id', it[0])
-                primaryMap.put('label', it[1])
+				if (showSearchField && showSearchField != 'null') {
+					primaryMap.put('label', "${it[0]}${showSearchField}${it[1]}")
+				}else{
+					primaryMap.put('label',it[1])
+				}
+                
                 primarySelectList.add(primaryMap)
             }
         }

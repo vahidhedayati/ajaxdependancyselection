@@ -3,7 +3,7 @@
 $(document).ready(function() {
 	$('#${attrs.id}').autocomplete({ 
 		source: '<g:createLink action='${attrs.action}' controller="${attrs.controller}"
-	 	params="[domain: ''+attrs.domain+'', searchField: ''+attrs.searchField+'', max: ''+attrs.max+'', order: ''+attrs.order+'', collectField: ''+attrs.collectField+'']"/>',
+	 	params="[domain: ''+attrs.domain+'', showSearchField: ''+attrs.showSearchField+'', searchField: ''+attrs.searchField+'', max: ''+attrs.max+'', order: ''+attrs.order+'', collectField: ''+attrs.collectField+'']"/>',
 		dataType: 'json'
 	});
 });
