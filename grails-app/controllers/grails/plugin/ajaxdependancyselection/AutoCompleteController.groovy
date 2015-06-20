@@ -39,8 +39,8 @@ class AutoCompleteController {
 		render autoCompleteService.autocompleteSecondaryNR(showSearchField,domain2, searchField, collectField, domain, params.id as Long,  bindid,  params.filter2, params.filterType2)
 	}
 	
-	def returnPrimarySearch(String term, String className, String domain, String searchField, String collectField){
-        render autoCompleteService.returnPrimarySearch('json', term, domain, searchField, collectField, params.filterType ?: 'A' ,  params.filterDisplay)
+	def returnPrimarySearch(){
+		render autoCompleteService.returnPrimarySearch('json',params.term,params.domain,params)
 	}
 	
 	def secondarySearch(String collectField, String searchField) {

@@ -103,7 +103,7 @@ class AutoCompleteTagLib   {
         if (autoCompleteService.verifySecurity(attrs.domain, attrs.searchField, attrs.collectField)) {
 
             if (attrs.filter) {
-                String filter = addFilters(attrs, 'loadFilterWord', 'returnPrimarySearch')
+				String filter = addFilters(attrs, 'loadFilterWord', 'returnPrimarySearch')
                 primarylist = autoCompleteService.returnPrimarySearch('', filter, attrs.domain, attrs)
             } else {
                 if (attrs.primaryList) {
@@ -191,7 +191,7 @@ class AutoCompleteTagLib   {
             if (attrs.filter) {
                 String filter = addFilters(attrs, 'loadFilterWord', 'returnPrimarySearch')
                 primarylist = autoCompleteService.returnPrimarySearch('', filter, attrs.domain, attrs)
-            } else {
+		    } else {
                 primarylist = autoCompleteService.returnPrimaryList(attrs.domain)
             }
         }
