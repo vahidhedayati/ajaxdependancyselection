@@ -1,34 +1,37 @@
 <g:javascript>
-	function ${attrs.id}Update(e) {
+
+
+
+	function ${attrs?.id}Update(e) {
   		if (e) { 	
-  		var zselect = document.getElementById('${attrs.id}')
+  		var zselect = document.getElementById('${attrs?.id}')
   		var zopt = zselect.options[zselect.selectedIndex]
-  		var secondary="${attrs.secondaryValue}";
-  		var primary="${attrs.value}";
+  		var secondary="${attrs?.secondaryValue}";
+  		var primary="${attrs?.value}";
   		
-		<g:if test="${attrs.setId && attrs.autocomp}">
+		<g:if test="${attrs?.setId && attrs?.autocomp}">
   		
-  			<g:if test="${attrs.hidden}">
-				$('#${attrs.hidden}').val(zselect);
+  			<g:if test="${attrs?.hidden}">
+				$('#${attrs?.hidden}').val(zselect);
 			</g:if>
-			<g:if test="${attrs.setId}">
-				$('#${attrs.setId}').attr('primaryid',zselect);
+			<g:if test="${attrs?.setId}">
+				$('#${attrs?.setId}').attr('primaryid',zselect);
 			</g:if>	
 
   		</g:if>
   		
-		<g:if test="${attrs.setId && !attrs.autocomp}">
+		<g:if test="${attrs?.setId && !attrs?.autocomp}">
 
-    		var rselect = document.getElementById('${attrs.setId}')
+    		var rselect = document.getElementById('${attrs?.setId}')
     		var l = rselect.length
     		while (l > 0) {
      			l--
      			rselect.remove(l)
   			}
   			var opt = document.createElement('option');
-  			<g:if test="${attrs.appendName}">
-  				opt.value="${attrs.appendValue}"
-  				opt.text="${attrs.appendName}" 
+  			<g:if test="${attrs?.appendName}">
+  				opt.value="${attrs?.appendValue}"
+  				opt.text="${attrs?.appendName}" 
   			
       			try {
     	   			rselect.add(opt, null)
@@ -53,41 +56,41 @@
   			}
   			
   			</g:if>
-  			<g:if test="${attrs.setId3 }">
-  				var myDocumentId="${attrs.setId3 }"
-  				${attrs.id}localGetter(zopt.value,myDocumentId, "${attrs?.domain3}","${attrs?.searchField3}","${attrs?.collectField3}","${attrs?.bindid3}","${attrs.filterDisplay3}","${attrs?.filter3}","${attrs?.filterType3}")
+  			<g:if test="${attrs?.setId3 }">
+  				var myDocumentId="${attrs?.setId3 }"
+  				${attrs?.id}localGetter(zopt.value,myDocumentId, "${attrs?.domain3}","${attrs?.searchField3}","${attrs?.collectField3}","${attrs?.bindid3}","${attrs?.filterDisplay3}","${attrs?.filter3}","${attrs?.filterType3}")
   			</g:if>
-  			<g:if test="${attrs.setId4 }">
-  				var myDocumentId="${attrs.setId4 }"
-  				${attrs.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain4}","${attrs?.searchField4}","${attrs?.collectField4}","${attrs?.bindid4}","${attrs.filterDisplay4}","${attrs?.filter4}","${attrs?.filterType4}")
+  			<g:if test="${attrs?.setId4 }">
+  				var myDocumentId="${attrs?.setId4 }"
+  				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain4}","${attrs?.searchField4}","${attrs?.collectField4}","${attrs?.bindid4}","${attrs?.filterDisplay4}","${attrs?.filter4}","${attrs?.filterType4}")
   			</g:if>
-  			<g:if test="${attrs.setId5 }">
-  				var myDocumentId="${attrs.setId5 }"
-  				${attrs.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain5}","${attrs?.searchField5}","${attrs?.collectField5}","${attrs?.bindid5}","${attrs.filterDisplay5}","${attrs?.filter5}","${attrs?.filterType5}")
+  			<g:if test="${attrs?.setId5 }">
+  				var myDocumentId="${attrs?.setId5 }"
+  				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain5}","${attrs?.searchField5}","${attrs?.collectField5}","${attrs?.bindid5}","${attrs?.filterDisplay5}","${attrs?.filter5}","${attrs?.filterType5}")
   			</g:if>
-  			<g:if test="${attrs.setId6 }">
-  				var myDocumentId="${attrs.setId6 }"
-  				localGetter(zopt.value,myDocumentId,"${attrs?.domain6}","${attrs?.searchField6}","${attrs?.collectField6}","${attrs?.bindid6}","${attrs.filterDisplay6}","${attrs?.filter6}","${attrs?.filterType6}")
+  			<g:if test="${attrs?.setId6 }">
+  				var myDocumentId="${attrs?.setId6 }"
+  				localGetter(zopt.value,myDocumentId,"${attrs?.domain6}","${attrs?.searchField6}","${attrs?.collectField6}","${attrs?.bindid6}","${attrs?.filterDisplay6}","${attrs?.filter6}","${attrs?.filterType6}")
   			</g:if>
-  			<g:if test="${attrs.setId7 }">
-  				var myDocumentId="${attrs.setId7 }"
-  				${attrs.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain7}","${attrs?.searchField7}","${attrs?.collectField7}","${attrs?.bindid7}","${attrs.filterDisplay7}","${attrs?.filter7}","${attrs?.filterType7}")
+  			<g:if test="${attrs?.setId7 }">
+  				var myDocumentId="${attrs?.setId7 }"
+  				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain7}","${attrs?.searchField7}","${attrs?.collectField7}","${attrs?.bindid7}","${attrs?.filterDisplay7}","${attrs?.filter7}","${attrs?.filterType7}")
   			</g:if>
-  			<g:if test="${attrs.setId8 }">
-  				var myDocumentId="${attrs.setId8 }"
-  				${attrs.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain8}","${attrs?.searchField8}","${attrs?.collectField8}","${attrs?.bindid8}","${attrs.filterDisplay8}","${attrs?.filter8}","${attrs?.filterType8}")
+  			<g:if test="${attrs?.setId8 }">
+  				var myDocumentId="${attrs?.setId8 }"
+  				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain8}","${attrs?.searchField8}","${attrs?.collectField8}","${attrs?.bindid8}","${attrs?.filterDisplay8}","${attrs?.filter8}","${attrs?.filterType8}")
   			</g:if>
   			
   		}else{
-  		<g:if test="${attrs.value}">
-  			$('#${attrs.id}').val(primary);
+  		<g:if test="${attrs?.value}">
+  			$('#${attrs?.id}').val(primary);
   		</g:if>
   		}
   		
   	}
-  	function ${attrs.id}localGetter(myvalue,myDocumentId,mydomain,mysearch,mycollect,mybind,myfilterDisplay,myfilter,myfilterType) {
+  	function ${attrs?.id}localGetter(myvalue,myDocumentId,mydomain,mysearch,mycollect,mybind,myfilterDisplay,myfilter,myfilterType) {
   	
-  		$.getJSON('${createLink(controller:"${attrs.controller}", action: "${attrs.action}")}?id='+myvalue+'&value=${attrs?.triggerWord}&bindid='+mybind+'&collectField='+mycollect+'&filterDisplay='+myfilterDisplay+'&searchField='+mysearch+'&domain=&domain2='+mydomain+'&filter2='+myfilter+'&filterType2='+myfilterType+'',function(e){
+  		$.getJSON('${createLink(controller:"${attrs?.controller}", action: "${attrs?.action}")}?id='+myvalue+'&value=${attrs?.triggerWord}&bindid='+mybind+'&collectField='+mycollect+'&filterDisplay='+myfilterDisplay+'&searchField='+mysearch+'&domain=&domain2='+mydomain+'&filter2='+myfilter+'&filterType2='+myfilterType+'',function(e){
 		if (e) { 
 		    var rselect = document.getElementById(myDocumentId)
 		    var l = rselect.length
@@ -96,8 +99,8 @@
 			    rselect.remove(l)
 			}
 			var opt = document.createElement('option');
-			opt.value="${attrs.appendValue}"
-			opt.text="${attrs.appendName}" 
+			opt.value="${attrs?.appendValue}"
+			opt.text="${attrs?.appendName}" 
 			try {
 		    	rselect.add(opt, null)
 			} catch(ex) {

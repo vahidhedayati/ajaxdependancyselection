@@ -10,12 +10,12 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-        compile ":ajaxdependancyselection:0.45-SNAPSHOT1"
+        compile ":ajaxdependancyselection:0.45-SNAPSHOT4"
 [codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/tree/grails2)
 
 Dependency (Grails 3.X) :
 ```
-    compile "org.grails.plugins:ajaxdependancyselection:1.0"
+    compile "org.grails.plugins:ajaxdependancyselection:1.0"  //inline with changes as above snapshot4
 ```
 
 [codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/)
@@ -65,6 +65,10 @@ To any ads:autoComplete tags and you should only need to call it once on a given
 ## version info:
 	
 ```
+0.45-SNAPSHOT4/1.0 - various issues https://github.com/vahidhedayati/testads5/issues/1#issuecomment-113842538
+0.45-SNAPSHOT3 - reverted returnPrimarySearch due to filtering issues
+0.45-SNAPSHOT2 - added showSearchField='|' and whatever character to split collect/search fields for auto complete - user request.
+
 0.45/1.0 - Fixed jquey-ui image issues, fixed controller action selection. hardcoded jquery removed from  _selectJs.gsp
 0.44 - a println left in security - as part of upgrade to grails3 (now working) all code has been reviewed and a major tidy up lock down carried out.
 
