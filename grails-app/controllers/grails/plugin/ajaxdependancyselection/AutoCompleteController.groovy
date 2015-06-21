@@ -15,8 +15,8 @@ class AutoCompleteController {
 		render autoCompleteService.selectSecondary(domain2, searchField2 ?: searchField, collectField2 ?: collectField, params.id as Long, bindid, params.filter2, params.filterType2)
 	}
 	
-	def ajaxSelectSecondaryNR(String term, String domain, String domain2, String searchField, String collectField, String primarybind) {
-		render autoCompleteService.selectSecondaryNR(term, domain, domain2, searchField, collectField, primarybind, params.primaryid as Long)
+	def ajaxSelectSecondaryNR() {
+		render autoCompleteService.selectSecondaryNR(params)
 	}
 	
 	def autocomplete(String domain, String searchField, String collectField, String term, String max, String order) {
@@ -35,16 +35,16 @@ class AutoCompleteController {
 		   render autoCompleteService.autocompleteSecondaryAction(showSearchField,domain, searchField, collectField, term, max, order, primarybind, params.primaryid as Long)
 	}
 	
-	def autocompleteSecondaryNR(String domain2, String showSearchField,String searchField, String collectField, String domain,  String bindid) {
-		render autoCompleteService.autocompleteSecondaryNR(showSearchField,domain2, searchField, collectField, domain, params.id as Long,  bindid,  params.filter2, params.filterType2)
+	def autocompleteSecondaryNR() {
+		render autoCompleteService.autocompleteSecondaryNR(params)
 	}
 	
 	def returnPrimarySearch(){
 		render autoCompleteService.returnPrimarySearch('json',params.term,params.domain,params)
 	}
 	
-	def secondarySearch(String collectField, String searchField) {
-        render autoCompleteService.secondarySearch(collectField, searchField,  params.prevValue as Long, params.domain, params.term, params.filterType)
+	def secondarySearch() {
+        render autoCompleteService.secondarySearch(params)
     }
 
     def loadFilterWord() {

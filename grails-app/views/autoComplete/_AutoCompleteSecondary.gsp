@@ -4,7 +4,7 @@
 $(document).ready(function() {
 	$('#${attrs?.id}').autocomplete({ 
 		source:	function(request, response) { 
-			$.getJSON('${createLink(controller:"${attrs?.controller}", action: "${attrs?.action}")}?term=' + request?.term + '&domain=${attrs?.domain}&showSearchField=${attrs?.showSearchField}&primarybind=${attrs?.primarybind}&searchField=${attrs?.searchField}&max=${attrs?.max}&order=${attrs?.order}&collectField=${attrs?.collectField}',
+			$.getJSON('${createLink(controller:"${attrs?.controller}", action: "${attrs?.action}")}?term=' + request.term + '&domain=${attrs?.domain}&showSearchField=${attrs?.showSearchField}&primarybind=${attrs?.primarybind}&searchField=${attrs?.searchField}&max=${attrs?.max}&order=${attrs?.order}&collectField=${attrs?.collectField}',
 			{ primaryid: $('#${attrs?.hidden}').val() },
 			response);  
 		},

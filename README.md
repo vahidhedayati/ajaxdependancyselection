@@ -10,7 +10,7 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.45-SNAPSHOT3" 
+	compile ":ajaxdependancyselection:0.45-SNAPSHOT4"
 [codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/tree/grails2)
 
 Dependency (Grails 3.X) :
@@ -78,6 +78,7 @@ The jquery-ui should only be required for autocomplete calls, jquery will be nee
 ## version info:
 	
 ```
+0.45-SNAPSHOT4 - various issues https://github.com/vahidhedayati/testads5/issues/1#issuecomment-113842538
 0.45-SNAPSHOT3 - reverted returnPrimarySearch due to filtering issues
 0.45-SNAPSHOT2 - added showSearchField='|' and whatever character to split collect/search fields for auto complete - user request.
 

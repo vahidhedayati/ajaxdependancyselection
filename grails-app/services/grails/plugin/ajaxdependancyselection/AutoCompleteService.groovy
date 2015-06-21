@@ -121,42 +121,37 @@ class AutoCompleteService {
 
 
 	// No reference auto complete service
-	def autocompleteSecondaryNR (String showSearchField=null,String term, String domain, String domain2, String searchField,
-			String collectField, String primarybind, Long primaryid) {
-
-		ArrayList primarySelectList = []
-
-		if (verifySecurity(domain2, searchField, collectField)) {
-			def domainClass2 = grailsApplication?.getDomainClass(domain2)?.clazz
-			def domainClass = grailsApplication?.getDomainClass(domain)?.clazz
-			def domaininq = domainClass.get(primaryid)
-			//def primarySelectList = []
-			domaininq."${primarybind}".each { dq ->
-				def query = {
-					eq (searchField , dq.toString().trim())
-					and { ilike  searchField ,term+ '%'}
-					projections {
-						property(collectField)
-						property(searchField)
-					}
-					order(searchField)
+	def autocompleteSecondaryNR (params) {
+		def primarySelectList=[]
+		def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
+		def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
+		def domaininq=domainClass.get(params.primaryid.toLong())
+		//def primarySelectList = []
+		domaininq."${params.primarybind}".each { dq ->
+			def query = {
+				eq (params.searchField , dq.toString().trim())
+				and { ilike  params.searchField ,params.term+ '%'}
+				projections {
+					property(params.collectField)
+					property(params.searchField)
 				}
-				def query1 = {
-					eq (searchField , dq.toString().trim())
-					and { ilike  searchField ,"%${term}%"}
-					projections {
-						property(collectField)
-						property(searchField)
-					}
-					order(searchField)
+				order(params.searchField)
+			}
+			def query1 = {
+				eq (params.searchField , dq.toString().trim())
+				and { ilike  params.searchField ,"%${params.term}%"}
+				projections {
+					property(params.collectField)
+					property(params.searchField)
 				}
-				def results = domainClass2?.createCriteria()?.list(query)
-				if (results.size()< 5){
-					results = domainClass2?.createCriteria()?.list(query1)
-				}
-				if (results) {
-					primarySelectList = resultSet1(results, showSearchField)
-				}
+				order(params.searchField)
+			}
+			def results =domainClass2?.createCriteria().list(query)
+			if (results.size()< 5){
+				results = domainClass2?.createCriteria().list(query1)
+			}
+			if (results) {
+				primarySelectList=resultSet1(results)
 			}
 		}
 		return primarySelectList as JSON
@@ -199,79 +194,67 @@ class AutoCompleteService {
 	}
 
 	// This is now set up for secondary filtering method
-	def secondarySearch(String collectField, String searchField,  Long prevValue=null,
-			String domain=null, String term=null, String filterType=null) {
-
-		ArrayList primarySelectList = []
-
-		if (verifySecurity(domain, searchField, collectField)) {
-			if (domain && prevValue) {
-				def domainClass = grailsApplication?.getDomainClass(domain)?.clazz
-				def query = {
-					eq  (filterbind, prevValue)
-					if ((term)&&(!term.toString().equals('null'))) {
-						def filter="${term}"
-						def myfilter = parseFilter(filter,filterType)
-						and { ilike  searchField ,myfilter}
-					}
-					projections {
-						property(collectField)
-						property(searchField)
-					}
-					order(searchField)
+	def secondarySearch(params) {
+		def primarySelectList=[]
+		if (params.domain && params.prevValue) {
+			def domainClass = grailsApplication?.getDomainClass(params?.domain)?.clazz
+			def query = {
+				eq  (params.filterbind, params.prevValue.toLong())
+				if ((params.term)&&(!params.term.toString().equals('null'))) {
+					def filter="${params.term}"
+					def filterType="${params.filterType}"
+					def myfilter=parseFilter(filter,filterType)
+					and { ilike  params.searchField ,myfilter}
 				}
-				def results = domainClass?.createCriteria()?.list(query)
-				if (results) {
-					primarySelectList = resultSet2(results)
+				projections {
+					property(params.collectField)
+					property(params.searchField)
 				}
+				order(params.searchField)
+			}
+			def results =domainClass?.createCriteria().list(query)
+			if (results) {
+				primarySelectList=resultSet2(results)
 			}
 		}
 		return primarySelectList as JSON
 	}
 
-	// No reference selection method i.e. belongsTo = UpperClass
-	def selectSecondaryNR(String domain2, String searchField, String collectField, String domain,
-			Long id, String bindid, String filter2=null, String filterType2=null) {
-
-
-		ArrayList primarySelectList = []
-
-		if (verifySecurity(domain2, searchField, collectField)) {
-			if ((domain2) && (domain) &&(id)) {
-				def domainClass2 = grailsApplication?.getDomainClass(domain2)?.clazz
-				def domainClass = grailsApplication?.getDomainClass(domain)?.clazz
-				def domaininq = domainClass?.get(id.toLong())
-				if (domaininq) {
-					domaininq."${bindid}".each { dq ->
-						def query = {
-							if ((filter2)&&(!filter2.toString().equals('null'))) {
-								def filter = filter2
-								def filterType = filterType2
-								def myfilter = parseFilter(filter,filterType)
-								and { ilike  searchField ,myfilter}
-							}
-							eq (searchField , dq.toString().trim())
-							projections {
-								property(collectField)
-								property(searchField)
-							}
-							order(searchField)
+	// No reference selection method i.e. belongsTo=UpperClass
+	def selectSecondaryNR(params) {
+		def primarySelectList = []
+		if ((params.domain2) && (params.domain) &&( params.id)) {
+			def domainClass2 = grailsApplication?.getDomainClass(params.domain2)?.clazz
+			def domainClass = grailsApplication?.getDomainClass(params.domain)?.clazz
+			def domaininq=domainClass?.get(params.id.toLong())
+			if (domaininq) {
+				domaininq."${params.bindid}".each { dq ->
+					def query = {
+						if ((params.filter2)&&(!params.filter2.toString().equals('null'))) {
+							def filter=params.filter2
+							def filterType=params.filterType2
+							def myfilter=parseFilter(filter,filterType)
+							and { ilike  params.searchField ,myfilter}
 						}
-						def results = domainClass2?.createCriteria()?.list(query)
-						results.each {
-							def primaryMap = [:]
-							primaryMap.put('id', it[0])
-							primaryMap.put('name', it[1])
-							primarySelectList.add(primaryMap)
+						eq (params.searchField , dq.toString().trim())
+						projections {
+							property(params.collectField)
+							property(params.searchField)
 						}
+						order(params.searchField)
+					}
+					def results =domainClass2?.createCriteria().list(query)
+					results.each {
+						def primaryMap = [:]
+						primaryMap.put('id', it[0])
+						primaryMap.put('name', it[1])
+						primarySelectList.add(primaryMap)
 					}
 				}
 			}
 		}
 		return primarySelectList as JSON
 	}
-
-
 
 	def returnPrimarySearch(String json, String filter, String className, params) {
 		if (!className.equals('')) {
