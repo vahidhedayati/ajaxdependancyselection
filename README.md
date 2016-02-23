@@ -10,12 +10,12 @@ A common problem when it comes to making a website is having objects that are in
 ## Installation:
 Add plugin Dependency :
 
-	compile ":ajaxdependancyselection:0.45-SNAPSHOT4"
+	compile ":ajaxdependancyselection:0.46"
 [codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/tree/grails2)
 
 Dependency (Grails 3.X) :
 ```
-    compile "org.grails.plugins:ajaxdependancyselection:1.0"
+    compile "org.grails.plugins:ajaxdependancyselection:1.1"
 ```
 
 [codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/)
