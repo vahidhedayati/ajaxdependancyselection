@@ -33,7 +33,7 @@ class AutoCompleteTagLib   {
 
 
 		def primarylist = autoCompleteService.returnControllerList()
-		def gsattrs=[ 'id': "${attrs?.id}", value: "${attrs?.value}", name: name, optionKey: "${attrs?.searchField}", optionValue: "${attrs?.collectField}" ]
+		def gsattrs=[id:attrs?.id, value:attrs?.value, name:name, optionKey:attrs?.searchField, optionValue:attrs?.collectField, class:attrs?.class]
 		gsattrs['from'] = primarylist
 
 		if (requireField) {
@@ -125,7 +125,7 @@ class AutoCompleteTagLib   {
 			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
 		}
 
-		def gsattrs=['optionKey' : "${attrs?.collectField}" , 'optionValue': "${attrs?.searchField}", 'id': "${attrs?.id}", 'value': "${attrs?.value}", 'name': "${name}"]
+		def gsattrs=[optionKey:attrs?.collectField, optionValue:attrs?.searchField, id:attrs?.id, value:attrs?.value, name:name, class:attrs?.class]
 		gsattrs['from'] = primarylist
 		if (requireField) {
 			gsattrs['required'] = 'required'
@@ -204,7 +204,7 @@ class AutoCompleteTagLib   {
 			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
 		}
 
-		def gsattrs=['optionKey' : "${attrs?.collectField}" , 'optionValue': "${attrs?.searchField}", 'id': "${attrs?.id}", 'value': "${attrs?.value}", 'name': "${name}"]
+		def gsattrs=[optionKey:attrs?.collectField, optionValue:attrs?.searchField, id:attrs?.id, value:attrs?.value, name:name, class:attrs?.class]
 		gsattrs['from'] = primarylist
 
 		if (requireField) {
@@ -293,7 +293,7 @@ class AutoCompleteTagLib   {
 			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
 		}
 
-		def gsattrs=['optionKey' : "${attrs?.collectField}" , 'optionValue': "${attrs?.searchField}", 'id': "${attrs?.id}", 'value': "${attrs?.value}", 'name': "${name}"]
+		def gsattrs=[optionKey:attrs?.collectField, optionValue:attrs?.searchField, id:attrs?.id, value:attrs?.value, name:name, class:attrs?.class]
 		gsattrs['from'] = secondarylist
 		if (requireField) {
 			gsattrs['required'] = 'required'
@@ -404,7 +404,7 @@ class AutoCompleteTagLib   {
 			out << g.render(contextPath: pluginContextPath, template: basicjs, model: [attrs:attrs])
 		}
 
-		def gsattrs=['optionKey' : "${attrs?.collectField}" , 'optionValue': "${attrs?.searchField}", 'id': "${attrs?.id}", 'value': "${attrs?.value}", 'name': "${name}"]
+		def gsattrs=[optionKey:attrs?.collectField, optionValue:attrs?.searchField, id:attrs?.id, value:attrs?.value, name:name, class:attrs?.class]
 		gsattrs['from'] = []
 
 		if (requireField) {
