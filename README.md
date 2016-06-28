@@ -15,7 +15,7 @@ Add plugin Dependency :
 
 Dependency (Grails 3.X) :
 ```
-    compile "org.grails.plugins:ajaxdependancyselection:1.2"  
+    compile "org.grails.plugins:ajaxdependancyselection:1.3"  
 ```
 
 [codebase for grails 2.X](https://github.com/vahidhedayati/ajaxdependancyselection/)
