@@ -318,11 +318,9 @@ class AutoCompleteTagLib   {
 			out << """
 				<script type = 'text/javascript'>
 					${remoteFunction(controller:''+attrs?.controller+'', action:''+attrs?.action+'', params:'\'id='+attrs?.value+'&value='+attrs?.secondaryValue+'&setId='+attrs?.setId+changeAddon+'&filterController='+attrs?.filterController+'&filterDisplay='+attrs?.filterDisplay+'&bindid='+ attrs?.bindid+'&collectField='+attrs?.collectField2+'&searchField='+attrs?.searchField2+'&filterType='+attrs?.filterType+'&filterType2='+attrs?.filterType2+'&filter='+attrs?.filter+'&filter2='+attrs?.filter2+'&domain2='+attrs?.domain2+'&prevId='+attrs?.prevId+'&controller = '+attrs?.controller+'\'',onSuccess:''+attrs?.id+'Update(data)')}
-
 				</script>
 			"""
 		}
-
 		out <<  g.select(gsattrs)
 
 	}
@@ -782,7 +780,7 @@ class AutoCompleteTagLib   {
 				throwTagError("Tag [selectPrimary] is missing required attribute [setId3]")
 			}
 
-			changeAddon = "&collectField3=${attrs?.collectField3}&searchField3=${attrs?.searchField3}&domain3=${attrs?.domain3}&controller3=${attrs?.controller3}&action3=${attrs?.action3}&setId3=${attrs?.setId3}&bindid3=${attrs?.bindid3}"
+			changeAddon = "&collectField3=${attrs?.collectField3}&value3=${attrs?.value3}&searchField3=${attrs?.searchField3}&domain3=${attrs?.domain3}&controller3=${attrs?.controller3}&action3=${attrs?.action3}&setId3=${attrs?.setId3}&bindid3=${attrs?.bindid3}"
 		}
 
 		if (attrs?.domain4) {
@@ -794,7 +792,7 @@ class AutoCompleteTagLib   {
 				throwTagError("Tag [selectPrimary] is missing required attribute [setId4]")
 			}
 
-			changeAddon+="&collectField4=${attrs?.collectField4}&searchField4=${attrs?.searchField4}&domain4=${attrs?.domain4}&controller4=${attrs?.controller4}&action4=${attrs?.action4}&setId4=${attrs?.setId4}&bindid4=${attrs?.bindid4}"
+			changeAddon+="&collectField4=${attrs?.collectField4}&value4=${attrs?.value4}&searchField4=${attrs?.searchField4}&domain4=${attrs?.domain4}&controller4=${attrs?.controller4}&action4=${attrs?.action4}&setId4=${attrs?.setId4}&bindid4=${attrs?.bindid4}"
 		}
 
 		if (attrs?.domain5) {
@@ -806,7 +804,7 @@ class AutoCompleteTagLib   {
 				throwTagError("Tag [selectPrimary] is missing required attribute [setId5]")
 			}
 
-			changeAddon+="&collectField5=${attrs?.collectField5}&searchField5=${attrs?.searchField5}&domain5=${attrs?.domain5}&controller5=${attrs?.controller5}&action5=${attrs?.action5}&setId5=${attrs?.setId5}&bindid5=${attrs?.bindid5}"
+			changeAddon+="&collectField5=${attrs?.collectField5}&value5=${attrs?.value5}&searchField5=${attrs?.searchField5}&domain5=${attrs?.domain5}&controller5=${attrs?.controller5}&action5=${attrs?.action5}&setId5=${attrs?.setId5}&bindid5=${attrs?.bindid5}"
 		}
 
 		if (attrs?.domain6) {
@@ -818,7 +816,7 @@ class AutoCompleteTagLib   {
 				throwTagError("Tag [selectPrimary] is missing required attribute [setId6]")
 			}
 
-			changeAddon+="&collectField6=${attrs?.collectField6}&searchField6=${attrs?.searchField6}&domain6=${attrs?.domain6}&controller6=${attrs?.controller6}&action6=${attrs?.action6}&setId6=${attrs?.setId6}&bindid6=${attrs?.bindid6}"
+			changeAddon+="&collectField6=${attrs?.collectField6}&value6=${attrs?.value6}&searchField6=${attrs?.searchField6}&domain6=${attrs?.domain6}&controller6=${attrs?.controller6}&action6=${attrs?.action6}&setId6=${attrs?.setId6}&bindid6=${attrs?.bindid6}"
 		}
 
 		if (attrs?.domain7) {
@@ -830,7 +828,7 @@ class AutoCompleteTagLib   {
 				throwTagError("Tag [selectPrimary] is missing required attribute [setId7]")
 			}
 
-			changeAddon+="&collectField7=${attrs?.collectField7}&searchField7=${attrs?.searchField7}&domain7=${attrs?.domain7}&controller7=${attrs?.controller7}&action7=${attrs?.action7}&setId7=${attrs?.setId7}&bindid7=${attrs?.bindid7}"
+			changeAddon+="&collectField7=${attrs?.collectField7}&value7=${attrs?.value7}&searchField7=${attrs?.searchField7}&domain7=${attrs?.domain7}&controller7=${attrs?.controller7}&action7=${attrs?.action7}&setId7=${attrs?.setId7}&bindid7=${attrs?.bindid7}"
 		}
 
 		if (attrs?.domain8) {
@@ -842,7 +840,7 @@ class AutoCompleteTagLib   {
 				throwTagError("Tag [selectPrimary] is missing required attribute [setId8]")
 			}
 
-			changeAddon+="&collectField8=${attrs?.collectField8}&searchField8=${attrs?.searchField8}&domain8=${attrs?.domain8}&controller8=${attrs?.controller8}&action8=${attrs?.action8}&setId8=${attrs?.setId8}&bindid8=${attrs?.bindid8}"
+			changeAddon+="&collectField8=${attrs?.collectField8}&value8=${attrs?.value8}&searchField8=${attrs?.searchField8}&domain8=${attrs?.domain8}&controller8=${attrs?.controller8}&action8=${attrs?.action8}&setId8=${attrs?.setId8}&bindid8=${attrs?.bindid8}"
 		}
 
 		return changeAddon

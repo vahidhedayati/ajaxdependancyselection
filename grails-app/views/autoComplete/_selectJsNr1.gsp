@@ -19,7 +19,7 @@
 
   		</g:if>
   		
-		<g:if test="${attrs?.setId && !attrs?.autocomp}">
+	<g:if test="${attrs?.setId && !attrs?.autocomp}">
 
     		var rselect = document.getElementById('${attrs?.setId}')
     		var l = rselect.length
@@ -53,39 +53,37 @@
   	  			}
   			}
   			</g:if>
-  		
-  			<g:if test="${attrs?.setId3 }">
-  				var myDocumentId="${attrs?.setId3 }"
-  				${attrs?.id}localGetter(zopt.value,myDocumentId, "${attrs?.domain3}","${attrs?.searchField3}","${attrs?.collectField3}","${attrs?.bindid3}","${attrs?.filterDisplay3}","${attrs?.filter3}","${attrs?.filterType3}")
-  			</g:if>
-  			<g:if test="${attrs?.setId4 }">
-  				var myDocumentId="${attrs?.setId4 }"
-  				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain4}","${attrs?.searchField4}","${attrs?.collectField4}","${attrs?.bindid4}","${attrs?.filterDisplay4}","${attrs?.filter4}","${attrs?.filterType4}")
-  			</g:if>
-  			<g:if test="${attrs?.setId5 }">
-  				var myDocumentId="${attrs?.setId5 }"
-  				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain5}","${attrs?.searchField5}","${attrs?.collectField5}","${attrs?.bindid5}","${attrs?.filterDisplay5}","${attrs?.filter5}","${attrs?.filterType5}")
-  			</g:if>
-  			<g:if test="${attrs?.setId6 }">
-  				var myDocumentId="${attrs?.setId6 }"
-  				localGetter(zopt.value,myDocumentId,"${attrs?.domain6}","${attrs?.searchField6}","${attrs?.collectField6}","${attrs?.bindid6}","${attrs?.filterDisplay6}","${attrs?.filter6}","${attrs?.filterType6}")
-  			</g:if>
-  			<g:if test="${attrs?.setId7 }">
-  				var myDocumentId="${attrs?.setId7 }"
-  				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain7}","${attrs?.searchField7}","${attrs?.collectField7}","${attrs?.bindid7}","${attrs?.filterDisplay7}","${attrs?.filter7}","${attrs?.filterType7}")
-  			</g:if>
-  			<g:if test="${attrs?.setId8 }">
-  				var myDocumentId="${attrs?.setId8 }"
-  				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.domain8}","${attrs?.searchField8}","${attrs?.collectField8}","${attrs?.bindid8}","${attrs?.filterDisplay8}","${attrs?.filter8}","${attrs?.filterType8}")
-  			</g:if>
-  			
+			<g:if test="${attrs?.setId3 }">
+				var myDocumentId="${attrs?.setId3 }"
+				${attrs?.id}localGetter(zopt.value,myDocumentId, "${attrs?.value3}","${attrs?.domain3}","${attrs?.searchField3}","${attrs?.collectField3}","${attrs?.bindid3}","${attrs?.filterDisplay3}","${attrs?.filter3}","${attrs?.filterType3}")
+			</g:if>
+			<g:if test="${attrs?.setId4 }">
+				var myDocumentId="${attrs?.setId4 }"
+				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.value4}","${attrs?.domain4}","${attrs?.searchField4}","${attrs?.collectField4}","${attrs?.bindid4}","${attrs?.filterDisplay4}","${attrs?.filter4}","${attrs?.filterType4}")
+			</g:if>
+			<g:if test="${attrs?.setId5 }">
+				var myDocumentId="${attrs?.setId5 }"
+				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.value5}","${attrs?.domain5}","${attrs?.searchField5}","${attrs?.collectField5}","${attrs?.bindid5}","${attrs?.filterDisplay5}","${attrs?.filter5}","${attrs?.filterType5}")
+			</g:if>
+			<g:if test="${attrs?.setId6 }">
+				var myDocumentId="${attrs?.setId6 }"
+						localGetter(zopt.value,myDocumentId,"${attrs?.value6}","${attrs?.domain6}","${attrs?.searchField6}","${attrs?.collectField6}","${attrs?.bindid6}","${attrs?.filterDisplay6}","${attrs?.filter6}","${attrs?.filterType6}")
+			</g:if>
+			<g:if test="${attrs?.setId7 }">
+				var myDocumentId="${attrs?.setId7 }"
+				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.value7}","${attrs?.domain7}","${attrs?.searchField7}","${attrs?.collectField7}","${attrs?.bindid7}","${attrs?.filterDisplay7}","${attrs?.filter7}","${attrs?.filterType7}")
+			</g:if>
+			<g:if test="${attrs?.setId8 }">
+				var myDocumentId="${attrs?.setId8 }"
+				${attrs?.id}localGetter(zopt.value,myDocumentId,"${attrs?.value8}","${attrs?.domain8}","${attrs?.searchField8}","${attrs?.collectField8}","${attrs?.bindid8}","${attrs?.filterDisplay8}","${attrs?.filter8}","${attrs?.filterType8}")
+			</g:if>
   		}
   		
   	}
-  	function ${attrs?.id}localGetter(myvalue,myDocumentId,mydomain,mysearch,mycollect,mybind,myfilterDisplay,myfilter,myfilterType) {
-  	
+  	function ${attrs?.id}localGetter(myvalue,myDocumentId,myVal,mydomain,mysearch,mycollect,mybind,myfilterDisplay,myfilter,myfilterType) {
+
   		$.getJSON('${createLink(controller:"${attrs?.controller}", action: "${attrs?.action}")}?id='+myvalue+'&value=${attrs?.triggerWord}&bindid='+mybind+'&collectField='+mycollect+'&filterDisplay='+myfilterDisplay+'&searchField='+mysearch+'&domain=&domain2='+mydomain+'&filter2='+myfilter+'&filterType2='+myfilterType+'',function(e){
-		if (e) { 
+		if (e) {
 		    var rselect = document.getElementById(myDocumentId)
 		    var l = rselect.length
 		    while (l > 0) {
@@ -94,7 +92,7 @@
 			}
 			var opt = document.createElement('option');
 			opt.value="${attrs?.appendValue}"
-			opt.text="${attrs?.appendName}" 
+			opt.text="${attrs?.appendName}"
 			try {
 		    	rselect.add(opt, null)
 			} catch(ex) {
@@ -110,9 +108,12 @@
 		    	} catch(ex) {
 		  	  		rselect.add(opt)
 		  		}
+		  		if (opt.value == myVal) {
+  					opt.selected = true;
+  	  			}
 		  	}
 		}
-		
+
 		});		
   	}
   	var zselect = document.getElementById('${attrs?.id}');
