@@ -1,6 +1,11 @@
 ajaxdependancyselection
 =======================
 
+### Side note - similar / related projects
+- [ajaxdependancyselection (this)](https://github.com/vahidhedayati/ajaxdependancyselection)
+
+- [grails-boselecta-plugin](https://github.com/vahidhedayati/grails-boselecta-plugin)
+
 
 Ajaxdependancyselection is a Grails plugin which makes use of jquery to provide either select or auto complete form fields. This can be any combination of either fully dependent objects or full dependent as well as no reference bindings.
 
